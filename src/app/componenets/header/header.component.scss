@@ -52,7 +52,7 @@
       left: 50%;
       bottom: 0;
       height: 2px;
-      background: #0ff;
+      background-color: #0ff;
       transform: translateX(-50%);
       width: 0;
       transition: width 0.4s ease, background-color 0.3s;
@@ -83,7 +83,7 @@
   &__svg {
     width: 24px;
     height: 24px;
-    transition: transform 0.3 ease, filter 0.3 ease;
+    transition: transform 0.3s ease, filter 0.3s ease;
     &:hover {
       transform: scale(1.2);
       filter: brightness(2) saturate(2);
@@ -97,7 +97,7 @@
   }
 
   &__language-btn {
-    background: none;
+    background-color: none;
     border: 1px solid #0ff;
     color: #0ff;
     font-size: 1rem;
@@ -106,7 +106,7 @@
     transition: background 0.3s;
 
     &:hover {
-      background: rgba(0, 255, 255, 0.2);
+      background-color: rgba(0, 255, 255, 0.2);
       cursor: pointer;
     }
   }
@@ -115,7 +115,8 @@
     position: absolute;
     top: calc(100% + 2px);
     right: 0;
-    background: #222;
+    background-color: #222;
+    box-shadow: 0 4px 8px rgba(0, 255, 255, 0.2);
     border: 1px solid #0ff;
     list-style: none;
     padding: 0;
@@ -132,7 +133,7 @@
     white-space: nowrap;
     transition: background 0.3s;
     &:hover {
-      background: #0ff;
+      background-color: #0ff;
       color: #000;
     }
   }

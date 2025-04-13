@@ -1,4 +1,4 @@
-<nav class="nav">
+<nav class="nav" role="navigation">
   <div class="nav__left">
     <div class="nav__logo">{{ "HEADER.LOGO" | translate }}</div>
     <div class="nav__container">
@@ -36,7 +36,7 @@
       <ul
         class="nav__language-dropdown"
         *ngIf="showDropdown"
-        (animationed)="onAnimationEnd()"
+        (animationend)="onAnimationEnd()"
         [ngClass]="{ 'fade-in': dropdownOpen, 'fade-out': !dropdownOpen }"
       >
         <li

@@ -5,3 +5,12 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+// Accessibility styles for tab navigation
+a:focus,
+button:focus {
+  outline: none;
+  border: 1px solid #0ff;
+  box-shadow: 0 0 5px #0ff;
+  background: rgba(0, 255, 255, 0.1);
+}
