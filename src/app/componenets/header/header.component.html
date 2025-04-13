@@ -1,24 +1,53 @@
 <nav class="nav">
   <div class="nav__left">
-    <div class="nav__logo">MK</div>
+    <div class="nav__logo">{{ "HEADER.LOGO" | translate }}</div>
     <div class="nav__container">
       <ul class="nav__links">
         <li class="nav__item">
-          <a class="nav__link" href="#home">Home</a>
+          <a class="nav__link" href="#home">{{ "HEADER.HOME" | translate }}</a>
         </li>
         <li class="nav__item">
-          <a class="nav__link" href="#about">About</a>
+          <a class="nav__link" href="#about">{{
+            "HEADER.ABOUT" | translate
+          }}</a>
         </li>
         <li class="nav__item">
-          <a class="nav__link" href="#projects">Projects</a>
+          <a class="nav__link" href="#projects">{{
+            "HEADER.PROJECTS" | translate
+          }}</a>
         </li>
         <li class="nav__item">
-          <a class="nav__link" href="#contact">Contact</a>
+          <a class="nav__link" href="#contact">{{
+            "HEADER.CONTACT" | translate
+          }}</a>
         </li>
       </ul>
     </div>
   </div>
   <div class="nav__right">
+    <div
+      class="nav__language-switcher"
+      (mouseenter)="onMouseEnterLanguage()"
+      (mouseleave)="onMouseLeaveLanguage()"
+    >
+      <button class="nav__language-btn">
+        {{ currentLanguage.toUpperCase() }}
+      </button>
+      <ul
+        class="nav__language-dropdown"
+        *ngIf="showDropdown"
+        (animationed)="onAnimationEnd()"
+        [ngClass]="{ 'fade-in': dropdownOpen, 'fade-out': !dropdownOpen }"
+      >
+        <li
+          class="nav__language-item"
+          *ngFor="let lang of languages"
+          (click)="changeLanguage(lang.code)"
+        >
+          {{ lang.code.toUpperCase() }}
+        </li>
+      </ul>
+    </div>
     <a class="nav__icon nav__login" href="/login" title="Login">
       <img src="assets/icons/logIn.svg" alt="Log In" />
     </a>

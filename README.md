@@ -1,6 +1,6 @@
 # Portfolio
 
-It's Michal Krzyzowski Portfolio@V0.1.0
+It's Michal Krzyzowski Portfolio@0.1.0
 
 # Inspiration
 
@@ -9,5 +9,5 @@ It's Michal Krzyzowski Portfolio@V0.1.0
 # TODO:
 
 - [x] change icon for navbar, use svg
-- [ ] add translation file to allow two languages
-- [ ] extened nav to allow to chang language
+- [x] add translation file to allow two languages
+- [x] extened nav to allow to chang language

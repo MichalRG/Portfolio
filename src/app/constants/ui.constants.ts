@@ -1,0 +1,1 @@
+export const DROPDOWN_HIDE_DELAY_MS = 300;
