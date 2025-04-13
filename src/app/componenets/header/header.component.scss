@@ -79,6 +79,16 @@
       transform: scale(1.2);
     }
   }
+
+  &__svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3 ease, filter 0.3 ease;
+    &:hover {
+      transform: scale(1.2);
+      filter: brightness(2) saturate(2);
+    }
+  }
 }
 
 @keyframes fadeSlideDown {

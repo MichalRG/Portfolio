@@ -8,4 +8,6 @@ It's Michal Krzyzowski Portfolio@V0.1.0
 
 # TODO:
 
-1. change icon for navbar, use svg
+- [x] change icon for navbar, use svg
+- [ ] add translation file to allow two languages
+- [ ] extened nav to allow to chang language
