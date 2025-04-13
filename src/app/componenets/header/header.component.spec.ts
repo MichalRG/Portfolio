@@ -1,5 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { CommonModule } from '@angular/common';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {
@@ -8,16 +14,61 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeaderComponent]
-    })
-    .compileComponents();
+      imports: [HeaderComponent, CommonModule, TranslateModule.forRoot()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  afterEach(() => {
+    localStorage.clear();
+  });
+
+  it('should create the header component', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render logo text', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const logoText = compiled.querySelector('.nav__logo')?.textContent?.trim();
+    expect(logoText).toBe('HEADER.LOGO');
+  });
+
+  it('should render navigation links', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const links = compiled.querySelectorAll('.nav__link');
+    expect(links.length).toBe(4); // Home, About, Projects, Contact
+  });
+
+  it('should render language switcher button', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const button = compiled.querySelector('.nav__language-btn');
+    expect(button).toBeTruthy();
+    expect(button?.textContent?.trim()).toContain('EN'); // default language
+  });
+
+  it('should open dropdown on mouseenter', fakeAsync(() => {
+    component.onMouseEnterLanguage();
+    fixture.detectChanges();
+    tick();
+    expect(component.showDropdown).toBeTrue();
+    expect(component.dropdownOpen).toBeTrue();
+  }));
+
+  it('should close dropdown after mouseleave with delay', fakeAsync(() => {
+    component.onMouseEnterLanguage();
+    fixture.detectChanges();
+    tick();
+    component.onMouseLeaveLanguage();
+    fixture.detectChanges();
+    tick(500);
+    expect(component.dropdownOpen).toBeFalse();
+  }));
+
+  it('should change language and update currentLanguage', () => {
+    component.changeLanguage('pl');
+    expect(component.currentLanguage).toBe('pl');
   });
 });
