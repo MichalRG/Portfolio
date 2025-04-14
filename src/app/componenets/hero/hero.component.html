@@ -1,1 +1,10 @@
-<p>hero works!</p>
+<section class="hero" [ngClass]="currentBackground">
+  <div class="hero__content">
+    <h1
+      class="hero__text"
+      [ngClass]="{ visible: isTextVisible, hidden: !isTextVisible }"
+    >
+      {{ currentMessage | translate }}
+    </h1>
+  </div>
+</section>

@@ -1,0 +1,69 @@
+@use 'assets/styles/variables' as *;
+
+.hero {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: background 3s ease;
+
+  &__content {
+    text-align: center;
+    color: $color-text;
+    z-index: 2;
+    padding: 5rem;
+  }
+
+  &__text {
+    font-size: 2rem;
+    font-weight: 400;
+    text-shadow: 0 0 10px rgba($color-primary, 0.8);
+    opacity: 1;
+    transition: opacity 1s ease;
+  }
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.visible {
+  opacity: 1;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.bg-0 {
+  background-image: url('/assets/images/hero/backgroundMoon.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-1 {
+  background-image: url('/assets/images/hero/backgroundMars.png');
+  background-size: cover;
+  background-position: center;
+}
+
+@keyframes fadeInText {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

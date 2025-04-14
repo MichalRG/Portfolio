@@ -44,7 +44,7 @@ describe('HeaderComponent', () => {
   });
 
   afterEach(() => {
-    localStorage.clear(); // Reset language after every test
+    localStorage.clear();
   });
 
   it('should create the header component', () => {
@@ -85,7 +85,7 @@ describe('HeaderComponent', () => {
     tick();
     component.onMouseLeaveLanguage();
     fixture.detectChanges();
-    tick(500); // simulate 500ms
+    tick(500);
     expect(component.dropdownOpen).toBeFalse();
   }));
 
