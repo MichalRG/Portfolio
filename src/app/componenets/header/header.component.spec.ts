@@ -5,8 +5,23 @@ import {
   fakeAsync,
   tick,
 } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { Observable, of } from 'rxjs';
 import { HeaderComponent } from './header.component';
+
+class FakeLoader implements TranslateLoader {
+  getTranslation(lang: string): Observable<any> {
+    return of({
+      HEADER: {
+        LOGO: 'MK',
+        HOME: 'Home',
+        ABOUT: 'About',
+        PROJECTS: 'Projects',
+        CONTACT: 'Contact',
+      },
+    });
+  }
+}
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -14,7 +29,13 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeaderComponent, CommonModule, TranslateModule.forRoot()],
+      imports: [
+        HeaderComponent,
+        CommonModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: FakeLoader },
+        }),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HeaderComponent);
@@ -23,7 +44,7 @@ describe('HeaderComponent', () => {
   });
 
   afterEach(() => {
-    localStorage.clear();
+    localStorage.clear(); // Reset language after every test
   });
 
   it('should create the header component', () => {
@@ -32,8 +53,9 @@ describe('HeaderComponent', () => {
 
   it('should render logo text', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    const logoText = compiled.querySelector('.nav__logo')?.textContent?.trim();
-    expect(logoText).toBe('HEADER.LOGO');
+    expect(compiled.querySelector('.nav__logo')?.textContent?.trim()).toBe(
+      'MK',
+    );
   });
 
   it('should render navigation links', () => {
@@ -46,7 +68,7 @@ describe('HeaderComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const button = compiled.querySelector('.nav__language-btn');
     expect(button).toBeTruthy();
-    expect(button?.textContent?.trim()).toContain('EN'); // default language
+    expect(button?.textContent?.trim()).toContain('EN');
   });
 
   it('should open dropdown on mouseenter', fakeAsync(() => {
@@ -63,7 +85,7 @@ describe('HeaderComponent', () => {
     tick();
     component.onMouseLeaveLanguage();
     fixture.detectChanges();
-    tick(500);
+    tick(500); // simulate 500ms
     expect(component.dropdownOpen).toBeFalse();
   }));
 
