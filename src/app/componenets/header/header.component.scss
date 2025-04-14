@@ -1,16 +1,18 @@
+@use 'assets/styles/variables' as *;
+
 .nav {
   position: fixed;
   top: 0;
   width: 100%;
   height: 50px;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba($color-background, 0.8);
   display: flex;
 
   justify-content: space-between;
   z-index: 1000;
   backdrop-filter: blur(10px);
 
-  animation: fadeSlideDown 1s ease forwards; //I need explenation of it
+  animation: fadeSlideDown 1s ease forwards;
   opacity: 0;
 
   &__left {
@@ -23,7 +25,7 @@
   &__logo {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #0ff;
+    color: $color-primary;
     letter-spacing: 1px;
     text-decoration: none;
   }
@@ -43,19 +45,21 @@
     position: relative;
 
     &:hover {
-      color: #0ff;
+      color: $color-primary;
     }
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       left: 50%;
       bottom: 0;
       height: 2px;
-      background-color: #0ff;
+      background-color: $color-primary;
       transform: translateX(-50%);
       width: 0;
-      transition: width 0.4s ease, background-color 0.3s;
+      transition:
+        width 0.4s ease,
+        background-color 0.3s;
     }
     &:hover::after {
       width: 100%;
@@ -70,7 +74,7 @@
   }
 
   &__icon {
-    color: #0ff;
+    color: $color-primary;
     font-size: 1.2rem;
     text-decoration: none;
     transition: transform 0.3s ease;
@@ -83,7 +87,9 @@
   &__svg {
     width: 24px;
     height: 24px;
-    transition: transform 0.3s ease, filter 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      filter 0.3s ease;
     &:hover {
       transform: scale(1.2);
       filter: brightness(2) saturate(2);
@@ -98,15 +104,15 @@
 
   &__language-btn {
     background-color: none;
-    border: 1px solid #0ff;
-    color: #0ff;
+    border: 1px solid $color-primary;
+    color: $color-primary;
     font-size: 1rem;
     padding: 4px 8px;
     border-radius: 4px;
     transition: background 0.3s;
 
     &:hover {
-      background-color: rgba(0, 255, 255, 0.2);
+      background-color: rgba($color-primary, 0.2);
       cursor: pointer;
     }
   }
@@ -116,8 +122,8 @@
     top: calc(100% + 2px);
     right: 0;
     background-color: #222;
-    box-shadow: 0 4px 8px rgba(0, 255, 255, 0.2);
-    border: 1px solid #0ff;
+    box-shadow: 0 4px 8px rgba($color-primary, 0.2);
+    border: 1px solid $color-primary;
     list-style: none;
     padding: 0;
     margin: 0;
@@ -133,8 +139,8 @@
     white-space: nowrap;
     transition: background 0.3s;
     &:hover {
-      background-color: #0ff;
-      color: #000;
+      background-color: $color-primary;
+      color: $color-text;
     }
   }
 }
