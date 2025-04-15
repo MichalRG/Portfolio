@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AboutComponent } from './componenets/about/about.component';
 import { ContactComponent } from './componenets/contact/contact.component';
 import { FooterComponent } from './componenets/footer/footer.component';
@@ -19,6 +19,13 @@ import { ProjectsComponent } from './componenets/projects/projects.component';
     ProjectsComponent,
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Michal';
+  showIntro = true;
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.showIntro = false;
+    }, 1500);
+  }
 }

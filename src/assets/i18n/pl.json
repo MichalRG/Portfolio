@@ -5,5 +5,9 @@
     "ABOUT": "O mnie",
     "CONTACT": "Kontakt",
     "PROJECTS": "Projekty"
+  },
+  "HERO": {
+    "TITLE-1": "Witaj po drugiej stronie ekranu, na moim portfolio",
+    "TITLE-2": "Miło mi że tu jesteś, uśmiechnij się i miłego przeglądania :)"
   }
 }

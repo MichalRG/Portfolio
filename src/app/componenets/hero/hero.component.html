@@ -7,4 +7,11 @@
       {{ currentMessage | translate }}
     </h1>
   </div>
+  <div
+    class="hero__scroll-indicator"
+    [class.hidden]="isArrowScrollHidden"
+    (click)="scrollToNextSection()"
+  >
+    ↓
+  </div>
 </section>

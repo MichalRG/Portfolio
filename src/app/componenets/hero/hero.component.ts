@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription, interval, timer } from 'rxjs';
 
@@ -14,9 +14,15 @@ export class HeroComponent implements OnInit {
   currentMessage = this.messages[0];
   currentBackground = 'bg-0';
   isTextVisible = true;
+  isArrowScrollHidden = false;
 
   private index = 0;
   private intervalSub?: Subscription;
+
+  @HostListener('window:scroll')
+  onScroll() {
+    this.isArrowScrollHidden = window.scrollY > 10;
+  }
 
   ngOnInit() {
     this.intervalSub = interval(10_000).subscribe(() => {
@@ -32,5 +38,13 @@ export class HeroComponent implements OnInit {
 
   ngOnDestroy() {
     this.intervalSub?.unsubscribe();
+  }
+
+  scrollToNextSection() {
+    const nextSection = document.querySelector('#about');
+
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 }

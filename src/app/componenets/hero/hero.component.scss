@@ -18,20 +18,56 @@
   }
 
   &__text {
-    font-size: 2rem;
+    font-size: clamp(1rem, 2.5vw, 2rem);
     font-weight: 400;
     text-shadow: 0 0 10px rgba($color-primary, 0.8);
     opacity: 1;
-    transition: opacity 1s ease;
+    transform: translateY(0);
+    transition:
+      opacity 1s ease,
+      transform 1s ease;
+  }
+
+  &__scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    color: $color-primary;
+    animation: bounce 2s infinite;
+    z-index: 2;
+    cursor: pointer;
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s ease;
+    opacity: 1;
+
+    &.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(10px);
   }
 }
 
 .hidden {
   opacity: 0;
+  transform: translateY(20px);
 }
 
 .visible {
   opacity: 1;
+  transform: translateY(0);
 }
 
 .hero::after {
