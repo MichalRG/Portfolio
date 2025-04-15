@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subscription, interval, timer } from 'rxjs';
+import { Subscription, interval, switchMap, tap, timer } from 'rxjs';
 
 @Component({
   selector: 'app-hero',
@@ -25,15 +25,17 @@ export class HeroComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.intervalSub = interval(10_000).subscribe(() => {
-      this.isTextVisible = false;
-      timer(1_500).subscribe(() => {
+    this.intervalSub = interval(10_000)
+      .pipe(
+        tap(() => (this.isTextVisible = false)),
+        switchMap(() => timer(1_500)),
+      )
+      .subscribe(() => {
         this.index = (this.index + 1) % 2;
         this.currentBackground = `bg-${this.index}`;
         this.currentMessage = this.messages[this.index];
         this.isTextVisible = true;
       });
-    });
   }
 
   ngOnDestroy() {
