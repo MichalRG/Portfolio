@@ -7,7 +7,13 @@
     "PROJECTS": "Projekty"
   },
   "HERO": {
-    "TITLE-1": "Witaj po drugiej stronie ekranu, na moim portfolio",
+    "TITLE-1": "Witaj po drugiej stronie ekranu!",
     "TITLE-2": "Miło mi że tu jesteś, uśmiechnij się i miłego przeglądania :)"
+  },
+  "ABOUT": {
+    "TITLE": "Uszanowanko!",
+    "DESCRIPTION_LINE_1": "Obecnie pracuję i rozwijam się jako software engineer. W życiu kieruję się pasją do nauki, odkrywania nowych możliwości i tworzenia innowacyjnych rozwiązań.",
+    "DESCRIPTION_LINE_2": "Uwielbiam próbować nowych rzeczy i się nimi bawić — szukam wyzwań, które pozwalają mi się rozwijać i zdobywać nowe umiejętności.",
+    "DESCRIPTION_LINE_3": "Poniżej znajdziesz tagi odzwierciedlające moje zainteresowania — zarówno te związane z IT, jak i nie tylko..."
   }
 }
