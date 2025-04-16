@@ -1,0 +1,73 @@
+@use 'assets/styles/variables' as *;
+@mixin smooth-fade-slide {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.about {
+  padding: 3.5rem 2rem;
+  background-color: $color-background;
+  color: #fff;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+
+  &__content {
+    max-width: 1000px;
+    width: 100%;
+  }
+
+  &__line {
+    @include smooth-fade-slide;
+    font-size: 1.5rem;
+    text-align: left;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+
+    &.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &__tag-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: nowrap;
+  }
+
+  &__tag {
+    padding: 0.6rem 1rem;
+    border: 1px solid;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+
+    &--primary {
+      color: $color-primary;
+      background-color: rgba($color-primary, 0.1);
+      border-color: $color-primary;
+
+      &:hover {
+        background-color: $color-primary;
+        color: #000;
+      }
+    }
+
+    &--secondary {
+      color: $color-secondary;
+      background-color: rgba($color-secondary, 0.1);
+      border-color: $color-secondary;
+
+      &:hover {
+        background-color: $color-secondary;
+        color: #000;
+      }
+    }
+  }
+}

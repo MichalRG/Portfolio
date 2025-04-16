@@ -1,0 +1,26 @@
+<section class="about" id="about">
+  <div class="about__content">
+    @for (line of descriptionLines; track line) {
+      <p
+        class="about__line"
+        appScrollReveal
+        [revealClass]="'active'"
+        [style.transitionDelay.s]="line.delay"
+      >
+        {{ line.key | translate }}
+      </p>
+    }
+
+    <div class="about__tag-row" *ngFor="let row of techChunks">
+      @for (tag of row; track tag) {
+        <span class="about__tag about__tag--primary">{{ tag }}</span>
+      }
+    </div>
+
+    <div class="about__tag-row" *ngFor="let row of interestChunks">
+      @for (tag of row; track tag) {
+        <span class="about__tag about__tag--secondary">{{ tag }}</span>
+      }
+    </div>
+  </div>
+</section>
