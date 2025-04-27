@@ -31,7 +31,9 @@
       [style.transitionDelay.s]="tagsDelay"
     >
       @for (tag of row; track tag) {
-        <span class="about__tag about__tag--secondary">{{ tag }}</span>
+        <span class="about__tag about__tag--secondary">
+          {{ 'ABOUT.INTERESTS.' + tag | translate }}
+        </span>
       }
     </div>
   </div>
