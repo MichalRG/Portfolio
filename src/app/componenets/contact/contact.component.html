@@ -1,70 +1,86 @@
 <section class="contact" id="contact">
-  <div class="contact">
-    <h2>{{ 'CONTACT.TITLE' | translate }}</h2>
-    <p>{{ 'CONTACT.TEXT' | translate }}</p>
-    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-      <!-- Name -->
-      <input
-        type="text"
-        formControlName="name"
-        placeholder="{{ 'CONTACT.NAME' | translate }}"
-      />
-      <div
-        class="error"
-        *ngIf="
-          contactForm.get('name')?.touched && contactForm.get('name')?.invalid
-        "
-      >
-        <small *ngIf="contactForm.get('name')?.hasError('required')">
-          {{ 'CONTACT.ERROR.NAME_REQUIRED' | translate }}
-        </small>
-        <small *ngIf="contactForm.get('name')?.hasError('minlength')">
-          {{ 'CONTACT.ERROR.NAME_MIN' | translate: { min: 2 } }}
-        </small>
+  <div class="contact__inner">
+    <h2 class="contact__title">{{ 'CONTACT.TITLE' | translate }}</h2>
+    <p class="contact__text">{{ 'CONTACT.TEXT' | translate }}</p>
+
+    <form
+      class="contact__form"
+      [formGroup]="contactForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="contact__field">
+        <input
+          class="contact__input"
+          type="text"
+          formControlName="name"
+          placeholder="{{ 'CONTACT.NAME' | translate }}"
+        />
+        <div
+          class="contact__error"
+          *ngIf="
+            contactForm.get('name')?.touched && contactForm.get('name')?.invalid
+          "
+        >
+          <small *ngIf="contactForm.get('name')?.hasError('required')">
+            {{ 'CONTACT.ERROR.NAME_REQUIRED' | translate }}
+          </small>
+          <small *ngIf="contactForm.get('name')?.hasError('minlength')">
+            {{ 'CONTACT.ERROR.NAME_MIN' | translate: { min: 2 } }}
+          </small>
+        </div>
       </div>
 
-      <!-- Email -->
-      <input
-        type="email"
-        formControlName="email"
-        placeholder="{{ 'CONTACT.EMAIL' | translate }}"
-      />
-      <div
-        class="error"
-        *ngIf="
-          contactForm.get('email')?.touched && contactForm.get('email')?.invalid
-        "
-      >
-        <small *ngIf="contactForm.get('email')?.hasError('required')">
-          {{ 'CONTACT.ERROR.EMAIL_REQUIRED' | translate }}
-        </small>
-        <small *ngIf="contactForm.get('email')?.hasError('email')">
-          {{ 'CONTACT.ERROR.EMAIL_VALID' | translate }}
-        </small>
+      <div class="contact__field">
+        <input
+          class="contact__input"
+          type="email"
+          formControlName="email"
+          placeholder="{{ 'CONTACT.EMAIL' | translate }}"
+        />
+        <div
+          class="contact__error"
+          *ngIf="
+            contactForm.get('email')?.touched &&
+            contactForm.get('email')?.invalid
+          "
+        >
+          <small *ngIf="contactForm.get('email')?.hasError('required')">
+            {{ 'CONTACT.ERROR.EMAIL_REQUIRED' | translate }}
+          </small>
+          <small *ngIf="contactForm.get('email')?.hasError('email')">
+            {{ 'CONTACT.ERROR.EMAIL_VALID' | translate }}
+          </small>
+        </div>
       </div>
 
-      <!-- Message -->
-      <textarea
-        formControlName="message"
-        rows="4"
-        placeholder="{{ 'CONTACT.MESSAGE' | translate }}"
-      ></textarea>
-      <div
-        class="error"
-        *ngIf="
-          contactForm.get('message')?.touched &&
-          contactForm.get('message')?.invalid
-        "
-      >
-        <small *ngIf="contactForm.get('message')?.hasError('required')">
-          {{ 'CONTACT.ERROR.MESSAGE_REQUIRED' | translate }}
-        </small>
-        <small *ngIf="contactForm.get('message')?.hasError('minlength')">
-          {{ 'CONTACT.ERROR.MESSAGE_MIN' | translate: { min: 10 } }}
-        </small>
+      <div class="contact__field">
+        <textarea
+          class="contact__textarea"
+          formControlName="message"
+          rows="4"
+          placeholder="{{ 'CONTACT.MESSAGE' | translate }}"
+        ></textarea>
+        <div
+          class="contact__error"
+          *ngIf="
+            contactForm.get('message')?.touched &&
+            contactForm.get('message')?.invalid
+          "
+        >
+          <small *ngIf="contactForm.get('message')?.hasError('required')">
+            {{ 'CONTACT.ERROR.MESSAGE_REQUIRED' | translate }}
+          </small>
+          <small *ngIf="contactForm.get('message')?.hasError('minlength')">
+            {{ 'CONTACT.ERROR.MESSAGE_MIN' | translate: { min: 10 } }}
+          </small>
+        </div>
       </div>
 
-      <button type="submit" [disabled]="contactForm.invalid">
+      <button
+        class="contact__button"
+        type="submit"
+        [disabled]="contactForm.invalid"
+      >
         {{ 'CONTACT.SEND' | translate }}
       </button>
     </form>

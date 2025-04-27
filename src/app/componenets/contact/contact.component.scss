@@ -5,65 +5,75 @@
   color: $color-text;
   padding: 1rem 2rem;
 
-  .contact {
+  &__inner {
+    max-width: 500px;
+    margin: 0 auto 3rem;
     text-align: center;
-    margin-bottom: 3rem;
+  }
 
-    h2 {
-      font-size: 2rem;
-      color: $color-primary;
-      margin-bottom: 1rem;
+  &__title {
+    font-size: 2rem;
+    color: $color-primary;
+    margin-bottom: 1rem;
+  }
+
+  &__text {
+    font-size: 1rem;
+    color: #ccc;
+    margin-bottom: 2rem;
+  }
+
+  &__form {
+    display: grid;
+    gap: 1rem;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__input,
+  &__textarea {
+    padding: 0.75rem;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background: $color-background;
+    color: $color-text;
+    font-size: 1rem;
+  }
+
+  &__input.ng-invalid.ng-touched,
+  &__textarea.ng-invalid.ng-touched {
+    border-color: $color-accent-warn;
+  }
+
+  &__error {
+    margin-top: 0.25rem;
+
+    small {
+      color: $color-accent-warn;
+      font-size: 0.875rem;
     }
-    p,
-    a,
-    .social a {
-      font-size: 1rem;
-      color: #ccc;
+  }
+
+  &__button {
+    background: $color-primary;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
-    .social {
-      margin-top: 1rem;
-      a {
-        margin: 0 0.5rem;
-      }
-    }
-    form {
-      max-width: 500px;
-      margin: 0 auto;
-      display: grid;
-      gap: 1rem;
 
-      input,
-      textarea {
-        padding: 0.75rem;
-        border: 1px solid #333;
-        border-radius: 4px;
-        background: $color-background;
-        color: $color-text;
-      }
-
-      input.ng-invalid.ng-touched,
-      textarea.ng-invalid.ng-touched {
-        border-color: $color-accent-warn;
-      }
-
-      button {
-        background: $color-primary;
-        border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-
-      .error {
-        small {
-          color: $color-accent-warn;
-        }
-      }
-
-      button:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
+    &:not(:disabled):hover {
+      opacity: 0.9;
     }
   }
 }
