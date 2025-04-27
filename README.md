@@ -12,5 +12,7 @@ It's Michal Krzyzowski Portfolio@0.1.0
 - [x] add translation file to allow two languages
 - [x] extened nav to allow to chang language
 - [x] main section
-- [ ] project section
+- [x] project section
+- [ ] contact section
+- [ ] footer section
 - [ ] mobile styles
