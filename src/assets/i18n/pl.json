@@ -15,5 +15,27 @@
     "DESCRIPTION_LINE_1": "Obecnie pracuję i rozwijam się jako software engineer. W życiu kieruję się pasją do nauki, odkrywania nowych możliwości i tworzenia innowacyjnych rozwiązań.",
     "DESCRIPTION_LINE_2": "Uwielbiam próbować nowych rzeczy i się nimi bawić — szukam wyzwań, które pozwalają mi się rozwijać i zdobywać nowe umiejętności.",
     "DESCRIPTION_LINE_3": "Poniżej znajdziesz tagi odzwierciedlające moje zainteresowania — zarówno te związane z IT, jak i nie tylko..."
+  },
+  "PROJECTS": {
+    "VISIT": "odwiedź",
+    "UNIVERSITY": {
+      "NAME": "Uniwersytet Bielsko-Bialski",
+      "DESCRIPTION": "Byłem studentem Uniwersytetu Bielsko-Bialskiego, gdzie studiowałem Informatykę. Uzyskałem tytuł inżyniera w 2022 roku oraz tytuł magistra w 2024 roku.",
+      "LINK": "Strona UBB"
+    },
+    "CERT": {
+      "NAME": "Certyfikaty",
+      "DESCRIPTION": "Ukończyłem dwa certyfikaty: \"AI Devs 3 Agents\" oraz \"AI Devs 2 - Połączenie GPT-4 z aplikacją i logiką automatyzacji\".",
+      "LINK": "Certyfikat AI Devs"
+    },
+    "GITHUB": {
+      "NAME": "GitHub",
+      "DESCRIPTION": "W ostatnich latach większość czasu poświęcałem na commitowanie do repozytoriów w pracy, ale mam też kilka przykładów mojej pracy dostępnych na GitHubie. Znajdują się tam małe projekty ze studiów, częściowo kod tego portfolio, projekty z kursów z Udemy, bot Discorda stworzony dla kanału Awanturnicy na YouTube oraz przykłady mojej pracy z AI Devs.",
+      "LINK": "profil GitHub"
+    },
+    "EXPERIENCE": {
+      "NAME": "Doświadczenie",
+      "DESCRIPTION": "- Software Engineer @ Precisely - od 2021,\n- Stażysta @ SM32 Studio od czerwca 2019 do września 2019"
+    }
   }
 }
