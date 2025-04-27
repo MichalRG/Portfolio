@@ -47,11 +47,31 @@
     "GITHUB": {
       "NAME": "GitHub",
       "DESCRIPTION": "W ostatnich latach większość czasu poświęcałem na commitowanie do repozytoriów w pracy, ale mam też kilka przykładów mojej pracy dostępnych na GitHubie. Znajdują się tam małe projekty ze studiów, częściowo kod tego portfolio, projekty z kursów z Udemy, bot Discorda stworzony dla kanału Awanturnicy na YouTube oraz przykłady mojej pracy z AI Devs.",
-      "LINK": "profil GitHub"
+      "LINK": "Profil GitHub"
     },
     "EXPERIENCE": {
       "NAME": "Doświadczenie",
       "DESCRIPTION": "- Software Engineer @ Precisely - od 2021,\n- Stażysta @ SM32 Studio od czerwca 2019 do września 2019"
+    }
+  },
+  "CONTACT": {
+    "TITLE": "Kontakt",
+    "TEXT": "Zapraszam do kontaktu mailowego lub przez media społecznościowe.",
+    "NAME": "Twoje imię",
+    "EMAIL": "Twój email",
+    "MESSAGE": "Twoja wiadomość",
+    "SEND": "Wyślij 📧",
+    "TOAST": {
+      "TITLE": "Wiadomość wysłana",
+      "MESSAGE": "Twoja wiadomość została wysłana. Wkrótce się odezwę, dzięki za Twój czas 😎!"
+    },
+    "ERROR": {
+      "NAME_REQUIRED": "Imię jest wymagane",
+      "NAME_MIN": "Imię musi mieć co najmniej {{min}} znaków",
+      "EMAIL_REQUIRED": "Email jest wymagany",
+      "EMAIL_VALID": "Wprowadź poprawny email",
+      "MESSAGE_REQUIRED": "Wiadomość jest wymagana",
+      "MESSAGE_MIN": "Wiadomość musi mieć co najmniej {{min}} znaków"
     }
   }
 }

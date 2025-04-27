@@ -53,5 +53,25 @@
       "NAME": "Experience",
       "DESCRIPTION": "- Software Engineer @ Precisely - since 2021,\n- Intern @ SM32 Studio from June 2019 to Sept 2019"
     }
+  },
+  "CONTACT": {
+    "TITLE": "Get in Touch",
+    "TEXT": "Feel free to reach out via email or connect on social media.",
+    "NAME": "Your Name",
+    "EMAIL": "Your Email",
+    "MESSAGE": "Your Message",
+    "SEND": "Send Message",
+    "TOAST": {
+      "TITLE": "Message Sent",
+      "MESSAGE": "Your message has been sent. I’ll get back to you shortly, thanks for your time 😎!"
+    },
+    "ERROR": {
+      "NAME_REQUIRED": "Name is required",
+      "NAME_MIN": "Name must be at least {{min}} characters",
+      "EMAIL_REQUIRED": "Email is required",
+      "EMAIL_VALID": "Enter a valid email",
+      "MESSAGE_REQUIRED": "Message is required",
+      "MESSAGE_MIN": "Message must be at least {{min}} characters"
+    }
   }
 }
