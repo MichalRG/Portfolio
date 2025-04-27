@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 import { AboutComponent } from './about.component';
 
-fdescribe('AboutComponent', () => {
+describe('AboutComponent', () => {
   let fixture: ComponentFixture<AboutComponent>;
   let component: AboutComponent;
 
@@ -40,10 +40,17 @@ fdescribe('AboutComponent', () => {
     expect(interestTags.length).toBe(component.interestTags.length);
   });
 
-  it('should apply scroll reveal directive to each line', () => {
-    const lines = fixture.debugElement.queryAll(
+  it('should apply ScrollRevealDirective to every revealable element', () => {
+    // grab all DebugElements with the directive
+    const els = fixture.debugElement.queryAll(
       By.directive(ScrollRevealDirective),
     );
-    expect(lines.length).toBe(3);
+
+    const expectedCount =
+      component.descriptionLines.length +
+      component.techChunks.length +
+      component.interestChunks.length;
+
+    expect(els.length).toBe(expectedCount);
   });
 });
