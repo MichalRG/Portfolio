@@ -46,9 +46,13 @@ export class AboutComponent implements OnInit {
   interestChunks: string[][] = [];
   descriptionLines = [
     { key: 'ABOUT.DESCRIPTION_LINE_1', delay: 0 },
-    { key: 'ABOUT.DESCRIPTION_LINE_2', delay: 1.5 },
-    { key: 'ABOUT.DESCRIPTION_LINE_3', delay: 3 },
+    { key: 'ABOUT.DESCRIPTION_LINE_2', delay: 0.75 },
+    { key: 'ABOUT.DESCRIPTION_LINE_3', delay: 1.5 },
   ];
+
+  tagsDelay = this.descriptionLines
+    .map((descriptionData) => descriptionData.delay + 0.5)
+    .pop();
 
   ngOnInit(): void {
     this.techChunks = this.chunkTags(this.techTags);
