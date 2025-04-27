@@ -14,7 +14,23 @@
     "TITLE": "Uszanowanko!",
     "DESCRIPTION_LINE_1": "Obecnie pracuję i rozwijam się jako software engineer. W życiu kieruję się pasją do nauki, odkrywania nowych możliwości i tworzenia innowacyjnych rozwiązań.",
     "DESCRIPTION_LINE_2": "Uwielbiam próbować nowych rzeczy i się nimi bawić — szukam wyzwań, które pozwalają mi się rozwijać i zdobywać nowe umiejętności.",
-    "DESCRIPTION_LINE_3": "Poniżej znajdziesz tagi odzwierciedlające moje zainteresowania — zarówno te związane z IT, jak i nie tylko..."
+    "DESCRIPTION_LINE_3": "Poniżej znajdziesz tagi odzwierciedlające moje zainteresowania, doświadczenie — zarówno te związane z IT, jak i nie tylko...",
+    "INTERESTS": {
+      "AI": "Sztuczna inteligencja",
+      "ML": "Uczenie maszynowe",
+      "UNITY": "Unity",
+      "UE": "Unreal Engine",
+      "QC": "Obliczenia kwantowe",
+      "DL": "Uczenie głębokie",
+      "PYTHON": "Python",
+      "RPG": "Gry fabularne (RPG)",
+      "GAMES": "Gry komputerowe",
+      "SF_FANTASY": "Fantastyka naukowa i fantasy",
+      "BOARD_GAME": "Gry planszowe",
+      "SW_LOTR": "Gwiezdne Wojny i Władca Pierścieni 💗",
+      "PSYCHOLOGY": "Psychologia",
+      "PHILOSOPHY": "Filozofia"
+    }
   },
   "PROJECTS": {
     "VISIT": "odwiedź",

@@ -14,7 +14,23 @@
     "TITLE": "Greetings from Michał!",
     "DESCRIPTION_LINE_1": "I currently work and grow as a software engineer. I'm driven by a passion for learning, discovering new possibilities, and building innovative solutions.",
     "DESCRIPTION_LINE_2": "I love trying new things and playing around with them — always looking for challenges that help me grow and develop new skills.",
-    "DESCRIPTION_LINE_3": "Below you'll find tags that reflect my interests — both in tech and beyond..."
+    "DESCRIPTION_LINE_3": "Below you'll find tags that reflect my interests, experience — both in tech and beyond...",
+    "INTERESTS": {
+      "AI": "Artificial Intelligence",
+      "ML": "Machine Learning",
+      "UNITY": "Unity",
+      "UE": "Unreal Engine",
+      "QC": "Quantum Computing",
+      "DL": "Deep Learning",
+      "PYTHON": "Python",
+      "RPG": "Tabletop RPGs",
+      "GAMES": "Computer Games",
+      "SF_FANTASY": "Science Fiction & Fantasy",
+      "BOARD_GAME": "Board Games",
+      "SW_LOTR": "Star Wars & LOTR 💗",
+      "PSYCHOLOGY": "Psychology",
+      "PHILOSOPHY": "Philosophy"
+    }
   },
   "PROJECTS": {
     "VISIT": "visit",
