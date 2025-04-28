@@ -1,0 +1,55 @@
+@use 'assets/styles/variables' as *;
+
+.footer {
+  background: $color-background;
+  color: $color-text;
+  text-align: center;
+  padding: 2rem 1rem;
+
+  &__brand {
+    margin-bottom: 1rem;
+  }
+
+  &__logo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: $color-primary;
+    letter-spacing: 1px;
+  }
+
+  &__divider {
+    border: none;
+    border-top: 1px solid #222;
+    margin: 1rem auto;
+    width: 80%;
+
+    &--bottom {
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  &__link {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  &__bottom {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 0.5rem;
+  }
+}

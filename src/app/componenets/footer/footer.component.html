@@ -1,1 +1,24 @@
-<p>footer works!</p>
+<footer class="footer">
+  <div class="footer__brand">
+    <div class="footer__logo">{{ 'FOOTER.LOGO' | translate }}</div>
+  </div>
+
+  <hr class="footer__divider" />
+
+  <nav class="footer__nav">
+    <a class="footer__link" href="#home">{{ 'FOOTER.HOME' | translate }}</a>
+    <a class="footer__link" href="#about">{{ 'FOOTER.ABOUT' | translate }}</a>
+    <a class="footer__link" href="#projects">{{
+      'FOOTER.PROJECTS' | translate
+    }}</a>
+    <a class="footer__link" href="#contact">{{
+      'FOOTER.CONTACT' | translate
+    }}</a>
+  </nav>
+
+  <hr class="footer__divider footer__divider--bottom" />
+
+  <div class="footer__bottom">
+    <p>© {{ currentYear }} {{ 'FOOTER.COPYRIGHT_NAME' | translate }}</p>
+  </div>
+</footer>
