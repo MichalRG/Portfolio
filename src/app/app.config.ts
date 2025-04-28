@@ -21,16 +21,6 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
-    // {
-    //   provide: TranslateLoader,
-    //   useFactory: HttpLoaderFactory,
-    //   deps: [HttpClient],
-    // },
-    // importProvidersFrom(
-    //   TranslateModule.forRoot({
-    //     defaultLanguage: 'en',
-    //   })
-    // ),
     importProvidersFrom(
       TranslateModule.forRoot({
         defaultLanguage: 'en',
