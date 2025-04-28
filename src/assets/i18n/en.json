@@ -73,5 +73,13 @@
       "MESSAGE_REQUIRED": "Message is required",
       "MESSAGE_MIN": "Message must be at least {{min}} characters"
     }
+  },
+  "FOOTER": {
+    "COPYRIGHT_NAME": "Michał Krzyżowski",
+    "HOME": "Home",
+    "ABOUT": "About",
+    "PROJECTS": "Projects",
+    "CONTACT": "Contact",
+    "LOGO": "MK"
   }
 }

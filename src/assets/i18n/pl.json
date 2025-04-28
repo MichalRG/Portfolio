@@ -73,5 +73,13 @@
       "MESSAGE_REQUIRED": "Wiadomość jest wymagana",
       "MESSAGE_MIN": "Wiadomość musi mieć co najmniej {{min}} znaków"
     }
+  },
+  "FOOTER": {
+    "COPYRIGHT_NAME": "Michał Krzyżowski",
+    "HOME": "Home",
+    "ABOUT": "O mnie",
+    "PROJECTS": "Projekty",
+    "CONTACT": "Kontakt",
+    "LOGO": "MK"
   }
 }
