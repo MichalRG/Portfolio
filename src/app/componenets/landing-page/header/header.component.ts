@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { LANGUAGES } from '../../constants/language.constants';
-import { LANGUAGE_STORAGE_KEY } from '../../constants/local-storage.constants';
-import { DROPDOWN_HIDE_DELAY_MS } from '../../constants/ui.constants';
+import { LANGUAGES } from '../../../constants/language.constants';
+import { LANGUAGE_STORAGE_KEY } from '../../../constants/local-storage.constants';
+import { DROPDOWN_HIDE_DELAY_MS } from '../../../constants/ui.constants';
 
 @Component({
   selector: 'app-header',

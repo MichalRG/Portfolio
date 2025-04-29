@@ -1,4 +1,7 @@
+@use 'assets/styles/variables' as *;
+
 body {
+  background-color: $color-background;
   margin: 0;
 }
 
@@ -6,7 +9,6 @@ html {
   scroll-behavior: smooth;
 }
 
-// Accessibility styles for tab navigation
 a:focus,
 button:focus {
   outline: none;

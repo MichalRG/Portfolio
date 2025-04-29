@@ -1,0 +1,19 @@
+<section class="animations-page">
+  <h1 class="animations-page__title">CSS Animation Examples</h1>
+
+  <div class="animations-page__grid">
+    <div
+      class="animations-page__card"
+      *ngFor="let animation of animationExamples"
+      [ngClass]="animation.animationClass"
+    >
+      <h2 class="animations-page__card-title">{{ animation.title }}</h2>
+
+      <div class="animations-page__animated-box"></div>
+
+      <div class="animations-page__code">
+        <pre><code>{{ animation.codeSnippet }}</code></pre>
+      </div>
+    </div>
+  </div>
+</section>

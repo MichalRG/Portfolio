@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
+import { ScrollRevealDirective } from '../../../directives/scroll-reveal.directive';
 import { AboutComponent } from './about.component';
 
 describe('AboutComponent', () => {
