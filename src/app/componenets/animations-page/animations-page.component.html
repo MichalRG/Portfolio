@@ -1,5 +1,5 @@
 <section class="animations-page">
-  <h1 class="animations-page__title">CSS Animation Examples</h1>
+  <h1 class="animations-page__title">{{ 'ANIMATIONS.TITLE' | translate }}</h1>
 
   <div class="animations-page__grid">
     <div
@@ -7,7 +7,9 @@
       *ngFor="let animation of animationExamples"
       [ngClass]="animation.animationClass"
     >
-      <h2 class="animations-page__card-title">{{ animation.title }}</h2>
+      <h2 class="animations-page__card-title">
+        {{ animation.title | translate }}
+      </h2>
 
       <div class="animations-page__animated-box"></div>
 

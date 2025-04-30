@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 interface AnimationExample {
   title: string;
@@ -12,12 +13,12 @@ interface AnimationExample {
   selector: 'app-animations-page',
   templateUrl: './animations-page.component.html',
   styleUrls: ['./animations-page.component.scss'],
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
 })
 export class AnimationsPageComponent {
   animationExamples: AnimationExample[] = [
     {
-      title: 'Fade In',
+      title: 'ANIMATIONS.FADEIN',
       animationClass: 'fade-in',
       codeSnippet: `
 @keyframes fadeIn {
@@ -30,7 +31,7 @@ export class AnimationsPageComponent {
 }`,
     },
     {
-      title: 'Slide Up + Fade',
+      title: 'ANIMATIONS.SLIDEUPFADE',
       animationClass: 'slide-up-fade',
       codeSnippet: `
 @keyframes slideUpFade {
@@ -45,7 +46,7 @@ export class AnimationsPageComponent {
 }`,
     },
     {
-      title: 'Bounce',
+      title: 'ANIMATIONS.BOUNCE',
       animationClass: 'bounce',
       codeSnippet: `
 @keyframes bounce {
@@ -65,7 +66,7 @@ export class AnimationsPageComponent {
 }`,
     },
     {
-      title: 'Rotate',
+      title: 'ANIMATIONS.ROTATE',
       animationClass: 'rotate',
       codeSnippet: `
 @keyframes rotate {
@@ -79,7 +80,7 @@ export class AnimationsPageComponent {
       `,
     },
     {
-      title: 'Pulse',
+      title: 'ANIMATIONS.PULSE',
       animationClass: 'pulse',
       codeSnippet: `
 @keyframes pulse {

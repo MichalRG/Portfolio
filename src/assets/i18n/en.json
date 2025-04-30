@@ -81,5 +81,14 @@
     "PROJECTS": "Projects",
     "CONTACT": "Contact",
     "LOGO": "MK"
+  },
+  "ANIMATIONS": {
+    "TITLE": "CSS Animation Examples",
+    "FADEIN": "Fade In",
+    "SLIDEUPFADE": "Slide Up + Fade",
+    "BOUNCE": "Bounce",
+    "ROTATE": "Rotate",
+    "PULSE": "Pulse",
+    "FANCY ENTRANCE": "Fancy Entrance"
   }
 }
