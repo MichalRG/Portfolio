@@ -82,5 +82,35 @@
     "ROTATE": "Rotacja",
     "PULSE": "Pulsacja",
     "FANCY_ENTRANCE": "Fancy Wejście"
+  },
+
+  "LAYOUT": {
+    "TITLE": "Plac zabaw: Flex i Grid",
+    "FLEX": "Demonstracja zachowania Flexboxa",
+    "GRID": "Przykład CSS Grida",
+    "TABLE": {
+      "HEADER": {
+        "ELEMENT": "Element",
+        "FLEX": "Wartość Flex",
+        "BEHAVIOR": "Zachowanie"
+      },
+      "ROW": {
+        "GROW1": {
+          "LABEL": "Grow 1",
+          "FLEX": "flex: 1 1 0%",
+          "DESC": "Otrzymuje <strong>1 część</strong> dostępnego miejsca. Drugi parametr: 1 = może się kurczyć, 0 = nie może."
+        },
+        "GROW2": {
+          "LABEL": "Grow 2",
+          "FLEX": "flex: 2 1 0%",
+          "DESC": "Otrzymuje <strong>2 części</strong> przestrzeni — <em>dwa razy więcej</em> niż Grow 1."
+        },
+        "FIXED": {
+          "LABEL": "Fixed",
+          "FLEX": "flex: 0 0 150px",
+          "DESC": "Zawsze ma <strong>150px szerokości</strong>, bez rozciągania i kurczenia."
+        }
+      }
+    }
   }
 }

@@ -90,5 +90,35 @@
     "ROTATE": "Rotate",
     "PULSE": "Pulse",
     "FANCY ENTRANCE": "Fancy Entrance"
+  },
+
+  "LAYOUT": {
+    "TITLE": "Flex & Grid Playground",
+    "FLEX": "Flexbox Behavior Demo",
+    "GRID": "CSS Grid Example",
+    "TABLE": {
+      "HEADER": {
+        "ELEMENT": "Element",
+        "FLEX": "Flex Value",
+        "BEHAVIOR": "Behavior"
+      },
+      "ROW": {
+        "GROW1": {
+          "LABEL": "Grow 1",
+          "FLEX": "flex: 1 1 0%",
+          "DESC": "Receives <strong>1 part</strong> of remaining space. Second parameter for 1 = shrink allowed, 0 = no shrink."
+        },
+        "GROW2": {
+          "LABEL": "Grow 2",
+          "FLEX": "flex: 2 1 0%",
+          "DESC": "Receives <strong>2 parts</strong> of remaining space — <em>twice</em> as much as Grow 1."
+        },
+        "FIXED": {
+          "LABEL": "Fixed",
+          "FLEX": "flex: 0 0 150px",
+          "DESC": "Always stays <strong>150px wide</strong>, no grow/shrink."
+        }
+      }
+    }
   }
 }

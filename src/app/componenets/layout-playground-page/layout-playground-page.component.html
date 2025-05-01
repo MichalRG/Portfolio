@@ -1,0 +1,62 @@
+<section class="layout-playground">
+  <h1 class="layout-playground__title">{{ 'LAYOUT.TITLE' | translate }}</h1>
+
+  <h2 class="layout-playground__subtitle">{{ 'LAYOUT.FLEX' | translate }}</h2>
+  <div class="layout-playground__flex-demo">
+    <div
+      class="layout-playground__flex-item layout-playground__flex-item--grow1"
+    >
+      Grow 1
+    </div>
+    <div
+      class="layout-playground__flex-item layout-playground__flex-item--grow2"
+    >
+      Grow 2
+    </div>
+    <div
+      class="layout-playground__flex-item layout-playground__flex-item--fixed"
+    >
+      Fixed
+    </div>
+  </div>
+  <table class="layout-playground__table">
+    <thead>
+      <tr>
+        <th>{{ 'LAYOUT.TABLE.HEADER.ELEMENT' | translate }}</th>
+        <th>{{ 'LAYOUT.TABLE.HEADER.FLEX' | translate }}</th>
+        <th>{{ 'LAYOUT.TABLE.HEADER.BEHAVIOR' | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ 'LAYOUT.TABLE.ROW.GROW1.LABEL' | translate }}</td>
+        <td>
+          <code>{{ 'LAYOUT.TABLE.ROW.GROW1.FLEX' | translate }}</code>
+        </td>
+        <td [innerHTML]="'LAYOUT.TABLE.ROW.GROW1.DESC' | translate"></td>
+      </tr>
+      <tr>
+        <td>{{ 'LAYOUT.TABLE.ROW.GROW2.LABEL' | translate }}</td>
+        <td>
+          <code>{{ 'LAYOUT.TABLE.ROW.GROW2.FLEX' | translate }}</code>
+        </td>
+        <td [innerHTML]="'LAYOUT.TABLE.ROW.GROW2.DESC' | translate"></td>
+      </tr>
+      <tr>
+        <td>{{ 'LAYOUT.TABLE.ROW.FIXED.LABEL' | translate }}</td>
+        <td>
+          <code>{{ 'LAYOUT.TABLE.ROW.FIXED.FLEX' | translate }}</code>
+        </td>
+        <td [innerHTML]="'LAYOUT.TABLE.ROW.FIXED.DESC' | translate"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="layout-playground__subtitle">{{ 'LAYOUT.GRID' | translate }}</h2>
+  <div class="layout-playground__grid-demo">
+    <div class="layout-playground__box">A</div>
+    <div class="layout-playground__box">B</div>
+    <div class="layout-playground__box">C</div>
+    <div class="layout-playground__box">D</div>
+  </div>
+</section>
