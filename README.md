@@ -13,6 +13,9 @@ It's Michal Krzyzowski Portfolio@0.1.0
 - [x] extened nav to allow to chang language
 - [x] main section
 - [x] project section
-- [ ] contact section
-- [ ] footer section
+- [x] contact section
+- [x] footer section
+- [x] layouts section
+- [x] animations section
+- [ ] authorization section
 - [ ] mobile styles
