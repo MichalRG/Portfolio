@@ -96,8 +96,30 @@
 
   &__grid-demo {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 100px);
     gap: 1rem;
+    margin-top: 1rem;
+    max-width: 1000px;
+    margin-inline: auto;
+  }
+
+  &__grid-box {
+    background: #0077b6;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-weight: bold;
+
+    &--wide {
+      grid-column: span 2;
+    }
+
+    &--tall {
+      grid-row: span 2;
+    }
   }
 
   &__box {

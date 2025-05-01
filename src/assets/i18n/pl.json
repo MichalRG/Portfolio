@@ -87,7 +87,7 @@
   "LAYOUT": {
     "TITLE": "Plac zabaw: Flex i Grid",
     "FLEX": "Demonstracja zachowania Flexboxa",
-    "GRID": "Przykład CSS Grida",
+    "GRID_TITLE": "Przykład CSS Grida",
     "TABLE": {
       "HEADER": {
         "ELEMENT": "Element",
@@ -111,6 +111,13 @@
           "DESC": "Zawsze ma <strong>150px szerokości</strong>, bez rozciągania i kurczenia."
         }
       }
+    },
+    "GRID": {
+      "BOX1": "Box 1 — zajmuje 2 kolumny",
+      "BOX2": "Box 2",
+      "BOX3": "Box 3 — zajmuje 2 wiersze",
+      "BOX4": "Box 4",
+      "BOX5": "Box 5"
     }
   }
 }

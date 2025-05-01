@@ -95,7 +95,7 @@
   "LAYOUT": {
     "TITLE": "Flex & Grid Playground",
     "FLEX": "Flexbox Behavior Demo",
-    "GRID": "CSS Grid Example",
+    "GRID_TITLE": "CSS Grid Example",
     "TABLE": {
       "HEADER": {
         "ELEMENT": "Element",
@@ -119,6 +119,13 @@
           "DESC": "Always stays <strong>150px wide</strong>, no grow/shrink."
         }
       }
+    },
+    "GRID": {
+      "BOX1": "Box 1 — spans 2 columns",
+      "BOX2": "Box 2",
+      "BOX3": "Box 3 — spans 2 rows",
+      "BOX4": "Box 4",
+      "BOX5": "Box 5"
     }
   }
 }

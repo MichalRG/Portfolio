@@ -52,11 +52,24 @@
     </tbody>
   </table>
 
-  <h2 class="layout-playground__subtitle">{{ 'LAYOUT.GRID' | translate }}</h2>
+  <h2 class="layout-playground__subtitle">
+    {{ 'LAYOUT.GRID_TITLE' | translate }}
+  </h2>
   <div class="layout-playground__grid-demo">
-    <div class="layout-playground__box">A</div>
-    <div class="layout-playground__box">B</div>
-    <div class="layout-playground__box">C</div>
-    <div class="layout-playground__box">D</div>
+    <div class="layout-playground__grid-box layout-playground__grid-box--wide">
+      {{ 'LAYOUT.GRID.BOX1' | translate }}
+    </div>
+    <div class="layout-playground__grid-box">
+      {{ 'LAYOUT.GRID.BOX2' | translate }}
+    </div>
+    <div class="layout-playground__grid-box layout-playground__grid-box--tall">
+      {{ 'LAYOUT.GRID.BOX3' | translate }}
+    </div>
+    <div class="layout-playground__grid-box">
+      {{ 'LAYOUT.GRID.BOX4' | translate }}
+    </div>
+    <div class="layout-playground__grid-box">
+      {{ 'LAYOUT.GRID.BOX5' | translate }}
+    </div>
   </div>
 </section>
