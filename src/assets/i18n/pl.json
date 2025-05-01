@@ -119,5 +119,14 @@
       "BOX4": "Box 4",
       "BOX5": "Box 5"
     }
+  },
+  "LOGIN": {
+    "TITLE": "Logowanie",
+    "EMAIL": "E-mail",
+    "PASSWORD": "Hasło",
+    "SUBMIT": "Zaloguj się",
+    "REQUIRED": "To pole jest wymagane",
+    "INVALID_EMAIL": "Podaj poprawny adres e-mail",
+    "PASSWORD_TOO_SHORT": "Hasło musi mieć co najmniej 6 znaków"
   }
 }

@@ -127,5 +127,14 @@
       "BOX4": "Box 4",
       "BOX5": "Box 5"
     }
+  },
+  "LOGIN": {
+    "TITLE": "Login",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "SUBMIT": "Sign In",
+    "REQUIRED": "This field is required",
+    "INVALID_EMAIL": "Please enter a valid email",
+    "PASSWORD_TOO_SHORT": "Password must be at least 6 characters"
   }
 }
