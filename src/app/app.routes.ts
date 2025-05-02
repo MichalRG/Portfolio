@@ -1,12 +1,10 @@
 import { Routes } from '@angular/router';
+import { LandingPageComponent } from './componenets/landing-page/landing-page.component';
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () =>
-      import('./componenets/landing-page/landing-page.component').then(
-        (m) => m.LandingPageComponent,
-      ),
+    component: LandingPageComponent,
   },
   {
     path: 'animations',
