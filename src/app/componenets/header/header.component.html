@@ -65,10 +65,18 @@
         <img src="assets/icons/logIn.svg" alt="Log In" />
       </a>
     } @else {
-      <a class="nav__item nav__admin" routerLink="/admin">
+      <a
+        class="nav__item nav__admin nav__svg"
+        aria-label="Admin"
+        routerLink="/admin"
+      >
         <img src="assets/icons/admin.svg" alt="Admin" />
       </a>
-      <button class="nav__item nav__logout" (click)="logout()">
+      <button
+        class="nav__item nav__logout nav__svg"
+        aria-label="Log out"
+        (click)="logout()"
+      >
         <img src="assets/icons/logout.svg" alt="Log Out" />
       </button>
     }
