@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -12,6 +14,8 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class LoginPageComponent {
   private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private authService = inject(AuthService);
 
   form = this.fb.group({
     email: ['', [Validators.required]],
@@ -34,5 +38,8 @@ export class LoginPageComponent {
 
     const { email, password } = this.form.value;
     console.log('Login with', email, password);
+
+    this.authService.login();
+    this.router.navigateByUrl('/admin');
   }
 }

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LandingPageComponent } from './componenets/landing-page/landing-page.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,14 @@ export const routes: Routes = [
       import('./componenets/login-page/login-page.component').then(
         (m) => m.LoginPageComponent,
       ),
+  },
+  {
+    path: 'admin',
+    loadComponent: () =>
+      import('./componenets/admin-page/admin-page.component').then(
+        (m) => m.AdminPageComponent,
+      ),
+    canActivate: [authGuard],
   },
   {
     path: '**',

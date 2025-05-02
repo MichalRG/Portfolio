@@ -1,27 +1,39 @@
 <nav class="nav" role="navigation">
   <div class="nav__left">
-    <div class="nav__logo">{{ "HEADER.LOGO" | translate }}</div>
+    <div class="nav__logo">{{ 'HEADER.LOGO' | translate }}</div>
     <div class="nav__container">
-      <ul class="nav__links">
-        <li class="nav__item">
-          <a class="nav__link" href="#home">{{ "HEADER.HOME" | translate }}</a>
-        </li>
-        <li class="nav__item">
-          <a class="nav__link" href="#about">{{
-            "HEADER.ABOUT" | translate
-          }}</a>
-        </li>
-        <li class="nav__item">
-          <a class="nav__link" href="#projects">{{
-            "HEADER.PROJECTS" | translate
-          }}</a>
-        </li>
-        <li class="nav__item">
-          <a class="nav__link" href="#contact">{{
-            "HEADER.CONTACT" | translate
-          }}</a>
-        </li>
-      </ul>
+      @if (currentPath() === '/') {
+        <ul class="nav__links">
+          <li class="nav__item">
+            <a class="nav__link" href="#home">{{
+              'HEADER.HOME' | translate
+            }}</a>
+          </li>
+          <li class="nav__item">
+            <a class="nav__link" href="#about">{{
+              'HEADER.ABOUT' | translate
+            }}</a>
+          </li>
+          <li class="nav__item">
+            <a class="nav__link" href="#projects">{{
+              'HEADER.PROJECTS' | translate
+            }}</a>
+          </li>
+          <li class="nav__item">
+            <a class="nav__link" href="#contact">{{
+              'HEADER.CONTACT' | translate
+            }}</a>
+          </li>
+        </ul>
+      } @else {
+        <ul class="nav__links">
+          <li class="nav__item">
+            <a class="nav__link" routerLink="/">{{
+              'HEADER.HOME' | translate
+            }}</a>
+          </li>
+        </ul>
+      }
     </div>
   </div>
   <div class="nav__right">
@@ -48,9 +60,18 @@
         </li>
       </ul>
     </div>
-    <a class="nav__icon nav__login" href="/login" title="Login">
-      <img src="assets/icons/logIn.svg" alt="Log In" />
-    </a>
+    @if (!authService.isLoggedIn()) {
+      <a class="nav__icon nav__login" routerLink="/login" title="Login">
+        <img src="assets/icons/logIn.svg" alt="Log In" />
+      </a>
+    } @else {
+      <a class="nav__item nav__admin" routerLink="/admin">
+        <img src="assets/icons/admin.svg" alt="Admin" />
+      </a>
+      <button class="nav__item nav__logout" (click)="logout()">
+        <img src="assets/icons/logout.svg" alt="Log Out" />
+      </button>
+    }
     <a
       class="nav__svg nav__linkedin"
       target="_blank"
