@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { LayoutPlaygroundPageComponent } from './layout-playground-page.component';
 
 describe('LayoutPlaygroundPageComponent', () => {
@@ -8,16 +8,15 @@ describe('LayoutPlaygroundPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LayoutPlaygroundPageComponent]
-    })
-    .compileComponents();
+      imports: [LayoutPlaygroundPageComponent, TranslateModule.forRoot()],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LayoutPlaygroundPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 });

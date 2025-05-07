@@ -1,40 +1,48 @@
-import { CommonModule } from '@angular/common';
-import {
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-} from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { Observable, of } from 'rxjs';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 import { HeaderComponent } from './header.component';
 
-class FakeLoader implements TranslateLoader {
-  getTranslation(lang: string): Observable<any> {
-    return of({
-      HEADER: {
-        LOGO: 'MK',
-        HOME: 'Home',
-        ABOUT: 'About',
-        PROJECTS: 'Projects',
-        CONTACT: 'Contact',
-      },
-    });
-  }
+class MockAuthService {
+  logout = jasmine.createSpy('logout');
+  isLoggedIn = jasmine.createSpy('isLoggedIn').and.returnValue(true);
 }
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
+  let authServiceSpy: jasmine.SpyObj<AuthService>;
+  let routerSpy: jasmine.SpyObj<Router>;
+  let events$: Subject<NavigationEnd>;
+  authServiceSpy = jasmine.createSpyObj('AuthService', [
+    'logout',
+    'isLoggedIn',
+  ]);
+  authServiceSpy.isLoggedIn.and.returnValue(true);
 
   beforeEach(async () => {
+    events$ = new Subject<NavigationEnd>();
+
+    routerSpy = jasmine.createSpyObj(
+      'Router',
+      ['navigateByUrl', 'createUrlTree', 'parseUrl', 'serializeUrl'],
+      {
+        url: '/projects',
+        events: events$.asObservable(),
+      },
+    );
+    routerSpy.createUrlTree.and.returnValue(routerSpy.parseUrl('/mocked-url'));
+    routerSpy.parseUrl.and.returnValue({} as any);
+    routerSpy.serializeUrl.and.returnValue('/mocked-serialized-url');
+
     await TestBed.configureTestingModule({
-      imports: [
-        HeaderComponent,
-        CommonModule,
-        TranslateModule.forRoot({
-          loader: { provide: TranslateLoader, useClass: FakeLoader },
-        }),
+      imports: [HeaderComponent, TranslateModule.forRoot()],
+      providers: [
+        { provide: AuthService, useClass: MockAuthService },
+        { provide: Router, useValue: routerSpy },
+        { provide: ActivatedRoute, useValue: {} },
       ],
     }).compileComponents();
 
@@ -43,54 +51,51 @@ describe('HeaderComponent', () => {
     fixture.detectChanges();
   });
 
-  afterEach(() => {
-    localStorage.clear();
-  });
-
-  it('should create the header component', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render logo text', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.nav__logo')?.textContent?.trim()).toBe(
-      'MK',
-    );
+  it('should change language and update localStorage', () => {
+    const setItemSpy = spyOn(localStorage, 'setItem');
+    component.changeLanguage('pl');
+
+    expect(component.currentLanguage).toBe('pl');
+    expect(setItemSpy).toHaveBeenCalledWith('language', 'pl');
+    expect(component.dropdownOpen).toBeFalse();
   });
 
-  it('should render navigation links', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    const links = compiled.querySelectorAll('.nav__link');
-    expect(links.length).toBe(4); // Home, About, Projects, Contact
+  it('should call logout and redirect to /login', () => {
+    const authService = TestBed.inject(AuthService);
+
+    component.logout();
+
+    expect(authService.logout).toHaveBeenCalled();
+    expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/login');
   });
 
-  it('should render language switcher button', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    const button = compiled.querySelector('.nav__language-btn');
-    expect(button).toBeTruthy();
-    expect(button?.textContent?.trim()).toContain('EN');
-  });
-
-  it('should open dropdown on mouseenter', fakeAsync(() => {
+  it('should handle language dropdown mouse enter/leave', () => {
     component.onMouseEnterLanguage();
-    fixture.detectChanges();
-    tick();
     expect(component.showDropdown).toBeTrue();
     expect(component.dropdownOpen).toBeTrue();
-  }));
 
-  it('should close dropdown after mouseleave with delay', fakeAsync(() => {
-    component.onMouseEnterLanguage();
-    fixture.detectChanges();
-    tick();
+    jasmine.clock().install();
     component.onMouseLeaveLanguage();
-    fixture.detectChanges();
-    tick(500);
+    jasmine.clock().tick(500); // DROPDOWN_HIDE_DELAY_MS
     expect(component.dropdownOpen).toBeFalse();
-  }));
+    jasmine.clock().uninstall();
+  });
 
-  it('should change language and update currentLanguage', () => {
-    component.changeLanguage('pl');
-    expect(component.currentLanguage).toBe('pl');
+  it('should hide dropdown on animation end if dropdownOpen is false', () => {
+    component.dropdownOpen = false;
+    component.showDropdown = true;
+
+    component.onAnimationEnd();
+
+    expect(component.showDropdown).toBeFalse();
+  });
+
+  it('should update currentPath on NavigationEnd', () => {
+    events$.next(new NavigationEnd(1, '/projects', '/projects'));
+    expect(component.currentPath()).toBe('/projects');
   });
 });
