@@ -4,7 +4,9 @@
     "HOME": "Start",
     "ABOUT": "O mnie",
     "CONTACT": "Kontakt",
-    "PROJECTS": "Projekty i osiągnięcia"
+    "PROJECTS": "Projekty i osiągnięcia",
+    "ANIMATIONS": "Animacje",
+    "LAYOUTS": "Layouty"
   },
   "HERO": {
     "TITLE-1": "Witaj po drugiej stronie ekranu!",

@@ -2,8 +2,8 @@
   <div class="nav__left">
     <div class="nav__logo">{{ 'HEADER.LOGO' | translate }}</div>
     <div class="nav__container">
-      @if (currentPath() === '/') {
-        <ul class="nav__links">
+      <ul class="nav__links">
+        @if (currentPath() === '/') {
           <li class="nav__item">
             <a class="nav__link" href="#home">{{
               'HEADER.HOME' | translate
@@ -24,16 +24,26 @@
               'HEADER.CONTACT' | translate
             }}</a>
           </li>
-        </ul>
-      } @else {
-        <ul class="nav__links">
+        } @else {
           <li class="nav__item">
             <a class="nav__link" routerLink="/">{{
               'HEADER.HOME' | translate
             }}</a>
           </li>
-        </ul>
-      }
+        }
+        @if (authService.isLoggedIn()) {
+          <li class="nav__item">
+            <a class="nav__link" routerLink="/animations">{{
+              'HEADER.ANIMATIONS' | translate
+            }}</a>
+          </li>
+          <li class="nav__item">
+            <a class="nav__link" routerLink="/layouts">{{
+              'HEADER.LAYOUTS' | translate
+            }}</a>
+          </li>
+        }
+      </ul>
     </div>
   </div>
   <div class="nav__right">

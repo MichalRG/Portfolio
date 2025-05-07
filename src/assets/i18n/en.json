@@ -4,7 +4,9 @@
     "HOME": "Home",
     "ABOUT": "About",
     "CONTACT": "Contact",
-    "PROJECTS": "Projects & Achievements"
+    "PROJECTS": "Projects & Achievements",
+    "ANIMATIONS": "Animations",
+    "LAYOUTS": "Layout"
   },
   "HERO": {
     "TITLE-1": "Welcome from the other side of the screen!",
