@@ -10,11 +10,15 @@ on:
 jobs:
   pre:
     runs-on: ubuntu-latest
-    container:
-      image: node:18-alpine
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 24
 
       - name: Cache node_modules
         uses: actions/cache@v4
@@ -28,9 +32,9 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build || echo "no build step"
+        run: npm run build || echo "No build step"
 
-      - name: Upload build artifact
+      - name: Upload dist folder
         uses: actions/upload-artifact@v4
         with:
           name: dist
@@ -38,17 +42,18 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    container:
-      image: zenika/alpine-chrome:with-node
     needs: pre
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout source
+        uses: actions/checkout@v3
 
-      - name: Set CHROME_BIN
-        run: echo "CHROME_BIN=/usr/bin/chromium-browser" >> $GITHUB_ENV
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 24
 
-      - name: Restore node_modules from cache
+      - name: Cache node_modules
         uses: actions/cache@v4
         with:
           path: node_modules
@@ -64,17 +69,16 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    container:
-      image: node:18-alpine
     needs: [pre, test]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout source
+        uses: actions/checkout@v3
 
-      - name: Download build artifact
+      - name: Download dist
         uses: actions/download-artifact@v4
         with:
           name: dist
 
-      - name: Mock Deploy
-        run: echo "Deploying contents of ./dist..."
+      - name: Mock deploy
+        run: echo "Deploying ./dist contents..."
