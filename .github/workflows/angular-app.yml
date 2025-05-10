@@ -39,11 +39,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: node:18-alpine
+      image: zenika/alpine-chrome:with-node
     needs: pre
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Set CHROME_BIN
+        run: echo "CHROME_BIN=/usr/bin/chromium-browser" >> $GITHUB_ENV
 
       - name: Restore node_modules from cache
         uses: actions/cache@v4
@@ -63,7 +66,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: node:18-alpine
-    needs: pre
+    needs: [pre, test]
 
     steps:
       - uses: actions/checkout@v3
