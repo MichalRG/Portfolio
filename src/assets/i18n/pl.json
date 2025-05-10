@@ -85,7 +85,14 @@
     "PULSE": "Pulsacja",
     "FANCY_ENTRANCE": "Fancy Wejście"
   },
-
+  "FOOTER": {
+    "COPYRIGHT_NAME": "Michał Krzyżowski",
+    "HOME": "Start",
+    "ABOUT": "O mnie",
+    "PROJECTS": "Projekty i osiągnięcia",
+    "CONTACT": "Kontakt",
+    "LOGO": "MK"
+  },
   "LAYOUT": {
     "TITLE": "Plac zabaw: Flex i Grid",
     "FLEX": "Demo Flexboxa",
