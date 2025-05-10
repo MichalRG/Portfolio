@@ -17,5 +17,5 @@ It's Michal Krzyzowski Portfolio@0.1.0
 - [x] footer section
 - [x] layouts section
 - [x] animations section
-- [ ] authorization section
+- [x] authorization section
 - [ ] mobile styles
