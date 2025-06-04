@@ -10,6 +10,7 @@ import {
   NavigationStart,
   Router,
   RouterOutlet,
+  UrlTree,
 } from '@angular/router';
 import { Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
@@ -24,10 +25,11 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     events$ = new Subject<NavigationStart | NavigationEnd>();
-    routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl'], {
+    routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl', 'createUrlTree'], {
       events: events$.asObservable(),
       url: '/',
     });
+    routerSpy.createUrlTree.and.returnValue({} as UrlTree);
 
     await TestBed.configureTestingModule({
       imports: [
