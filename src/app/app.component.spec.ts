@@ -4,7 +4,15 @@ import {
   fakeAsync,
   tick,
 } from '@angular/core/testing';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  NavigationStart,
+  Router,
+  RouterOutlet,
+  UrlTree,
+} from '@angular/router';
+import { Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './componenets/header/header.component';
@@ -12,8 +20,23 @@ import { HeaderComponent } from './componenets/header/header.component';
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
+  let routerSpy: jasmine.SpyObj<Router>;
+  let events$: Subject<NavigationStart | NavigationEnd>;
 
   beforeEach(async () => {
+    events$ = new Subject<NavigationStart | NavigationEnd>();
+    routerSpy = jasmine.createSpyObj(
+      'Router',
+      ['navigateByUrl', 'createUrlTree', 'parseUrl', 'serializeUrl'],
+      {
+        events: events$.asObservable(),
+        url: '/',
+      },
+    );
+    routerSpy.parseUrl.and.returnValue({} as any);
+    routerSpy.createUrlTree.and.returnValue(routerSpy.parseUrl('/mock')); 
+    routerSpy.serializeUrl.and.returnValue('/mock');
+
     await TestBed.configureTestingModule({
       imports: [
         AppComponent,
@@ -21,7 +44,10 @@ describe('AppComponent', () => {
         HeaderComponent,
         TranslateModule.forRoot(),
       ],
-      providers: [{ provide: ActivatedRoute, useValue: {} }],
+      providers: [
+        { provide: ActivatedRoute, useValue: {} },
+        { provide: Router, useValue: routerSpy },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
@@ -48,5 +74,16 @@ describe('AppComponent', () => {
     fixture.detectChanges();
 
     expect(component.showIntro).toBeFalse();
+  }));
+
+  it('should toggle transition overlay on navigation', fakeAsync(() => {
+    events$.next(new NavigationStart(1, '/'));
+    fixture.detectChanges();
+    expect(component.showTransition).toBeTrue();
+
+    events$.next(new NavigationEnd(1, '/', '/'));
+    tick(300);
+    fixture.detectChanges();
+    expect(component.showTransition).toBeFalse();
   }));
 });
