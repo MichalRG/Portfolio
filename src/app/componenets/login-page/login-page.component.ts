@@ -1,9 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
+
+interface LoginForm {
+  email: FormControl<string>;
+  password: FormControl<string>;
+}
 
 @Component({
   selector: 'app-login-page',
@@ -17,17 +27,23 @@ export class LoginPageComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
 
-  form = this.fb.group({
-    email: ['', [Validators.required]],
-    password: ['', [Validators.required]],
+  form = this.fb.group<LoginForm>({
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    password: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
   });
 
   get email() {
-    return this.form.get('email');
+    return this.form.controls.email;
   }
 
   get password() {
-    return this.form.get('password');
+    return this.form.controls.password;
   }
 
   onSubmit(): void {
