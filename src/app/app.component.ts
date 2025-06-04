@@ -1,5 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
+import {
+  NavigationEnd,
+  NavigationStart,
+  Router,
+  RouterOutlet,
+} from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { timer } from 'rxjs';
 import { HeaderComponent } from './componenets/header/header.component';
 
 @Component({
@@ -10,10 +17,30 @@ import { HeaderComponent } from './componenets/header/header.component';
 })
 export class AppComponent implements OnInit {
   showIntro = true;
+  showTransition = false;
+
+  private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   ngOnInit() {
     setTimeout(() => {
       this.showIntro = false;
     }, 1500);
+
+    this.router.events
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((event) => {
+        if (event instanceof NavigationStart) {
+          this.showTransition = true;
+        }
+
+        if (event instanceof NavigationEnd) {
+          timer(300)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => {
+              this.showTransition = false;
+            });
+        }
+      });
   }
 }
