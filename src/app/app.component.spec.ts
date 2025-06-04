@@ -25,11 +25,17 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     events$ = new Subject<NavigationStart | NavigationEnd>();
-    routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl', 'createUrlTree'], {
-      events: events$.asObservable(),
-      url: '/',
-    });
-    routerSpy.createUrlTree.and.returnValue({} as UrlTree);
+    routerSpy = jasmine.createSpyObj(
+      'Router',
+      ['navigateByUrl', 'createUrlTree', 'parseUrl', 'serializeUrl'],
+      {
+        events: events$.asObservable(),
+        url: '/',
+      },
+    );
+    routerSpy.parseUrl.and.returnValue({} as any);
+    routerSpy.createUrlTree.and.returnValue(routerSpy.parseUrl('/mock')); 
+    routerSpy.serializeUrl.and.returnValue('/mock');
 
     await TestBed.configureTestingModule({
       imports: [
