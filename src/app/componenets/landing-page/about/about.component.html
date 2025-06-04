@@ -11,30 +11,32 @@
       </p>
     }
 
-    <div
-      class="about__tag-row"
-      *ngFor="let row of techChunks"
-      appScrollReveal
-      [revealClass]="'active'"
-      [style.transitionDelay.s]="tagsDelay"
-    >
-      @for (tag of row; track tag) {
-        <span class="about__tag about__tag--primary">{{ tag }}</span>
-      }
-    </div>
+    @for (row of techChunks; track row) {
+      <div
+        class="about__tag-row"
+        appScrollReveal
+        [revealClass]="'active'"
+        [style.transitionDelay.s]="tagsDelay"
+      >
+        @for (tag of row; track tag) {
+          <span class="about__tag about__tag--primary">{{ tag }}</span>
+        }
+      </div>
+    }
 
-    <div
-      class="about__tag-row"
-      *ngFor="let row of interestChunks"
-      appScrollReveal
-      [revealClass]="'active'"
-      [style.transitionDelay.s]="tagsDelay"
-    >
-      @for (tag of row; track tag) {
-        <span class="about__tag about__tag--secondary">
-          {{ 'ABOUT.INTERESTS.' + tag | translate }}
-        </span>
-      }
-    </div>
+    @for (row of interestChunks; track row) {
+      <div
+        class="about__tag-row"
+        appScrollReveal
+        [revealClass]="'active'"
+        [style.transitionDelay.s]="tagsDelay"
+      >
+        @for (tag of row; track tag) {
+          <span class="about__tag about__tag--secondary">
+            {{ 'ABOUT.INTERESTS.' + tag | translate }}
+          </span>
+        }
+      </div>
+    }
   </div>
 </section>

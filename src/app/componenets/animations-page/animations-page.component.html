@@ -2,20 +2,18 @@
   <h1 class="animations-page__title">{{ 'ANIMATIONS.TITLE' | translate }}</h1>
 
   <div class="animations-page__grid">
-    <div
-      class="animations-page__card"
-      *ngFor="let animation of animationExamples"
-      [ngClass]="animation.animationClass"
-    >
-      <h2 class="animations-page__card-title">
-        {{ animation.title | translate }}
-      </h2>
+    @for (animation of animationExamples; track animation) {
+      <div class="animations-page__card" [ngClass]="animation.animationClass">
+        <h2 class="animations-page__card-title">
+          {{ animation.title | translate }}
+        </h2>
 
-      <div class="animations-page__animated-box"></div>
+        <div class="animations-page__animated-box"></div>
 
-      <div class="animations-page__code">
-        <pre><code>{{ animation.codeSnippet }}</code></pre>
+        <div class="animations-page__code">
+          <pre><code>{{ animation.codeSnippet }}</code></pre>
+        </div>
       </div>
-    </div>
+    }
   </div>
 </section>

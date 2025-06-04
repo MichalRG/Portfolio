@@ -55,20 +55,19 @@
       <button class="nav__language-btn">
         {{ currentLanguage.toUpperCase() }}
       </button>
-      <ul
-        class="nav__language-dropdown"
-        *ngIf="showDropdown"
-        (animationend)="onAnimationEnd()"
-        [ngClass]="{ 'fade-in': dropdownOpen, 'fade-out': !dropdownOpen }"
-      >
-        <li
-          class="nav__language-item"
-          *ngFor="let lang of languages"
-          (click)="changeLanguage(lang.code)"
+      @if (showDropdown) {
+        <ul
+          class="nav__language-dropdown"
+          (animationend)="onAnimationEnd()"
+          [ngClass]="{ 'fade-in': dropdownOpen, 'fade-out': !dropdownOpen }"
         >
-          {{ lang.code.toUpperCase() }}
-        </li>
-      </ul>
+          @for (lang of languages; track lang.code) {
+            <li class="nav__language-item" (click)="changeLanguage(lang.code)">
+              {{ lang.code.toUpperCase() }}
+            </li>
+          }
+        </ul>
+      }
     </div>
     @if (!authService.isLoggedIn()) {
       <a class="nav__icon nav__login" routerLink="/login" title="Login">
