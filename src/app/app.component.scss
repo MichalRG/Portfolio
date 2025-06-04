@@ -9,20 +9,21 @@
     z-index: 9999;
     animation: introFadeOut 1.5s ease forwards;
   }
-}
 
-.app__transition-overlay {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 9998;
-}
-.app__transition-overlay.active {
-  opacity: 0.6;
-  pointer-events: auto;
+  &__transition-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 9998;
+
+    &.active {
+      opacity: 0.6;
+      pointer-events: auto;
+    }
+  }
 }
 
 @keyframes introFadeOut {

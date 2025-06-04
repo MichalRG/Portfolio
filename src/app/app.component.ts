@@ -6,7 +6,7 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { timer } from 'rxjs';
+import { merge, filter, tap, delay } from 'rxjs';
 import { HeaderComponent } from './componenets/header/header.component';
 
 @Component({
@@ -27,20 +27,17 @@ export class AppComponent implements OnInit {
       this.showIntro = false;
     }, 1500);
 
-    this.router.events
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((event) => {
-        if (event instanceof NavigationStart) {
-          this.showTransition = true;
-        }
+    const start$ = this.router.events.pipe(
+      filter((e): e is NavigationStart => e instanceof NavigationStart),
+      tap(() => (this.showTransition = true)),
+    );
 
-        if (event instanceof NavigationEnd) {
-          timer(300)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(() => {
-              this.showTransition = false;
-            });
-        }
-      });
+    const end$ = this.router.events.pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+      delay(300),
+      tap(() => (this.showTransition = false)),
+    );
+
+    merge(start$, end$).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 }

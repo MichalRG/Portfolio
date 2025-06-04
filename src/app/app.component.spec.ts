@@ -69,11 +69,11 @@ describe('AppComponent', () => {
   }));
 
   it('should toggle transition overlay on navigation', fakeAsync(() => {
-    events$.next(new NavigationStart(1, '/')); 
+    events$.next(new NavigationStart(1, '/'));
     fixture.detectChanges();
     expect(component.showTransition).toBeTrue();
 
-    events$.next(new NavigationEnd(1, '/', '/')); 
+    events$.next(new NavigationEnd(1, '/', '/'));
     tick(300);
     fixture.detectChanges();
     expect(component.showTransition).toBeFalse();
