@@ -1,3 +1,5 @@
+@use 'assets/styles/variables' as *;
+
 .app {
   &__intro-overlay {
     position: fixed;
@@ -13,7 +15,7 @@
   &__transition-overlay {
     position: fixed;
     inset: 0;
-    background: #000;
+    background: $color-background;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.5s ease;
@@ -21,7 +23,7 @@
 
     &.active {
       opacity: 1;
-      background: #000;
+      background: $color-background;
       pointer-events: auto;
       transition: none;
     }
