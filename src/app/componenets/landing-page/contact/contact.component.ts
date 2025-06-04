@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -9,11 +10,18 @@ import {
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 
+interface ContactForm {
+  name: FormControl<string>;
+  email: FormControl<string>;
+  message: FormControl<string>;
+}
+
 @Component({
   selector: 'app-contact',
   imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactComponent {
   contactForm: FormGroup;
@@ -24,10 +32,19 @@ export class ContactComponent {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
   ) {
-    this.contactForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
-      message: ['', [Validators.required, Validators.minLength(10)]],
+    this.contactForm = this.formBuilder.group<ContactForm>({
+      name: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      email: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, Validators.email],
+      }),
+      message: new FormControl('', {
+        nonNullable: true,
+        validators: [Validators.required, Validators.minLength(10)],
+      }),
     });
   }
 
