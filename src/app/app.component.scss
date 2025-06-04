@@ -16,11 +16,12 @@
     background: #000;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.5s ease;
     z-index: 999;
 
     &.active {
       opacity: 1;
+      background: #000;
       pointer-events: auto;
       transition: none;
     }
