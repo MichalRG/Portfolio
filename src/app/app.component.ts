@@ -39,13 +39,19 @@ export class AppComponent implements OnInit {
 
     const start$ = this.router.events.pipe(
       filter((e): e is NavigationStart => e instanceof NavigationStart),
-      tap(() => (this.showTransition = true)),
+      tap(() => {
+        this.showTransition = true;
+        this.cdRef.markForCheck();
+      }),
     );
 
     const end$ = this.router.events.pipe(
       filter((e): e is NavigationEnd => e instanceof NavigationEnd),
       delay(300),
-      tap(() => (this.showTransition = false)),
+      tap(() => {
+        this.showTransition = false;
+        this.cdRef.markForCheck();
+      }),
     );
 
     merge(start$, end$).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
