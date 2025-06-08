@@ -1,19 +1,27 @@
-import { Component, OnInit, DestroyRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   NavigationEnd,
   NavigationStart,
   Router,
   RouterOutlet,
 } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { merge, filter, tap, delay } from 'rxjs';
+import { delay, filter, merge, tap } from 'rxjs';
 import { HeaderComponent } from './componenets/header/header.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrls: ['./app.component.scss'],
   imports: [RouterOutlet, HeaderComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit {
   showIntro = true;
@@ -21,10 +29,12 @@ export class AppComponent implements OnInit {
 
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
+  private cdRef = inject(ChangeDetectorRef);
 
   ngOnInit() {
     setTimeout(() => {
       this.showIntro = false;
+      this.cdRef.markForCheck();
     }, 1500);
 
     const start$ = this.router.events.pipe(

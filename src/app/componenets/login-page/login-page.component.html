@@ -12,11 +12,13 @@
     <label class="login-page__label">
       <span>{{ 'LOGIN.EMAIL' | translate }}</span>
       <input type="email" formControlName="email" class="login-page__input" />
-      <div *ngIf="email?.touched && email?.errors" class="login-page__error">
-        <span *ngIf="email?.errors?.['required']">{{
-          'LOGIN.REQUIRED' | translate
-        }}</span>
-      </div>
+      @if (email.touched && email.errors) {
+        <div class="login-page__error">
+          @if (email.errors['required']) {
+            <span>{{ 'LOGIN.REQUIRED' | translate }}</span>
+          }
+        </div>
+      }
     </label>
 
     <label class="login-page__label">
@@ -26,14 +28,13 @@
         formControlName="password"
         class="login-page__input"
       />
-      <div
-        *ngIf="password?.touched && password?.errors"
-        class="login-page__error"
-      >
-        <span *ngIf="password?.errors?.['required']">{{
-          'LOGIN.REQUIRED' | translate
-        }}</span>
-      </div>
+      @if (password.touched && password.errors) {
+        <div class="login-page__error">
+          @if (password.errors['required']) {
+            <span>{{ 'LOGIN.REQUIRED' | translate }}</span>
+          }
+        </div>
+      }
     </label>
 
     <button type="submit" [disabled]="form.invalid" class="login-page__submit">

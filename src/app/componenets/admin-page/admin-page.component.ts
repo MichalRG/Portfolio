@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-admin-page',
   imports: [],
   templateUrl: './admin-page.component.html',
-  styleUrl: './admin-page.component.scss'
+  styleUrls: ['./admin-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdminPageComponent {
-
-}
+export class AdminPageComponent {}

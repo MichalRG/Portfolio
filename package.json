@@ -5,8 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test --browsers=ChromeHeadlessNoSandbox --watch=false"
+    "build:watch": "ng build --watch --configuration development",
+    "test": "ng test --browsers=ChromeHeadlessNoSandbox --watch=false",
+    "test:watch": "ng test --browsers=ChromeHeadlessNoSandbox --watch=true"
   },
   "private": true,
   "dependencies": {
