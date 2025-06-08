@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-layout-playground-page',
   imports: [TranslateModule],
   templateUrl: './layout-playground-page.component.html',
-  styleUrl: './layout-playground-page.component.scss',
+  styleUrls: ['./layout-playground-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutPlaygroundPageComponent {}

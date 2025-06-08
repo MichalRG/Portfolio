@@ -15,7 +15,7 @@ import { ProjectsComponent } from './projects/projects.component';
     ProjectsComponent,
   ],
   templateUrl: './landing-page.component.html',
-  styleUrl: './landing-page.component.scss',
+  styleUrls: ['./landing-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingPageComponent {}

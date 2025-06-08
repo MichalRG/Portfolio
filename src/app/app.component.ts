@@ -19,7 +19,7 @@ import { HeaderComponent } from './componenets/header/header.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrls: ['./app.component.scss'],
   imports: [RouterOutlet, HeaderComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

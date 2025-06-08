@@ -20,7 +20,7 @@ interface ContactForm {
   selector: 'app-contact',
   imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './contact.component.html',
-  styleUrl: './contact.component.scss',
+  styleUrls: ['./contact.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactComponent {

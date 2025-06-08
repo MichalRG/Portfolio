@@ -7,7 +7,7 @@ import { ScrollRevealDirective } from '../../../directives/scroll-reveal.directi
   selector: 'app-projects',
   imports: [CommonModule, TranslateModule, ScrollRevealDirective],
   templateUrl: './projects.component.html',
-  styleUrl: './projects.component.scss',
+  styleUrls: ['./projects.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsComponent {

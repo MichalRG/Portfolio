@@ -12,7 +12,7 @@ import { Subscription, interval, switchMap, tap, timer } from 'rxjs';
   selector: 'app-hero',
   imports: [CommonModule, TranslateModule],
   templateUrl: './hero.component.html',
-  styleUrl: './hero.component.scss',
+  styleUrls: ['./hero.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroComponent implements OnInit {

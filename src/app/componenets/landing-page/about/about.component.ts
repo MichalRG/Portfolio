@@ -7,7 +7,7 @@ import { ScrollRevealDirective } from '../../../directives/scroll-reveal.directi
   selector: 'app-about',
   imports: [CommonModule, TranslateModule, ScrollRevealDirective],
   templateUrl: './about.component.html',
-  styleUrl: './about.component.scss',
+  styleUrls: ['./about.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutComponent implements OnInit {

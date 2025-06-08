@@ -20,7 +20,7 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-header',
   imports: [TranslateModule, CommonModule, RouterModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+  styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
