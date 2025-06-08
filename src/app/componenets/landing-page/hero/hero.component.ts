@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  OnInit,
+} from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription, interval, switchMap, tap, timer } from 'rxjs';
 
@@ -8,6 +13,7 @@ import { Subscription, interval, switchMap, tap, timer } from 'rxjs';
   imports: [CommonModule, TranslateModule],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroComponent implements OnInit {
   messages = ['HERO.TITLE-1', 'HERO.TITLE-2'];
