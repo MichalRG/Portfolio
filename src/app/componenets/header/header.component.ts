@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
   authService = inject(AuthService);
   currentPath = signal<string>('/');
 
-  readonly isLoggenIn = this.authService.isLoggedIn();
+  readonly isLoggedIn = this.authService.isLoggedIn();
 
   private hideTimeout?: ReturnType<typeof setTimeout>;
   private router = inject(Router);
