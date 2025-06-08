@@ -74,9 +74,9 @@ describe('ContactComponent', () => {
       'CONTACT.TOAST.TITLE',
     );
     expect(component.contactForm.value).toEqual({
-      name: null,
-      email: null,
-      message: null,
+      name: '',
+      email: '',
+      message: '',
     });
   });
 

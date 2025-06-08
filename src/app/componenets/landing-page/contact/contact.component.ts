@@ -35,7 +35,7 @@ export class ContactComponent {
     this.contactForm = this.formBuilder.group<ContactForm>({
       name: new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.minLength(2)],
       }),
       email: new FormControl('', {
         nonNullable: true,
