@@ -18,4 +18,7 @@ It's Michal Krzyzowski Portfolio@0.1.0
 - [x] layouts section
 - [x] animations section
 - [x] authorization section
+- [x] add github actions
+- [ ] add linter during pushing
+- [ ] add github rules to not push on master + require positive pipeline for merging
 - [ ] mobile styles
