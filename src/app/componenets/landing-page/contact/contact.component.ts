@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -27,11 +27,11 @@ export class ContactComponent {
   contactForm: FormGroup;
   currentYear = new Date().getFullYear();
 
-  constructor(
-    private translate: TranslateService,
-    private formBuilder: FormBuilder,
-    private toastr: ToastrService,
-  ) {
+  private translate = inject(TranslateService);
+  private formBuilder = inject(FormBuilder);
+  private toastr = inject(ToastrService);
+
+  constructor() {
     this.contactForm = this.formBuilder.group<ContactForm>({
       name: new FormControl('', {
         nonNullable: true,

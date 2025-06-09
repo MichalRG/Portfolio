@@ -36,8 +36,9 @@ export class HeaderComponent implements OnInit {
   private hideTimeout?: ReturnType<typeof setTimeout>;
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
+  private translateService = inject(TranslateService);
 
-  constructor(private translateService: TranslateService) {
+  constructor() {
     const currentLocalStorageLanguage =
       localStorage.getItem(LANGUAGE_STORAGE_KEY);
     this.translateService.setDefaultLang(currentLocalStorageLanguage || 'en');

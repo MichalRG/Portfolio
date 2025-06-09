@@ -10,7 +10,8 @@ import { HeroComponent } from './hero.component';
 
 // Fake translation loader
 class FakeLoader implements TranslateLoader {
-  getTranslation(lang: string): Observable<any> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  getTranslation(): Observable<any> {
     return of({
       HERO: {
         'TITLE-1': 'Welcome!',

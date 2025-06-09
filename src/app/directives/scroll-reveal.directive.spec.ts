@@ -2,9 +2,11 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ScrollRevealDirective } from './scroll-reveal.directive';
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 let intersectionCallback: Function;
 
 class MockIntersectionObserver {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   constructor(cb: Function) {
     intersectionCallback = cb;
   }
@@ -30,6 +32,7 @@ describe('ScrollRevealDirective', () => {
   let el: DebugElement;
 
   beforeAll(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (window as any).IntersectionObserver = MockIntersectionObserver;
   });
 
@@ -64,6 +67,7 @@ describe('ScrollRevealDirective', () => {
     ]);
 
     fixture.detectChanges();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const instance = el.injector.get(ScrollRevealDirective) as any;
     expect(instance.observer.unobserve).toHaveBeenCalledWith(el.nativeElement);
   });

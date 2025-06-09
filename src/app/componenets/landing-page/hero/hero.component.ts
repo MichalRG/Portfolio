@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   HostListener,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -15,7 +16,7 @@ import { Subscription, interval, switchMap, tap, timer } from 'rxjs';
   styleUrls: ['./hero.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeroComponent implements OnInit {
+export class HeroComponent implements OnInit, OnDestroy {
   messages = ['HERO.TITLE-1', 'HERO.TITLE-2'];
   currentMessage = this.messages[0];
   currentBackground = 'bg-0';

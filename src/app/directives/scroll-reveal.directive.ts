@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Directive,
   ElementRef,
+  inject,
   Input,
   OnDestroy,
   Renderer2,
@@ -15,10 +16,8 @@ export class ScrollRevealDirective implements AfterViewInit, OnDestroy {
   @Input() revealClass = 'active';
   private observer!: IntersectionObserver;
 
-  constructor(
-    private el: ElementRef,
-    private renderer: Renderer2,
-  ) {}
+  private el = inject(ElementRef);
+  private renderer = inject(Renderer2);
 
   ngAfterViewInit(): void {
     this.observer = new IntersectionObserver(

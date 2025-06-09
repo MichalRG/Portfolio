@@ -34,6 +34,7 @@ describe('HeaderComponent', () => {
       },
     );
     routerSpy.createUrlTree.and.returnValue(routerSpy.parseUrl('/mocked-url'));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     routerSpy.parseUrl.and.returnValue({} as any);
     routerSpy.serializeUrl.and.returnValue('/mocked-serialized-url');
 
