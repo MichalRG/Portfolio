@@ -10,10 +10,9 @@ import {
   NavigationStart,
   Router,
   RouterOutlet,
-  UrlTree,
 } from '@angular/router';
-import { Subject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './componenets/header/header.component';
 
@@ -33,8 +32,9 @@ describe('AppComponent', () => {
         url: '/',
       },
     );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     routerSpy.parseUrl.and.returnValue({} as any);
-    routerSpy.createUrlTree.and.returnValue(routerSpy.parseUrl('/mock')); 
+    routerSpy.createUrlTree.and.returnValue(routerSpy.parseUrl('/mock'));
     routerSpy.serializeUrl.and.returnValue('/mock');
 
     await TestBed.configureTestingModule({
