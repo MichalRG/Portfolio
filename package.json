@@ -1,6 +1,8 @@
 {
   "name": "portfolio-website",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "A personal portfolio website built with Angular - version base just SPA without dynamic content. SPA was created in cooperation with AI (LLM) solutions.",
+  "author": "Michal",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
