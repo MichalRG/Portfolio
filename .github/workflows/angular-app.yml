@@ -1,4 +1,5 @@
-name: Node CI/CD
+# .github/workflows/angular-app.yml
+name: CI/CD
 
 on:
   push:
@@ -10,102 +11,89 @@ on:
 jobs:
   pre:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Setup Node.js (Frontend)
         uses: actions/setup-node@v3
         with:
           node-version: 24
 
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install dependencies
+      - name: Install dependencies (Frontend)
         run: npm ci
+        working-directory: frontend
 
-      - name: Build
-        run: npm run build || echo "No build step"
+      - name: Build (Frontend)
+        run: npm run build
+        working-directory: frontend
 
       - name: Upload dist folder
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: dist/
+          path: frontend/dist/
 
   test:
     runs-on: ubuntu-latest
     needs: pre
-
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Setup Node.js (Frontend)
         uses: actions/setup-node@v3
         with:
           node-version: 24
 
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install dependencies
+      - name: Install dependencies (Frontend)
         run: npm ci
+        working-directory: frontend
 
-      - name: Run tests
+      - name: Run tests (Frontend)
         run: npm test
+        working-directory: frontend
 
   lint:
     runs-on: ubuntu-latest
     needs: pre
-
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Setup Node.js (Frontend)
         uses: actions/setup-node@v3
         with:
           node-version: 24
 
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install dependencies
+      - name: Install dependencies (Frontend)
         run: npm ci
+        working-directory: frontend
 
-      - name: Run ESLint
+      - name: Run ESLint (Frontend)
         run: npm run lint
+        working-directory: frontend
 
-  deploy:
+  infra-deploy:
     runs-on: ubuntu-latest
     needs: [pre, test, lint]
-
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Download dist
-        uses: actions/download-artifact@v4
+      - name: Setup Node.js (Infra)
+        uses: actions/setup-node@v3
         with:
-          name: dist
+          node-version: 24
 
-      - name: Mock deploy
-        run: echo "Deploying ./dist contents..."
+      - name: Install CDK dependencies
+        run: npm ci
+        working-directory: infra
+
+      # - name: CDK Bootstrap
+      #   run: npx cdk bootstrap --require-approval=never
+      #   working-directory: infra
+
+      # - name: CDK Deploy
+      #   run: npx cdk deploy --require-approval=never
+      #   working-directory: infra
