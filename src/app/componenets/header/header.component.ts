@@ -41,8 +41,14 @@ export class HeaderComponent implements OnInit {
   constructor() {
     const currentLocalStorageLanguage =
       localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    const browserLanguage = navigator.language.split('-')[0];
+    const supportedLanguages = LANGUAGES.map((lang) => lang.code);
+
     this.translateService.setDefaultLang(currentLocalStorageLanguage || 'en');
-    this.translateService.use(currentLocalStorageLanguage || 'en');
+    this.translateService.use(
+      currentLocalStorageLanguage ||
+        (supportedLanguages.includes(browserLanguage) ? browserLanguage : 'en'),
+    );
     this.currentLanguage = this.translateService.currentLang || 'en';
   }
 
