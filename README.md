@@ -21,4 +21,4 @@ It's Michal Krzyzowski Portfolio@0.1.0
 - [x] add github actions
 - [x] add linter during pushing
 - [x] add github rules to not push on master + require positive pipeline for merging
-- [~] mobile styles
+- [x] mobile styles - for current state seems to looks well
