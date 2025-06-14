@@ -8,7 +8,7 @@ It's Michal Krzyzowski Portfolio@0.1.0
 
 # Hooks
 
-Localy I use pre-push hook in .git/hooks/pre-push file
+Locally I use pre-push hook in .git/hooks/pre-push file
 
 ```bash
 #!/bin/sh
