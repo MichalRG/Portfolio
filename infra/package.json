@@ -1,0 +1,17 @@
+{
+  "name": "portfolio-infra",
+  "scripts": {
+    "build": "tsc",
+    "cdk": "cdk"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.200.1",
+    "constructs": "^10.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "aws-cdk": "^2.200.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
