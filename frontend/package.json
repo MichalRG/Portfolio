@@ -10,7 +10,8 @@
     "build:watch": "ng build --watch --configuration development",
     "test": "ng test --browsers=ChromeHeadlessNoSandbox --watch=false",
     "test:watch": "ng test --browsers=ChromeHeadlessNoSandbox --watch=true",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "private": true,
   "dependencies": {
