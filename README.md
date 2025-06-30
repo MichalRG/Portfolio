@@ -6,6 +6,45 @@ It's Michal Krzyzowski Portfolio@0.1.0
 
 [Vaonis Website](https://vaonis.com/)
 
+# Setup
+
+To setup this app from scratch for first time with brand new aws account run:
+
+1. Bootstrap AWS environment acocunt (once per region)
+
+```ts
+cd infra
+cdk bootstrap
+```
+
+2. Build app
+
+```ts
+npm i
+npm run build
+```
+
+3. Deploy Infra
+
+```ts
+cd infra
+npm i
+npx cdk deploy
+```
+
+4. Pray
+
+🙏🙏🙏
+
+# Clean up
+
+To clean up you can run
+
+```ts
+cd infra
+npx cdk destroy
+```
+
 # Hooks
 
 Locally I use pre-push hook in .git/hooks/pre-push file

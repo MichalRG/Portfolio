@@ -28,7 +28,7 @@ export class SpaHostingStack extends Stack {
     const portfolioBucket = new Bucket(this, "PortfolioBucket", {
       bucketName: `portfolio-website-${this.stackName.toLowerCase()}`,
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
-      removalPolicy: RemovalPolicy.RETAIN,
+      removalPolicy: RemovalPolicy.DESTROY,
       encryption: BucketEncryption.S3_MANAGED,
     });
 
