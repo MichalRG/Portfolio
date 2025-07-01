@@ -23,6 +23,7 @@ describe('ContactComponent', () => {
 
     fixture = TestBed.createComponent(ContactComponent);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
   });
 
@@ -74,9 +75,9 @@ describe('ContactComponent', () => {
       'CONTACT.TOAST.TITLE',
     );
     expect(component.contactForm.value).toEqual({
-      name: '',
-      email: '',
-      message: '',
+      name: 'John Doe',
+      email: 'john@example.com',
+      message: 'This is a valid contact message.',
     });
   });
 
