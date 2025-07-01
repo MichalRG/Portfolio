@@ -64,8 +64,8 @@
     "MESSAGE": "Twoja wiadomość",
     "SEND": "Wyślij 📧",
     "TOAST": {
-      "TITLE": "Wiadomość wysłana",
-      "MESSAGE": "Twoja wiadomość została wysłana. Wkrótce się odezwę, dzięki za Twój czas 😎!"
+      "TITLE": "Otwieranie okna e-mail",
+      "MESSAGE": "Otwieranie Twojej aplikacji mailowej, dzięki za Twój czas 😎!"
     },
     "ERROR": {
       "NAME_REQUIRED": "Imię jest wymagane",
