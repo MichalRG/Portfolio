@@ -75,7 +75,7 @@ export class ContactComponent {
 
     this.toastr.success(messageToastr, titleToastr);
 
-    window.location.href = mailtoUrl;
     this.isSubmitting = false;
+    window.location.href = mailtoUrl;
   }
 }
