@@ -65,9 +65,7 @@ export class ContactComponent {
     const message = this.contactForm.value.message;
 
     const subject = encodeURIComponent(`Contact from ${name}`);
-    const body = encodeURIComponent(
-      `Email: ${email}\n\n${message}\n\n${name}`,
-    );
+    const body = encodeURIComponent(`Email: ${email}\n\n${message}\n\n${name}`);
     const mailtoUrl = `mailto:you@example.com?subject=${subject}&body=${body}`;
 
     const titleToastr = this.translate.instant('CONTACT.TOAST.TITLE');
