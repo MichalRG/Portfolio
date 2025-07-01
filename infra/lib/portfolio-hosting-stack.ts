@@ -45,7 +45,7 @@ export class SpaHostingStack extends Stack {
         props?.stage || "dev"
       }`,
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
-      removalPolicy: RemovalPolicy.DESTROY, // Intentionaly set to avoid costs and clean entirely
+      removalPolicy: RemovalPolicy.DESTROY, // Intentionally set to avoid costs and clean entirely
       autoDeleteObjects: true,
       encryption: BucketEncryption.S3_MANAGED,
       serverAccessLogsBucket: logsBucket,
