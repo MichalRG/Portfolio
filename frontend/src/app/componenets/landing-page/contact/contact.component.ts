@@ -66,7 +66,7 @@ export class ContactComponent {
 
     const subject = encodeURIComponent(`Contact from ${name}`);
     const body = encodeURIComponent(
-      `Email: ${email}\n\n${message}\n\n ${name}`,
+      `Email: ${email}\n\n${message}\n\n${name}`,
     );
     const mailtoUrl = `mailto:you@example.com?subject=${subject}&body=${body}`;
 
