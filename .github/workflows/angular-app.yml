@@ -123,10 +123,14 @@ jobs:
         run: npm ci
         working-directory: infra
 
-      # - name: CDK Bootstrap
-      #   run: npx cdk bootstrap --require-approval=never
-      #   working-directory: infra
-
       # - name: CDK Deploy
-      #   run: npx cdk deploy --require-approval=never
+      #   env:
+      #     CSP_NONCE:   ${{ needs.build-frontend.outputs.nonce }}
+      #     HANDLER_HASH: ${{ steps.handler.outputs.HASH }}
+      #   run: |
+      #     npx cdk deploy \
+      #       --require-approval=never \
+      #       -c stage=prod \
+      #       -c cspNonce=$CSP_NONCE \
+      #       -c handlerHash=$HANDLER_HASH
       #   working-directory: infra
