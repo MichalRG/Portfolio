@@ -75,9 +75,7 @@ export class ContactComponent {
 
     this.toastr.success(messageToastr, titleToastr);
 
-    setTimeout(() => {
-      window.location.href = mailtoUrl;
-      this.isSubmitting = false;
-    }, 500);
+    window.location.href = mailtoUrl;
+    this.isSubmitting = false;
   }
 }

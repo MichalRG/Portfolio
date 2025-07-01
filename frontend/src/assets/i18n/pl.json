@@ -62,6 +62,7 @@
     "NAME": "Twoje imię",
     "EMAIL": "Twój email",
     "MESSAGE": "Twoja wiadomość",
+    "SENDING": "Wysyłanie...",
     "SEND": "Wyślij 📧",
     "TOAST": {
       "TITLE": "Otwieranie okna e-mail",

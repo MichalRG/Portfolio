@@ -63,6 +63,7 @@
     "EMAIL": "Your Email",
     "MESSAGE": "Your Message",
     "SEND": "Send Message",
+    "SENDING": "Sending...",
     "TOAST": {
       "TITLE": "Email Window Open",
       "MESSAGE": "Opening your mail app, thanks for your time 😎!"
