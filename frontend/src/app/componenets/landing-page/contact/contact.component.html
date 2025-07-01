@@ -87,9 +87,13 @@
       <button
         class="contact__button"
         type="submit"
-        [disabled]="contactForm.invalid"
+        [disabled]="contactForm.invalid || isSubmitting"
       >
-        {{ 'CONTACT.SEND' | translate }}
+        {{
+          isSubmitting
+            ? ('CONTACT.SENDING' | translate)
+            : ('CONTACT.SEND' | translate)
+        }}
       </button>
     </form>
   </div>

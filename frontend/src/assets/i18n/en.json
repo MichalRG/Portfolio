@@ -63,9 +63,10 @@
     "EMAIL": "Your Email",
     "MESSAGE": "Your Message",
     "SEND": "Send Message",
+    "SENDING": "Sending...",
     "TOAST": {
-      "TITLE": "Message Sent",
-      "MESSAGE": "Your message has been sent. I’ll get back to you shortly, thanks for your time 😎!"
+      "TITLE": "Email Window Open",
+      "MESSAGE": "Opening your mail app, thanks for your time 😎!"
     },
     "ERROR": {
       "NAME_REQUIRED": "Name is required",

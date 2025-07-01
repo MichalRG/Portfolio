@@ -2,27 +2,32 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { BrowserLocation } from '../../../services/browser-location.service';
 import { ContactComponent } from './contact.component';
 
 describe('ContactComponent', () => {
   let component: ContactComponent;
-  let fixture: ComponentFixture<ContactComponent>;
   let toastrServiceSpy: jasmine.SpyObj<ToastrService>;
+  let fixture: ComponentFixture<ContactComponent>;
+  const browserSpy = jasmine.createSpyObj('BrowserLocation', ['navigate']);
 
   beforeEach(async () => {
     toastrServiceSpy = jasmine.createSpyObj('ToastrService', ['success']);
-
     await TestBed.configureTestingModule({
       imports: [
         ContactComponent,
         ReactiveFormsModule,
         TranslateModule.forRoot(),
       ],
-      providers: [{ provide: ToastrService, useValue: toastrServiceSpy }],
+      providers: [
+        { provide: ToastrService, useValue: toastrServiceSpy },
+        { provide: BrowserLocation, useValue: browserSpy },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ContactComponent);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
   });
 
@@ -74,10 +79,13 @@ describe('ContactComponent', () => {
       'CONTACT.TOAST.TITLE',
     );
     expect(component.contactForm.value).toEqual({
-      name: '',
-      email: '',
-      message: '',
+      name: 'John Doe',
+      email: 'john@example.com',
+      message: 'This is a valid contact message.',
     });
+    expect(browserSpy.navigate).toHaveBeenCalledWith(
+      jasmine.stringMatching(/^mailto:/),
+    );
   });
 
   it('should not submit if form is invalid', () => {
