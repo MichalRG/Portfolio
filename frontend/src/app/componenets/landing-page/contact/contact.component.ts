@@ -26,6 +26,7 @@ interface ContactForm {
 export class ContactComponent {
   contactForm: FormGroup;
   currentYear = new Date().getFullYear();
+  isSubmitting = false;
 
   private translate = inject(TranslateService);
   private formBuilder = inject(FormBuilder);
@@ -57,13 +58,26 @@ export class ContactComponent {
       this.contactForm.markAllAsTouched();
       return;
     }
+    this.isSubmitting = true;
 
-    console.log('Contact form value:', this.contactForm.value);
+    const name = this.contactForm.value.name;
+    const email = this.contactForm.value.email;
+    const message = this.contactForm.value.message;
 
-    const title = this.translate.instant('CONTACT.TOAST.TITLE');
-    const message = this.translate.instant('CONTACT.TOAST.MESSAGE');
+    const subject = encodeURIComponent(`Contact from ${name}`);
+    const body = encodeURIComponent(
+      `Email: ${email}\n\n${message}\n\n ${name}`,
+    );
+    const mailtoUrl = `mailto:you@example.com?subject=${subject}&body=${body}`;
 
-    this.toastr.success(message, title);
-    this.contactForm.reset();
+    const titleToastr = this.translate.instant('CONTACT.TOAST.TITLE');
+    const messageToastr = this.translate.instant('CONTACT.TOAST.MESSAGE');
+
+    this.toastr.success(messageToastr, titleToastr);
+
+    setTimeout(() => {
+      window.location.href = mailtoUrl;
+      this.isSubmitting = false;
+    }, 500);
   }
 }
