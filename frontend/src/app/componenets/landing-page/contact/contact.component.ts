@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { BrowserLocation } from '../../../services/browser-location.service';
 
 interface ContactForm {
   name: FormControl<string>;
@@ -31,6 +32,7 @@ export class ContactComponent {
   private translate = inject(TranslateService);
   private formBuilder = inject(FormBuilder);
   private toastr = inject(ToastrService);
+  private browser = inject(BrowserLocation);
 
   constructor() {
     this.contactForm = this.formBuilder.group<ContactForm>({
@@ -74,6 +76,6 @@ export class ContactComponent {
     this.toastr.success(messageToastr, titleToastr);
 
     this.isSubmitting = false;
-    window.location.href = mailtoUrl;
+    this.browser.navigate(mailtoUrl);
   }
 }
