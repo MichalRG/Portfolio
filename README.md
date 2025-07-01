@@ -21,18 +21,27 @@ cdk bootstrap
 
 ```ts
 npm i
-npm run build
+NONCE=$(openssl rand -base64 16) //generate NONCE for style file
+CSP_NONCE="$NONCE" npm run build  //pass CSP_NONCE to build it runs later postbuild script that adds this nonce value
+HANDLER_HASH=$(cat dist/handlerHash.txt) //for CSP to get rid console error
 ```
 
-3. Deploy Infra
+3. Check Infra file setup
 
 ```ts
 cd infra
 npm i
-npx cdk deploy
+npx cdk synth
 ```
 
-4. Pray
+4. Deploy changes
+
+```ts
+npx cdk deploy
+npx cdk deploy -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH"  //if you want to deploy as pointed environment
+```
+
+5. Pray
 
 🙏🙏🙏
 
@@ -66,6 +75,14 @@ npm run lint
 ```
 
 I encourage to use and force lint for every run
+
+# Useful commands:
+
+1. Invalidation of cloudfront
+
+```bash
+aws cloudfront create-invalidation --distribution-id {{id}} --paths "/*"
+```
 
 # TODO:
 

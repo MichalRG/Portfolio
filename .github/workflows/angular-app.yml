@@ -14,6 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Generate CSP nonce
+        id: nonce
+        run: echo "NONCE=$(openssl rand -base64 16)" >> "$GITHUB_OUTPUT"
+
       - name: Setup Node.js (Frontend)
         uses: actions/setup-node@v3
         with:
@@ -26,10 +30,12 @@ jobs:
         working-directory: frontend
 
       - name: Build
+        env:
+          CSP_NONCE: ${{ steps.nonce.outputs.NONCE }}
         run: npm run build
         working-directory: frontend
 
-      - name: Upload dist
+      - name: Upload dist (+ handlerHash)
         uses: actions/upload-artifact@v4
         with:
           name: frontend-dist
@@ -92,6 +98,12 @@ jobs:
           name: frontend-dist
           path: frontend/dist
 
+      - name: Read handler hash
+        id: handler
+        run: |
+          HASH=$(cat frontend/dist/handlerHash.txt)
+          echo "HASH=$HASH" >> "$GITHUB_OUTPUT"
+
       - name: Setup Node.js (Infra)
         uses: actions/setup-node@v3
         with:
@@ -111,10 +123,14 @@ jobs:
         run: npm ci
         working-directory: infra
 
-      # - name: CDK Bootstrap
-      #   run: npx cdk bootstrap --require-approval=never
-      #   working-directory: infra
-
       # - name: CDK Deploy
-      #   run: npx cdk deploy --require-approval=never
+      #   env:
+      #     CSP_NONCE:   ${{ needs.build-frontend.outputs.nonce }}
+      #     HANDLER_HASH: ${{ steps.handler.outputs.HASH }}
+      #   run: |
+      #     npx cdk deploy \
+      #       --require-approval=never \
+      #       -c stage=prod \
+      #       -c cspNonce=$CSP_NONCE \
+      #       -c handlerHash=$HANDLER_HASH
       #   working-directory: infra

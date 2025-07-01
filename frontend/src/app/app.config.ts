@@ -1,6 +1,7 @@
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import {
   ApplicationConfig,
+  CSP_NONCE,
   importProvidersFrom,
   provideZoneChangeDetection,
 } from '@angular/core';
@@ -37,5 +38,12 @@ export const appConfig: ApplicationConfig = {
         preventDuplicates: true,
       }),
     ),
+    {
+      provide: CSP_NONCE,
+      useFactory: () =>
+        document
+          .querySelector('meta[name="csp-nonce"]')
+          ?.getAttribute('content') ?? '',
+    },
   ],
 };

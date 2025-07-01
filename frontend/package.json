@@ -8,6 +8,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:watch": "ng build --watch --configuration development",
+    "postbuild": "node scripts/add-csp-nonce.js",
     "test": "ng test --browsers=ChromeHeadlessNoSandbox --watch=false",
     "test:watch": "ng test --browsers=ChromeHeadlessNoSandbox --watch=true",
     "lint": "eslint .",
