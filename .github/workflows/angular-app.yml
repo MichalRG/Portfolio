@@ -14,6 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Generate CSP nonce
+        id: nonce
+        run: echo "NONCE=$(openssl rand -base64 16)" >> "$GITHUB_OUTPUT"
+
       - name: Setup Node.js (Frontend)
         uses: actions/setup-node@v3
         with:
@@ -26,10 +30,12 @@ jobs:
         working-directory: frontend
 
       - name: Build
+        env:
+          CSP_NONCE: ${{ steps.nonce.outputs.NONCE }}
         run: npm run build
         working-directory: frontend
 
-      - name: Upload dist
+      - name: Upload dist (+ handlerHash)
         uses: actions/upload-artifact@v4
         with:
           name: frontend-dist
@@ -91,6 +97,12 @@ jobs:
         with:
           name: frontend-dist
           path: frontend/dist
+
+      - name: Read handler hash
+        id: handler
+        run: |
+          HASH=$(cat frontend/dist/handlerHash.txt)
+          echo "HASH=$HASH" >> "$GITHUB_OUTPUT"
 
       - name: Setup Node.js (Infra)
         uses: actions/setup-node@v3
