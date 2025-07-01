@@ -78,7 +78,7 @@ I encourage to use and force lint for every run
 
 # Useful commands:
 
-1. Invlidation of cloudfront
+1. Invalidation of cloudfront
 
 ```bash
 aws cloudfront create-invalidation --distribution-id {{id}} --paths "/*"
