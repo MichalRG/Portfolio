@@ -27,7 +27,10 @@ export class ScrollRevealDirective implements AfterViewInit, OnDestroy {
           this.observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.2 },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -10% 0px',
+      },
     );
 
     this.observer.observe(this.el.nativeElement);

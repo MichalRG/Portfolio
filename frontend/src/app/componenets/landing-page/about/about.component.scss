@@ -81,3 +81,10 @@
     }
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .about__line,
+  .about__tag-row {
+    transition: none;
+  }
+}
