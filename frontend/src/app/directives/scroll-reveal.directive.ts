@@ -28,8 +28,8 @@ export class ScrollRevealDirective implements AfterViewInit, OnDestroy {
         }
       },
       {
-        threshold: 0.1,
-        rootMargin: '0px 0px -10% 0px',
+        threshold: SCROLL_REVEAL_THRESHOLD,
+        rootMargin: SCROLL_REVEAL_ROOT_MARGIN,
       },
     );
 
