@@ -51,7 +51,7 @@ describe('ContactComponent', () => {
 
   it('should require valid name, email, and message', () => {
     const invalidName = faker.string.alpha({ length: 1 });
-    const invalidEmail = faker.internet.email().replace(/@.+/, '');
+    const invalidEmail = faker.helpers.alpha({ length: 10 });
     const invalidMessage = faker.string.alpha({ length: 5 });
 
     component.contactForm.setValue({
