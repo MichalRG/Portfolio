@@ -7,6 +7,10 @@ import {
   OnDestroy,
   Renderer2,
 } from '@angular/core';
+import {
+  SCROLL_REVEAL_ROOT_MARGIN,
+  SCROLL_REVEAL_THRESHOLD,
+} from '../constants/ui.constants';
 
 @Directive({
   selector: '[appScrollReveal]',
