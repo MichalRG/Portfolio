@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { faker } from '@faker-js/faker';
 import { TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { BrowserLocation } from '../../../services/browser-location.service';
-import { faker } from '@faker-js/faker';
 import { ContactComponent } from './contact.component';
 
 describe('ContactComponent', () => {
@@ -51,7 +51,7 @@ describe('ContactComponent', () => {
 
   it('should require valid name, email, and message', () => {
     const invalidName = faker.string.alpha({ length: 1 });
-    const invalidEmail = faker.helpers.alpha({ length: 10 });
+    const invalidEmail = faker.string.alpha({ length: 10 });
     const invalidMessage = faker.string.alpha({ length: 5 });
 
     component.contactForm.setValue({
