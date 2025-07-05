@@ -43,3 +43,4 @@ Thumbs.db
 
 # Cdk
 **/cdk.out/
+**/cdk.context.json
