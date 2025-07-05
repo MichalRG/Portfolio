@@ -28,21 +28,27 @@ export class HeroComponent implements OnInit, OnDestroy {
 
   @HostListener('window:scroll')
   onScroll() {
-    this.isArrowScrollHidden = window.scrollY > 10;
+    this.isArrowScrollHidden = window.scrollY > 100;
   }
 
   ngOnInit() {
-    this.intervalSub = interval(10_000)
-      .pipe(
-        tap(() => (this.isTextVisible = false)),
-        switchMap(() => timer(1_500)),
-      )
-      .subscribe(() => {
-        this.index = (this.index + 1) % 2;
-        this.currentBackground = `bg-${this.index}`;
-        this.currentMessage = this.messages[this.index];
-        this.isTextVisible = true;
-      });
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+
+    if (!prefersReducedMotion) {
+      this.intervalSub = interval(10_000)
+        .pipe(
+          tap(() => (this.isTextVisible = false)),
+          switchMap(() => timer(1_500)),
+        )
+        .subscribe(() => {
+          this.index = (this.index + 1) % 2;
+          this.currentBackground = `bg-${this.index}`;
+          this.currentMessage = this.messages[this.index];
+          this.isTextVisible = true;
+        });
+    }
   }
 
   ngOnDestroy() {

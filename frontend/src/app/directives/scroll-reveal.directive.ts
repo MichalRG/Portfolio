@@ -7,6 +7,10 @@ import {
   OnDestroy,
   Renderer2,
 } from '@angular/core';
+import {
+  SCROLL_REVEAL_ROOT_MARGIN,
+  SCROLL_REVEAL_THRESHOLD,
+} from '../constants/ui.constants';
 
 @Directive({
   selector: '[appScrollReveal]',
@@ -27,7 +31,10 @@ export class ScrollRevealDirective implements AfterViewInit, OnDestroy {
           this.observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.2 },
+      {
+        threshold: SCROLL_REVEAL_THRESHOLD,
+        rootMargin: SCROLL_REVEAL_ROOT_MARGIN,
+      },
     );
 
     this.observer.observe(this.el.nativeElement);

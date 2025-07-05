@@ -63,7 +63,7 @@ describe('HeroComponent', () => {
   });
 
   it('should hide scroll indicator when scrolled', () => {
-    spyOnProperty(window, 'scrollY').and.returnValue(100);
+    spyOnProperty(window, 'scrollY').and.returnValue(150);
     component.onScroll();
     expect(component.isArrowScrollHidden).toBeTrue();
   });

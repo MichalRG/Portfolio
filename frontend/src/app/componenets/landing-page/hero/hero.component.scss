@@ -50,6 +50,17 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .hero__scroll-indicator {
+    animation: none;
+  }
+
+  .hero__text,
+  .hero__scroll-indicator {
+    transition: none;
+  }
+}
+
 @keyframes bounce {
   0%,
   100% {
