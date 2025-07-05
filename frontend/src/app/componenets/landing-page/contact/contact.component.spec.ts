@@ -3,6 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { BrowserLocation } from '../../../services/browser-location.service';
+import { faker } from '@faker-js/faker';
 import { ContactComponent } from './contact.component';
 
 describe('ContactComponent', () => {
@@ -49,10 +50,14 @@ describe('ContactComponent', () => {
   });
 
   it('should require valid name, email, and message', () => {
+    const invalidName = faker.string.alpha({ length: 1 });
+    const invalidEmail = faker.internet.email().replace(/@.+/, '');
+    const invalidMessage = faker.string.alpha({ length: 5 });
+
     component.contactForm.setValue({
-      name: 'A',
-      email: 'invalid-email',
-      message: 'short',
+      name: invalidName,
+      email: invalidEmail,
+      message: invalidMessage,
     });
 
     expect(component.contactForm.invalid).toBeTrue();
@@ -66,10 +71,14 @@ describe('ContactComponent', () => {
   });
 
   it('should submit form and call toastr/translate on valid input', () => {
+    const name = faker.person.fullName();
+    const email = faker.internet.email();
+    const message = faker.lorem.sentence(10);
+
     component.contactForm.setValue({
-      name: 'John Doe',
-      email: 'john@example.com',
-      message: 'This is a valid contact message.',
+      name,
+      email,
+      message,
     });
 
     component.onSubmit();
@@ -79,9 +88,9 @@ describe('ContactComponent', () => {
       'CONTACT.TOAST.TITLE',
     );
     expect(component.contactForm.value).toEqual({
-      name: 'John Doe',
-      email: 'john@example.com',
-      message: 'This is a valid contact message.',
+      name,
+      email,
+      message,
     });
     expect(browserSpy.navigate).toHaveBeenCalledWith(
       jasmine.stringMatching(/^mailto:/),
