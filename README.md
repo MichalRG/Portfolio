@@ -101,5 +101,5 @@ aws cloudfront create-invalidation --distribution-id {{id}} --paths "/*"
 - [x] add github rules to not push on master + require positive pipeline for merging
 - [x] mobile styles - for current state seems to looks well
 - [ ] increase UX for landing page scrolling
-- [ ] implement faker for tests
+- [x] implement faker for tests
 - [ ] add docker for aws env

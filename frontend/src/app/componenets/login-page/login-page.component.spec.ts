@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { faker } from '@faker-js/faker';
 import { AuthService } from '../../services/auth.service';
 import { LoginPageComponent } from './login-page.component';
 
@@ -50,7 +51,9 @@ describe('LoginPageComponent', () => {
   });
 
   it('should call login and navigate on valid form submission', () => {
-    component.form.setValue({ email: 'test@example.com', password: 'secret' });
+    const email = faker.internet.email();
+    const password = faker.internet.password();
+    component.form.setValue({ email, password });
 
     component.onSubmit();
 
