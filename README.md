@@ -1,7 +1,7 @@
 # Portfolio
 
 It's Michal Krzyzowski Portfolio@0.2.0
-I encourage to visit mkrzyzowski.com to see it in action :) it's still not fully ready so pls don't be too harsh.
+I encourage you to visit mkrzyzowski.com to see it in action :) it's still not fully ready, so please don't be too harsh.
 
 # Inspiration
 
