@@ -21,8 +21,8 @@ npm run start
 
 To setup this app from scratch for first time with brand new aws account run:
 
-1. Bootstrap AWS environment acocunt (once per region)
-   For run of this app it's required to have bootstraped account on us-east-1 as cert is required to deploy code
+1. Bootstrap AWS environment account (once per region)
+   For run of this app it's required to have bootstrapped account on us-east-1 as cert is required to deploy code
 
 ```ts
 cd infra
