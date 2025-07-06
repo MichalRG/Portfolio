@@ -27,7 +27,7 @@ To setup this app from scratch for first time with brand new aws account run:
 ```ts
 cd infra
 npm i
-npx cdk bootstrap aws://{{acountId}}//{{region}}
+npx cdk bootstrap aws://{{accountId}}//{{region}}
 ```
 
 2. Build app
