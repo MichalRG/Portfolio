@@ -35,8 +35,8 @@ export class SpaHostingStack extends Stack {
   constructor(scope: Construct, id: string, props?: SpaHostingStackProps) {
     super(scope, id, props);
 
-    if (!props?.domainName) {
-      throw new Error("Domain name is required in stack props");
+    if (!props?.certificateArn) {
+      throw new Error("CertificateARN is not in stack props");
     }
 
     const nonce =
