@@ -68,7 +68,7 @@ npx cdk deploy -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" 
 
 # Clean up
 
-To clean up you can run to destory hosting stack
+To clean up you can run to destroy hosting stack
 
 ```ts
 cd infra
