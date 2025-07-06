@@ -7,7 +7,7 @@ I encourage you to visit mkrzyzowski.com to see it in action :) it's still not f
 
 [Vaonis Website](https://vaonis.com/)
 
-# Locla setup
+# Local setup
 
 1. Install deps and run local serve of frontend
 
