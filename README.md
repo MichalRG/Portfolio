@@ -77,7 +77,7 @@ npx cdk destroy SpaHostingStack
 
 # History
 
-1. To make this app work I had to register my domain so in route53 I requested for a new domain when it was processed with succes I was able to deploy my cert and create A AAAA records for it.
+1. To make this app work I had to register my domain so in route53 I requested for a new domain when it was processed with success I was able to deploy my cert and create A AAAA records for it.
 
 # Hooks
 
