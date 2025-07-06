@@ -32,10 +32,10 @@ import { randomBytes } from "crypto";
 import { SpaHostingStackProps } from "./types";
 
 export class SpaHostingStack extends Stack {
-  constructor(scope: Construct, id: string, props?: SpaHostingStackProps) {
+  constructor(scope: Construct, id: string, props: SpaHostingStackProps) {
     super(scope, id, props);
 
-    if (!props?.certificateArn) {
+    if (props.certificateArn) {
       throw new Error("CertificateARN is not in stack props");
     }
 
@@ -57,7 +57,7 @@ export class SpaHostingStack extends Stack {
     // 1) Private, encrypted bucket
     const portfolioBucket = new Bucket(this, "PortfolioBucket", {
       bucketName: `portfolio-website-${this.stackName.toLowerCase()}-${
-        props?.stage || "dev"
+        props.stage || "dev"
       }`,
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       removalPolicy: RemovalPolicy.DESTROY, // Intentionally set to avoid costs and clean entirely
@@ -207,12 +207,12 @@ export class SpaHostingStack extends Stack {
         },
       ],
       certificate,
-      domainNames: [props!.domainName, `www.${props!.domainName}`],
+      domainNames: [props.domainName, `www.${props.domainName}`],
     });
 
     new ARecord(this, "ApexAlias", {
       zone,
-      recordName: props!.domainName, // apex
+      recordName: props.domainName, // apex
       target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
     });
     new AaaaRecord(this, "ApexAliasAAAA", {
@@ -223,7 +223,7 @@ export class SpaHostingStack extends Stack {
 
     new ARecord(this, "WwwAlias", {
       zone,
-      recordName: `www.${props!.domainName}`,
+      recordName: `www.${props.domainName}`,
       target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
     });
     new AaaaRecord(this, "WwwAliasAAAA", {
