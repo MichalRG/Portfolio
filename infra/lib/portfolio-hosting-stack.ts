@@ -1,6 +1,10 @@
 import { CfnOutput, Duration, RemovalPolicy, Stack } from "aws-cdk-lib";
+import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import {
+  Function as CfFunction,
   Distribution,
+  FunctionCode,
+  FunctionEventType,
   HeadersFrameOption,
   HeadersReferrerPolicy,
   OriginAccessIdentity,
@@ -10,6 +14,13 @@ import {
 } from "aws-cdk-lib/aws-cloudfront";
 import { S3BucketOrigin } from "aws-cdk-lib/aws-cloudfront-origins";
 import { CanonicalUserPrincipal, PolicyStatement } from "aws-cdk-lib/aws-iam";
+import {
+  AaaaRecord,
+  ARecord,
+  HostedZone,
+  RecordTarget,
+} from "aws-cdk-lib/aws-route53";
+import { CloudFrontTarget } from "aws-cdk-lib/aws-route53-targets";
 import {
   BlockPublicAccess,
   Bucket,
@@ -21,8 +32,12 @@ import { randomBytes } from "crypto";
 import { SpaHostingStackProps } from "./types";
 
 export class SpaHostingStack extends Stack {
-  constructor(scope: Construct, id: string, props?: SpaHostingStackProps) {
+  constructor(scope: Construct, id: string, props: SpaHostingStackProps) {
     super(scope, id, props);
+
+    if (props.certificateArn) {
+      throw new Error("CertificateARN is not in stack props");
+    }
 
     const nonce =
       this.node.tryGetContext("cspNonce") ?? randomBytes(16).toString("base64");
@@ -42,7 +57,7 @@ export class SpaHostingStack extends Stack {
     // 1) Private, encrypted bucket
     const portfolioBucket = new Bucket(this, "PortfolioBucket", {
       bucketName: `portfolio-website-${this.stackName.toLowerCase()}-${
-        props?.stage || "dev"
+        props.stage || "dev"
       }`,
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       removalPolicy: RemovalPolicy.DESTROY, // Intentionally set to avoid costs and clean entirely
@@ -132,6 +147,36 @@ export class SpaHostingStack extends Stack {
       },
     });
 
+    const zone = HostedZone.fromLookup(this, "HostedZone", {
+      domainName: props.domainName,
+    });
+
+    const certificate = Certificate.fromCertificateArn(
+      this,
+      "PortfolioCert",
+      props.certificateArn
+    );
+
+    const redirectWww = new CfFunction(this, "RedirectWwwToApex", {
+      comment: "301 www. → apex",
+      code: FunctionCode.fromInline(`
+     function handler(event) {
+       var req = event.request;
+       var host = req.headers.host.value;
+       if (host.startsWith('www.')) {
+         return {
+           statusCode: 301,
+           statusDescription: 'Moved Permanently',
+           headers: {
+             location: { value: 'https://' + host.slice(4) + req.uri }
+           }
+         };
+       }
+       return req;
+     }
+       `),
+    });
+
     // 4) CloudFront distribution
     const distribution = new Distribution(this, "PortfolioDistribution", {
       defaultRootObject: "index.html",
@@ -139,6 +184,12 @@ export class SpaHostingStack extends Stack {
         origin: s3Origin,
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         responseHeadersPolicy: securityHeaders,
+        functionAssociations: [
+          {
+            eventType: FunctionEventType.VIEWER_REQUEST,
+            function: redirectWww,
+          },
+        ],
       },
       priceClass: PriceClass.PRICE_CLASS_100,
       errorResponses: [
@@ -155,6 +206,30 @@ export class SpaHostingStack extends Stack {
           ttl: Duration.minutes(0),
         },
       ],
+      certificate,
+      domainNames: [props.domainName, `www.${props.domainName}`],
+    });
+
+    new ARecord(this, "ApexAlias", {
+      zone,
+      recordName: props.domainName, // apex
+      target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
+    });
+    new AaaaRecord(this, "ApexAliasAAAA", {
+      zone,
+      recordName: props.domainName,
+      target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
+    });
+
+    new ARecord(this, "WwwAlias", {
+      zone,
+      recordName: `www.${props.domainName}`,
+      target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
+    });
+    new AaaaRecord(this, "WwwAliasAAAA", {
+      zone,
+      recordName: `www.${props.domainName}`,
+      target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
     });
 
     // 5) Deploy your built Angular files and invalidate cache
