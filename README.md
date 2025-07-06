@@ -1,13 +1,13 @@
 # Portfolio
 
 It's Michal Krzyzowski Portfolio@0.2.0
-I encourage to visit mkrzyzowski.com to see it in action :) it's still not fully ready so pls don't be too harsh.
+I encourage you to visit mkrzyzowski.com to see it in action :) it's still not fully ready, so please don't be too harsh.
 
 # Inspiration
 
 [Vaonis Website](https://vaonis.com/)
 
-# Locla setup
+# Local setup
 
 1. Install deps and run local serve of frontend
 
@@ -21,7 +21,7 @@ npm run start
 
 To setup this app from scratch for first time with brand new aws account run:
 
-1. Bootstrap AWS environment acocunt (once per region)
+1. Bootstrap AWS environment account (once per region)
    For run of this app it's required to have bootstrapped account on us-east-1 as cert is required to deploy code
 
 ```ts
@@ -68,7 +68,7 @@ npx cdk deploy -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" 
 
 # Clean up
 
-To clean up you can run to destory hosting stack
+To clean up you can run to destroy hosting stack
 
 ```ts
 cd infra
@@ -77,7 +77,7 @@ npx cdk destroy SpaHostingStack
 
 # History
 
-1. To make this app work I had to register my domain so in route53 I requested for a new domain when it was processed with succes I was able to deploy my cert and create A AAAA records for it.
+1. To make this app work I had to register my domain so in route53 I requested for a new domain when it was processed with success I was able to deploy my cert and create A AAAA records for it.
 
 # Hooks
 
