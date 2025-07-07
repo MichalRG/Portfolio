@@ -130,3 +130,4 @@ aws cloudfront create-invalidation --distribution-id {{id}} --paths "/*"
 - [x] implement faker for tests
 - [ ] add docker for aws env
 - [ ] make more fancy card under hyperlink to your portfolio
+- [ ] replace current frotn carousel with short video
