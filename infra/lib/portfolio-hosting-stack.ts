@@ -1,6 +1,10 @@
 import { CfnOutput, Duration, RemovalPolicy, Stack } from "aws-cdk-lib";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import {
+  CacheCookieBehavior,
+  CacheHeaderBehavior,
+  CachePolicy,
+  CacheQueryStringBehavior,
   Function as CfFunction,
   Distribution,
   FunctionCode,
@@ -32,10 +36,12 @@ import { randomBytes } from "crypto";
 import { SpaHostingStackProps } from "./types";
 
 export class SpaHostingStack extends Stack {
+  public readonly distribution: Distribution;
+
   constructor(scope: Construct, id: string, props: SpaHostingStackProps) {
     super(scope, id, props);
 
-    if (props.certificateArn) {
+    if (!props.certificateArn) {
       throw new Error("CertificateARN is not in stack props");
     }
 
@@ -147,6 +153,17 @@ export class SpaHostingStack extends Stack {
       },
     });
 
+    const spaCache = new CachePolicy(this, "SpaCachePolicy", {
+      queryStringBehavior: CacheQueryStringBehavior.none(),
+      headerBehavior: CacheHeaderBehavior.none(),
+      cookieBehavior: CacheCookieBehavior.none(),
+      enableAcceptEncodingGzip: true,
+      enableAcceptEncodingBrotli: true,
+      defaultTtl: Duration.days(1),
+      minTtl: Duration.seconds(0),
+      maxTtl: Duration.days(365),
+    });
+
     const zone = HostedZone.fromLookup(this, "HostedZone", {
       domainName: props.domainName,
     });
@@ -178,12 +195,13 @@ export class SpaHostingStack extends Stack {
     });
 
     // 4) CloudFront distribution
-    const distribution = new Distribution(this, "PortfolioDistribution", {
+    this.distribution = new Distribution(this, "PortfolioDistribution", {
       defaultRootObject: "index.html",
       defaultBehavior: {
         origin: s3Origin,
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         responseHeadersPolicy: securityHeaders,
+        cachePolicy: spaCache,
         functionAssociations: [
           {
             eventType: FunctionEventType.VIEWER_REQUEST,
@@ -213,37 +231,37 @@ export class SpaHostingStack extends Stack {
     new ARecord(this, "ApexAlias", {
       zone,
       recordName: props.domainName, // apex
-      target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
+      target: RecordTarget.fromAlias(new CloudFrontTarget(this.distribution)),
     });
     new AaaaRecord(this, "ApexAliasAAAA", {
       zone,
       recordName: props.domainName,
-      target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
+      target: RecordTarget.fromAlias(new CloudFrontTarget(this.distribution)),
     });
 
     new ARecord(this, "WwwAlias", {
       zone,
       recordName: `www.${props.domainName}`,
-      target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
+      target: RecordTarget.fromAlias(new CloudFrontTarget(this.distribution)),
     });
     new AaaaRecord(this, "WwwAliasAAAA", {
       zone,
       recordName: `www.${props.domainName}`,
-      target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
+      target: RecordTarget.fromAlias(new CloudFrontTarget(this.distribution)),
     });
 
     // 5) Deploy your built Angular files and invalidate cache
     new BucketDeployment(this, "DeployWebsite", {
       sources: [Source.asset("../frontend/dist/portfolio-website/browser")],
       destinationBucket: portfolioBucket,
-      distribution,
+      distribution: this.distribution,
       distributionPaths: ["/*"],
     });
 
     // 6) Output the CloudFront URL
     new CfnOutput(this, "CloudFrontURL", {
       description: "Static Angular SPA hosted on CloudFront + S3",
-      value: `https://${distribution.domainName}`,
+      value: `https://${this.distribution.domainName}`,
     });
   }
 }
