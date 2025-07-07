@@ -1,7 +1,7 @@
 # Portfolio
 
-It's Michal Krzyzowski Portfolio@0.2.0
-I encourage you to visit mkrzyzowski.com to see it in action :) it's still not fully ready, so please don't be too harsh.
+It's Michal Krzyzowski Portfolio@1.0.0
+I encourage you to visit mkrzyzowski.com to see it in action :) it's still not fully ready, but I think good enough :D so please don't be too harsh.
 
 # Inspiration
 
@@ -72,7 +72,7 @@ To clean up you can run to destroy hosting stack
 
 ```ts
 cd infra
-npx cdk destroy SpaHostingStack
+npx cdk destroy SpaHostingStack -c certArn=arn:aws:acm:us-east-1:{{accountId}}:certificate/xxxx
 ```
 
 # History
