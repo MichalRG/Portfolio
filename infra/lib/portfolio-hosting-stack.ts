@@ -1,6 +1,10 @@
 import { CfnOutput, Duration, RemovalPolicy, Stack } from "aws-cdk-lib";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import {
+  CacheCookieBehavior,
+  CacheHeaderBehavior,
+  CachePolicy,
+  CacheQueryStringBehavior,
   Function as CfFunction,
   Distribution,
   FunctionCode,
@@ -27,6 +31,7 @@ import {
   BucketEncryption,
 } from "aws-cdk-lib/aws-s3";
 import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
+import { CfnWebACL, CfnWebACLAssociation } from "aws-cdk-lib/aws-wafv2";
 import { Construct } from "constructs";
 import { randomBytes } from "crypto";
 import { SpaHostingStackProps } from "./types";
@@ -147,6 +152,17 @@ export class SpaHostingStack extends Stack {
       },
     });
 
+    const spaCache = new CachePolicy(this, "SpaCachePolicy", {
+      queryStringBehavior: CacheQueryStringBehavior.none(),
+      headerBehavior: CacheHeaderBehavior.none(),
+      cookieBehavior: CacheCookieBehavior.none(),
+      enableAcceptEncodingGzip: true,
+      enableAcceptEncodingBrotli: true,
+      defaultTtl: Duration.days(1),
+      minTtl: Duration.seconds(0),
+      maxTtl: Duration.days(365),
+    });
+
     const zone = HostedZone.fromLookup(this, "HostedZone", {
       domainName: props.domainName,
     });
@@ -184,6 +200,7 @@ export class SpaHostingStack extends Stack {
         origin: s3Origin,
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         responseHeadersPolicy: securityHeaders,
+        cachePolicy: spaCache,
         functionAssociations: [
           {
             eventType: FunctionEventType.VIEWER_REQUEST,
@@ -208,6 +225,57 @@ export class SpaHostingStack extends Stack {
       ],
       certificate,
       domainNames: [props.domainName, `www.${props.domainName}`],
+    });
+
+    const webAcl = new CfnWebACL(this, "SpaWebAcl", {
+      scope: "CLOUDFRONT",
+      defaultAction: { allow: {} },
+      visibilityConfig: {
+        cloudWatchMetricsEnabled: true,
+        sampledRequestsEnabled: true,
+        metricName: `${props.stage}-webacl`,
+      },
+      rules: [
+        // 1a  Rate-limit rule
+        {
+          name: "RateLimit100Per5Min",
+          priority: 10,
+          action: { block: {} },
+          statement: {
+            rateBasedStatement: {
+              limit: 100, // requests
+              aggregateKeyType: "IP", // per-IP
+            },
+          },
+          visibilityConfig: {
+            cloudWatchMetricsEnabled: true,
+            sampledRequestsEnabled: true,
+            metricName: "RateLimit",
+          },
+        },
+        // 1b  AWS Managed Core Rule Set
+        {
+          name: "AWS-AWSManagedRulesCommonRuleSet",
+          priority: 20,
+          overrideAction: { none: {} }, // keep provider’s action
+          statement: {
+            managedRuleGroupStatement: {
+              name: "AWSManagedRulesCommonRuleSet",
+              vendorName: "AWS",
+            },
+          },
+          visibilityConfig: {
+            cloudWatchMetricsEnabled: true,
+            sampledRequestsEnabled: true,
+            metricName: "AWSCommon",
+          },
+        },
+      ],
+    });
+
+    new CfnWebACLAssociation(this, "SpaAclAssoc", {
+      resourceArn: distribution.distributionArn,
+      webAclArn: webAcl.attrArn,
     });
 
     new ARecord(this, "ApexAlias", {
