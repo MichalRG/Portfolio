@@ -40,7 +40,7 @@ export class SpaHostingStack extends Stack {
   constructor(scope: Construct, id: string, props: SpaHostingStackProps) {
     super(scope, id, props);
 
-    if (props.certificateArn) {
+    if (!props.certificateArn) {
       throw new Error("CertificateARN is not in stack props");
     }
 
