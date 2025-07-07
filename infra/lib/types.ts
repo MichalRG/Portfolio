@@ -11,3 +11,8 @@ export interface CertificateStackProps extends StackProps {
   domainName: string;
   env: { region: string; account: string };
 }
+
+export interface SpaSecurityStackProps extends StackProps {
+  distributionArn: string;
+  stage: string;
+}
