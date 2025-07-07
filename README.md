@@ -1,6 +1,6 @@
 # Portfolio
 
-It's Michal Krzyzowski Portfolio@1.0.0
+It's [Michal Krzyzowski Portfolio@1.0.0](https://mkrzyzowski.com/)
 I encourage you to visit mkrzyzowski.com to see it in action :) it's still not fully ready, but I think good enough :D so please don't be too harsh.
 
 # Inspiration
@@ -57,9 +57,10 @@ npx cdk deploy
 5. Second deploy - when cert is issued and connected to hosted zone related to your domain then you can deploy hosting app
    if you don't pass stage then it will assign value "dev"
    as certArn you have to set arn of your cert from the point 4th
+   SpaSecuirtyStack is only necessary for first run then u can skip it
 
 ```ts
-npx cdk deploy SpaHostingStack SpaSecurityStack -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" -c certArn=arn:aws:acm:us-east-1:{{accountId}}:certificate/xxxx  //if you want to deploy as pointed environment
+npx cdk deploy SpaSecurityStack SpaHostingStack -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" -c certArn=arn:aws:acm:us-east-1:{{accountId}}:certificate/xxxx  //if you want to deploy as pointed environment
 ```
 
 6. Pray
