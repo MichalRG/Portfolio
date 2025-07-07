@@ -59,7 +59,7 @@ npx cdk deploy
    as certArn you have to set arn of your cert from the point 4th
 
 ```ts
-npx cdk deploy -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" -c certArn=arn:aws:acm:us-east-1:{{accountId}}:certificate/xxxx  //if you want to deploy as pointed environment
+npx cdk deploy SpaHostingStack SpaSecurityStack -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" -c certArn=arn:aws:acm:us-east-1:{{accountId}}:certificate/xxxx  //if you want to deploy as pointed environment
 ```
 
 6. Pray

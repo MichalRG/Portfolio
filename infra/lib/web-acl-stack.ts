@@ -1,9 +1,10 @@
 import { Stack } from "aws-cdk-lib";
-import { CfnWebACL, CfnWebACLAssociation } from "aws-cdk-lib/aws-wafv2";
+import { CfnWebACL } from "aws-cdk-lib/aws-wafv2";
 import { Construct } from "constructs";
 import { SpaSecurityStackProps } from "./types";
 
 export class SpaSecurityStack extends Stack {
+  public readonly webAclArn: string;
   constructor(scope: Construct, id: string, props: SpaSecurityStackProps) {
     super(scope, id, props);
 
@@ -53,9 +54,6 @@ export class SpaSecurityStack extends Stack {
       ],
     });
 
-    new CfnWebACLAssociation(this, "Assoc", {
-      resourceArn: props.distributionArn,
-      webAclArn: webAcl.attrArn,
-    });
+    this.webAclArn = webAcl.attrArn;
   }
 }

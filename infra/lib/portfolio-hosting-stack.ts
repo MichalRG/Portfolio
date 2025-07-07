@@ -36,6 +36,8 @@ import { randomBytes } from "crypto";
 import { SpaHostingStackProps } from "./types";
 
 export class SpaHostingStack extends Stack {
+  public readonly distribution: Distribution;
+
   constructor(scope: Construct, id: string, props: SpaHostingStackProps) {
     super(scope, id, props);
 
@@ -193,7 +195,7 @@ export class SpaHostingStack extends Stack {
     });
 
     // 4) CloudFront distribution
-    const distribution = new Distribution(this, "PortfolioDistribution", {
+    this.distribution = new Distribution(this, "PortfolioDistribution", {
       defaultRootObject: "index.html",
       defaultBehavior: {
         origin: s3Origin,
@@ -229,37 +231,37 @@ export class SpaHostingStack extends Stack {
     new ARecord(this, "ApexAlias", {
       zone,
       recordName: props.domainName, // apex
-      target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
+      target: RecordTarget.fromAlias(new CloudFrontTarget(this.distribution)),
     });
     new AaaaRecord(this, "ApexAliasAAAA", {
       zone,
       recordName: props.domainName,
-      target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
+      target: RecordTarget.fromAlias(new CloudFrontTarget(this.distribution)),
     });
 
     new ARecord(this, "WwwAlias", {
       zone,
       recordName: `www.${props.domainName}`,
-      target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
+      target: RecordTarget.fromAlias(new CloudFrontTarget(this.distribution)),
     });
     new AaaaRecord(this, "WwwAliasAAAA", {
       zone,
       recordName: `www.${props.domainName}`,
-      target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
+      target: RecordTarget.fromAlias(new CloudFrontTarget(this.distribution)),
     });
 
     // 5) Deploy your built Angular files and invalidate cache
     new BucketDeployment(this, "DeployWebsite", {
       sources: [Source.asset("../frontend/dist/portfolio-website/browser")],
       destinationBucket: portfolioBucket,
-      distribution,
+      distribution: this.distribution,
       distributionPaths: ["/*"],
     });
 
     // 6) Output the CloudFront URL
     new CfnOutput(this, "CloudFrontURL", {
       description: "Static Angular SPA hosted on CloudFront + S3",
-      value: `https://${distribution.domainName}`,
+      value: `https://${this.distribution.domainName}`,
     });
   }
 }
