@@ -1,8 +1,22 @@
 <nav class="nav" role="navigation">
   <div class="nav__left">
+    <button
+      class="nav__burger"
+      aria-label="Toggle navigation"
+      (click)="toggleMenu()"
+      [class.nav__burger--open]="mobileMenuOpen"
+    >
+      <img
+        [src]="
+          mobileMenuOpen ? 'assets/icons/cross.svg' : 'assets/icons/burger.svg'
+        "
+        alt="burger menu icon"
+        aria-hidden="true"
+      />
+    </button>
     <div class="nav__logo">{{ 'HEADER.LOGO' | translate }}</div>
     <div class="nav__container">
-      <ul class="nav__links">
+      <ul class="nav__links" [ngClass]="{ 'nav__links--open': mobileMenuOpen }">
         @if (currentPath() === '/') {
           <li class="nav__item">
             <a class="nav__link" href="#home">{{

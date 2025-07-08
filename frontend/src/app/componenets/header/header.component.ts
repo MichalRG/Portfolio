@@ -30,6 +30,7 @@ export class HeaderComponent implements OnInit {
   currentLanguage = 'en';
   authService = inject(AuthService);
   currentPath = signal<string>('/');
+  mobileMenuOpen = false;
 
   readonly isLoggedIn = this.authService.isLoggedIn;
 
@@ -95,5 +96,12 @@ export class HeaderComponent implements OnInit {
     if (!this.dropdownOpen) {
       this.showDropdown = false;
     }
+  }
+
+  toggleMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+
+    // Toggle body overflow to prevent scrolling when menu is open
+    document.body.style.overflow = this.mobileMenuOpen ? 'hidden' : '';
   }
 }
