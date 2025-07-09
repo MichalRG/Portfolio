@@ -66,7 +66,7 @@
     color: $color-accent-warn;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .login-page {
     padding: 0 1rem;
 
