@@ -172,7 +172,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .nav {
     box-shadow: 0 4px 8px rgba($color-primary, 0.2);
     &__left {

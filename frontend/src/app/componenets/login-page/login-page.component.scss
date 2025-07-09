@@ -2,7 +2,7 @@
 
 .login-page {
   position: relative;
-  color: $color-text-black;
+  color: $color-black;
   min-height: 100vh;
   background-image: url('/assets/images/login/deepspace.webp');
   background-size: cover;
@@ -15,7 +15,7 @@
   &__overlay {
     position: absolute;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.6); // <-- dark overlay
+    background-color: rgba($color-black, 0.6); // <-- dark overlay
     z-index: 1;
   }
 
@@ -25,7 +25,7 @@
     background-color: rgba(255, 255, 255, 0.9);
     padding: 2rem;
     border-radius: 1rem;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 20px rgba($color-black, 0.3);
     max-width: 400px;
     width: 100%;
   }
@@ -64,5 +64,24 @@
     margin-top: 0.25rem;
     font-size: 0.875rem;
     color: $color-accent-warn;
+  }
+}
+@media (max-width: $breakpoint-mobile) {
+  .login-page {
+    padding: 0 1rem;
+
+    &__form {
+      max-width: none; // no more 400px cap
+      width: 100%; // fill the padded container
+      margin: 0 auto; // centre horizontally (now meaningful)
+      padding: 1rem; // reduced padding
+      box-sizing: border-box; // include padding in that 100%
+    }
+
+    &__input {
+      width: 100%; // full width of the form
+      box-sizing: border-box; // include the 0.4rem padding inside that width
+      margin: 0; // reset if you’d previously set auto
+    }
   }
 }

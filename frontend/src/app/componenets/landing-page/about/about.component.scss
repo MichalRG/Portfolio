@@ -89,7 +89,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .about {
     &__tag-row {
       flex-wrap: wrap;

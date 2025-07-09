@@ -108,7 +108,7 @@
 }
 
 /* mobile refocus */
-@media (max-width: 768px) {
+@media (max-width: $breakpoint-mobile) {
   .hero.bg-0,
   .hero.bg-1 {
     background-position: 80% 50%;
