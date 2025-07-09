@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   HostListener,
+  inject,
   OnDestroy,
   OnInit,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subscription, interval, switchMap, tap, timer } from 'rxjs';
+import { interval, Subscription, switchMap, tap, timer } from 'rxjs';
 
 @Component({
   selector: 'app-hero',
@@ -25,6 +27,7 @@ export class HeroComponent implements OnInit, OnDestroy {
 
   private index = 0;
   private intervalSub?: Subscription;
+  private readonly cdr = inject(ChangeDetectorRef);
 
   @HostListener('window:scroll')
   onScroll() {
@@ -39,7 +42,10 @@ export class HeroComponent implements OnInit, OnDestroy {
     if (!prefersReducedMotion) {
       this.intervalSub = interval(10_000)
         .pipe(
-          tap(() => (this.isTextVisible = false)),
+          tap(() => {
+            this.isTextVisible = false;
+            this.cdr.markForCheck();
+          }),
           switchMap(() => timer(1_500)),
         )
         .subscribe(() => {
@@ -47,6 +53,7 @@ export class HeroComponent implements OnInit, OnDestroy {
           this.currentBackground = `bg-${this.index}`;
           this.currentMessage = this.messages[this.index];
           this.isTextVisible = true;
+          this.cdr.markForCheck();
         });
     }
   }

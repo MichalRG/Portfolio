@@ -98,16 +98,21 @@
   );
 }
 
-.bg-0 {
-  background-image: url('/assets/images/hero/backgroundMoon.png');
-  background-size: cover;
-  background-position: center;
+.hero.bg-0 {
+  background: url('/assets/images/hero/backgroundMoon.png') center/cover
+    no-repeat;
+}
+.hero.bg-1 {
+  background: url('/assets/images/hero/backgroundMars.png') center/cover
+    no-repeat;
 }
 
-.bg-1 {
-  background-image: url('/assets/images/hero/backgroundMars.png');
-  background-size: cover;
-  background-position: center;
+/* mobile refocus */
+@media (max-width: 768px) {
+  .hero.bg-0,
+  .hero.bg-1 {
+    background-position: 80% 50%;
+  }
 }
 
 @keyframes fadeInText {
