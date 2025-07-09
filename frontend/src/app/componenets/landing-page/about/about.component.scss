@@ -88,3 +88,11 @@
     transition: none;
   }
 }
+
+@media (max-width: 768px) {
+  .about {
+    &__tag-row {
+      flex-wrap: wrap;
+    }
+  }
+}

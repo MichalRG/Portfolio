@@ -5,6 +5,7 @@ import {
   DestroyRef,
   inject,
   OnInit,
+  Renderer2,
   signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -30,6 +31,7 @@ export class HeaderComponent implements OnInit {
   currentLanguage = 'en';
   authService = inject(AuthService);
   currentPath = signal<string>('/');
+  mobileMenuOpen = signal(false);
 
   readonly isLoggedIn = this.authService.isLoggedIn;
 
@@ -37,6 +39,7 @@ export class HeaderComponent implements OnInit {
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
   private translateService = inject(TranslateService);
+  private renderer = inject(Renderer2);
 
   constructor() {
     const currentLocalStorageLanguage =
@@ -95,5 +98,16 @@ export class HeaderComponent implements OnInit {
     if (!this.dropdownOpen) {
       this.showDropdown = false;
     }
+  }
+
+  toggleMenu() {
+    this.mobileMenuOpen.set(!this.mobileMenuOpen());
+
+    // Toggle body overflow to prevent scrolling when menu is open
+    this.renderer.setStyle(
+      document.body,
+      'overflow',
+      this.mobileMenuOpen() ? 'hidden' : '',
+    );
   }
 }
