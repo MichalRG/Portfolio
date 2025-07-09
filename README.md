@@ -1,6 +1,6 @@
 # Portfolio
 
-It's [Michal Krzyzowski Portfolio@1.0.0](https://mkrzyzowski.com/)
+It's [Michal Krzyzowski Portfolio@1.1.0](https://mkrzyzowski.com/)
 I encourage you to visit mkrzyzowski.com to see it in action :) it's still not fully ready, but I think good enough :D so please don't be too harsh.
 
 # Inspiration
@@ -129,5 +129,6 @@ aws cloudfront create-invalidation --distribution-id {{id}} --paths "/*"
 - [x] increase UX for landing page scrolling
 - [x] implement faker for tests
 - [ ] add docker for aws env
-- [ ] make more fancy card under hyperlink to your portfolio
+- [x] make more fancy card under hyperlink to your portfolio
+- [ ] add index.html for pl and en
 - [ ] replace current frotn carousel with short video
