@@ -7,12 +7,14 @@ import {
   OnInit,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Meta, Title } from '@angular/platform-browser';
 import {
   NavigationEnd,
   NavigationStart,
   Router,
   RouterOutlet,
 } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { delay, filter, merge, tap } from 'rxjs';
 import { HeaderComponent } from './componenets/header/header.component';
 
@@ -30,6 +32,12 @@ export class AppComponent implements OnInit {
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
   private cdRef = inject(ChangeDetectorRef);
+
+  constructor(
+    private title: Title,
+    private meta: Meta,
+    private translate: TranslateService,
+  ) {}
 
   ngOnInit() {
     setTimeout(() => {
@@ -55,5 +63,12 @@ export class AppComponent implements OnInit {
     );
 
     merge(start$, end$).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
+
+    this.translate.get('HOME.TITLE').subscribe((t) => this.title.setTitle(t));
+    this.translate
+      .get('HOME.META_DESCRIPTION')
+      .subscribe((desc) =>
+        this.meta.updateTag({ name: 'description', content: desc }),
+      );
   }
 }
