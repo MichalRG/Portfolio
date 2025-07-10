@@ -32,12 +32,9 @@ export class AppComponent implements OnInit {
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
   private cdRef = inject(ChangeDetectorRef);
-
-  constructor(
-    private title: Title,
-    private meta: Meta,
-    private translate: TranslateService,
-  ) {}
+  private title = inject(Title);
+  private meta = inject(Meta);
+  private translate = inject(TranslateService);
 
   ngOnInit() {
     setTimeout(() => {
