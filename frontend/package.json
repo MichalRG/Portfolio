@@ -10,6 +10,7 @@
     "build:watch": "ng build --watch --configuration development",
     "postbuild": "node scripts/add-csp-nonce.js",
     "test": "ng test --browsers=ChromeHeadlessNoSandbox --watch=false",
+    "test:3": "bash -c \"for i in {1..3}; do npm test || exit 1; done\"",
     "test:watch": "ng test --browsers=ChromeHeadlessNoSandbox --watch=true",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
