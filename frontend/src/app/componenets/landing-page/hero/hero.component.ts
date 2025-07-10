@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -18,12 +19,13 @@ import { interval, Subscription, switchMap, tap, timer } from 'rxjs';
   styleUrls: ['./hero.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeroComponent implements OnInit, OnDestroy {
+export class HeroComponent implements OnInit, OnDestroy, AfterViewInit {
   messages = ['HERO.TITLE-1', 'HERO.TITLE-2'];
   currentMessage = this.messages[0];
   currentBackground = 'bg-0';
   isTextVisible = true;
   isArrowScrollHidden = false;
+  hasEntered = false;
 
   private index = 0;
   private intervalSub?: Subscription;
@@ -56,6 +58,15 @@ export class HeroComponent implements OnInit, OnDestroy {
           this.cdr.markForCheck();
         });
     }
+  }
+
+  ngAfterViewInit() {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        this.hasEntered = true;
+        this.cdr.markForCheck();
+      });
+    });
   }
 
   ngOnDestroy() {

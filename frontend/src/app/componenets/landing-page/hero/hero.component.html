@@ -1,17 +1,22 @@
-<section class="hero" [ngClass]="currentBackground">
-  <div class="hero__content">
-    <h1
-      class="hero__text"
-      [ngClass]="{ visible: isTextVisible, hidden: !isTextVisible }"
-    >
-      {{ currentMessage | translate }}
-    </h1>
-  </div>
-  <div
-    class="hero__scroll-indicator"
-    [class.hidden]="isArrowScrollHidden"
-    (click)="scrollToNextSection()"
+<div class="hero-wrapper">
+  <section
+    class="hero"
+    [ngClass]="[currentBackground, hasEntered ? 'hero--entered' : '']"
   >
-    ↓
-  </div>
-</section>
+    <div class="hero__content">
+      <h1
+        class="hero__text"
+        [ngClass]="{ visible: isTextVisible, hidden: !isTextVisible }"
+      >
+        {{ currentMessage | translate }}
+      </h1>
+    </div>
+    <div
+      class="hero__scroll-indicator"
+      [class.hidden]="isArrowScrollHidden"
+      (click)="scrollToNextSection()"
+    >
+      ↓
+    </div>
+  </section>
+</div>
