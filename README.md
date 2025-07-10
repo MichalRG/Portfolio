@@ -60,7 +60,7 @@ npx cdk deploy
    SpaSecuirtyStack is only necessary for first run then u can skip it
 
 ```ts
-npx cdk deploy SpaSecurityStack SpaHostingStack -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" -c certArn=arn:aws:acm:us-east-1:{{accountId}}:certificate/xxxx  //if you want to deploy as pointed environment
+npx cdk deploy SpaSecurityStack SpaHostingStack -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" -c certArn="arn:aws:acm:us-east-1:{{accountId}}:certificate/xxxx"
 ```
 
 6. Pray

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://mkrzyzowski.com/</loc>
+  </url>
+  <url>
+    <loc>https://mkrzyzowski.com/animations</loc>
+    <priority>0</priority>
+  </url>
+  <url>
+    <loc>https://mkrzyzowski.com/layouts</loc>
+    <priority>0</priority>
+  </url>
+  <url>
+    <loc>https://mkrzyzowski.com/login</loc>
+  </url>
+  <url>
+    <loc>https://mkrzyzowski.com/admin</loc>
+  </url>
+</urlset>
