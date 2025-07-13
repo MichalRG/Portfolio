@@ -1,6 +1,6 @@
 # Portfolio
 
-It's [Michal Krzyzowski Portfolio@1.1.0](https://mkrzyzowski.com/)
+It's [Michal Krzyzowski Portfolio@1.2.0](https://mkrzyzowski.com/)
 I encourage you to visit mkrzyzowski.com to see it in action :) it's still not fully ready, but I think good enough :D so please don't be too harsh.
 
 # Inspiration
