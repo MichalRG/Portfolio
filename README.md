@@ -1,6 +1,6 @@
 # Portfolio
 
-It's [Michal Krzyzowski Portfolio@1.1.0](https://mkrzyzowski.com/)
+It's [Michal Krzyzowski Portfolio@1.2.0](https://mkrzyzowski.com/)
 I encourage you to visit mkrzyzowski.com to see it in action :) it's still not fully ready, but I think good enough :D so please don't be too harsh.
 
 # Inspiration
@@ -58,9 +58,12 @@ npx cdk deploy
    if you don't pass stage then it will assign value "dev"
    as certArn you have to set arn of your cert from the point 4th
    SpaSecuirtyStack is only necessary for first run then u can skip it
+   $PORTFOLIO_CERT_ARN should be arn of your cert stored in env variables
 
 ```ts
-npx cdk deploy SpaSecurityStack SpaHostingStack -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" -c certArn="arn:aws:acm:us-east-1:{{accountId}}:certificate/xxxx"
+npx cdk deploy SpaSecurityStack SpaHostingStack -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" -c certArn="$PORTFOLIO_CERT_ARN"
+
+npx cdk deploy SpaHostingStack -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" -c certArn="$PORTFOLIO_CERT_ARN"
 ```
 
 6. Pray
@@ -131,4 +134,4 @@ aws cloudfront create-invalidation --distribution-id {{id}} --paths "/*"
 - [ ] add docker for aws env
 - [x] make more fancy card under hyperlink to your portfolio
 - [ ] add index.html for pl and en
-- [ ] replace current frotn carousel with short video
+- [x] replace current front carousel with short video - partially done as I added animation with zooming in

@@ -230,7 +230,7 @@ export class SpaHostingStack extends Stack {
 
     new ARecord(this, "ApexAlias", {
       zone,
-      recordName: props.domainName, // apex
+      recordName: props.domainName,
       target: RecordTarget.fromAlias(new CloudFrontTarget(this.distribution)),
     });
     new AaaaRecord(this, "ApexAliasAAAA", {

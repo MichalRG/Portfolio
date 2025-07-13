@@ -61,7 +61,6 @@ export class AppComponent implements OnInit {
 
     merge(start$, end$).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
 
-    this.translate.get('HOME.TITLE').subscribe((t) => this.title.setTitle(t));
     this.translate
       .get('HOME.META_DESCRIPTION')
       .subscribe((desc) =>
