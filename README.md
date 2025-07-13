@@ -58,9 +58,10 @@ npx cdk deploy
    if you don't pass stage then it will assign value "dev"
    as certArn you have to set arn of your cert from the point 4th
    SpaSecuirtyStack is only necessary for first run then u can skip it
+   $PORTFOLIO_CERT_ARN should be arn of your cert stored in env variables
 
 ```ts
-npx cdk deploy SpaSecurityStack SpaHostingStack -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" -c certArn="arn:aws:acm:us-east-1:{{accountId}}:certificate/xxxx"
+npx cdk deploy SpaSecurityStack SpaHostingStack -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" -c certArn="$PORTFOLIO_CERT_ARN"
 ```
 
 6. Pray
