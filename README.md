@@ -134,4 +134,4 @@ aws cloudfront create-invalidation --distribution-id {{id}} --paths "/*"
 - [ ] add docker for aws env
 - [x] make more fancy card under hyperlink to your portfolio
 - [ ] add index.html for pl and en
-- [ ] replace current frotn carousel with short video
+- [x] replace current frotn carousel with short video - partialy done as I added animation with zooming in
