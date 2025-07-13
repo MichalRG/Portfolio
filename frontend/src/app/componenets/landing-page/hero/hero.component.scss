@@ -20,6 +20,29 @@
     opacity: 1;
   }
 
+  &__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-out;
+    z-index: 0;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    &__bg {
+      background-position: 80% 50%;
+    }
+  }
+
+  &__bg--visible {
+    opacity: 1;
+  }
+
   &-wrapper {
     width: 100%;
     height: 100vh;
@@ -112,23 +135,6 @@
     rgba($color-background, 0.3) 80%,
     rgba($color-background, 1) 100%
   );
-}
-
-.hero.bg-0 {
-  background: url('/assets/images/hero/backgroundMoon.png') center/cover
-    no-repeat;
-}
-.hero.bg-1 {
-  background: url('/assets/images/hero/backgroundMars.png') center/cover
-    no-repeat;
-}
-
-/* mobile refocus */
-@media (max-width: $breakpoint-mobile) {
-  .hero.bg-0,
-  .hero.bg-1 {
-    background-position: 80% 50%;
-  }
 }
 
 @keyframes fadeInText {

@@ -26,8 +26,12 @@ export class HeroComponent implements OnInit, OnDestroy, AfterViewInit {
   isTextVisible = true;
   isArrowScrollHidden = false;
   hasEntered = false;
+  backgrounds = [
+    '/assets/images/hero/backgroundMoon.png',
+    '/assets/images/hero/backgroundMars.png',
+  ];
 
-  private index = 0;
+  backgroundIndex = 0;
   private intervalSub?: Subscription;
   private readonly cdr = inject(ChangeDetectorRef);
 
@@ -51,9 +55,10 @@ export class HeroComponent implements OnInit, OnDestroy, AfterViewInit {
           switchMap(() => timer(1_500)),
         )
         .subscribe(() => {
-          this.index = (this.index + 1) % 2;
-          this.currentBackground = `bg-${this.index}`;
-          this.currentMessage = this.messages[this.index];
+          this.backgroundIndex =
+            (this.backgroundIndex + 1) % this.backgrounds.length;
+          this.currentBackground = `bg-${this.backgroundIndex}`;
+          this.currentMessage = this.messages[this.backgroundIndex];
           this.isTextVisible = true;
           this.cdr.markForCheck();
         });
