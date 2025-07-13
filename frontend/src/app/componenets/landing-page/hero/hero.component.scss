@@ -33,16 +33,8 @@
     z-index: 0;
   }
 
-  &__bg--0 {
-    background-image: url('/assets/images/hero/backgroundMoon.png');
-  }
-  &__bg--1 {
-    background-image: url('/assets/images/hero/backgroundMars.png');
-  }
-
   @media (max-width: $breakpoint-mobile) {
-    &__bg--0,
-    &__bg--1 {
+    &__bg {
       background-position: 80% 50%;
     }
   }

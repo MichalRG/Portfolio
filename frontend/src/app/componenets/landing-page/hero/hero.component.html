@@ -1,13 +1,13 @@
 <div class="hero-wrapper">
   <section class="hero" [ngClass]="[hasEntered ? 'hero--entered' : '']">
-    <div
-      class="hero__bg hero__bg--0"
-      [class.hero__bg--visible]="currentBackground === 'bg-0'"
-    ></div>
-    <div
-      class="hero__bg hero__bg--1"
-      [class.hero__bg--visible]="currentBackground === 'bg-1'"
-    ></div>
+    @for (background of backgrounds; track background; let idx = $index) {
+      <div
+        class="hero__bg"
+        [class.hero__bg--visible]="idx === backgroundIndex"
+        [style.backgroundImage]="'url(' + background + ')'"
+      ></div>
+    }
+
     <div class="hero__content">
       <h1
         class="hero__text"
