@@ -55,7 +55,7 @@ export class HeroComponent implements OnInit, OnDestroy, AfterViewInit {
           switchMap(() => timer(1_500)),
         )
         .subscribe(() => {
-          this.backgroundIndex = (this.backgroundIndex + 1) % 2;
+          this.backgroundIndex = (this.backgroundIndex + 1) % this.backgrounds.length;
           this.currentBackground = `bg-${this.backgroundIndex}`;
           this.currentMessage = this.messages[this.backgroundIndex];
           this.isTextVisible = true;
