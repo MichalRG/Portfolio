@@ -62,6 +62,8 @@ npx cdk deploy
 
 ```ts
 npx cdk deploy SpaSecurityStack SpaHostingStack -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" -c certArn="$PORTFOLIO_CERT_ARN"
+
+npx cdk deploy SpaHostingStack -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" -c certArn="$PORTFOLIO_CERT_ARN"
 ```
 
 6. Pray
