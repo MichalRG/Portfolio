@@ -5,6 +5,7 @@ import {
   CacheHeaderBehavior,
   CachePolicy,
   CacheQueryStringBehavior,
+  S3OriginAccessControl,
   Function as CfFunction,
   Distribution,
   FunctionCode,
@@ -71,8 +72,13 @@ export class SpaHostingStack extends Stack {
       serverAccessLogsPrefix: "s3/",
     });
 
-    // 2) Wire up Origin Access Control (OAC) for the S3 origin
-    const s3Origin = S3BucketOrigin.withOriginAccessControl(portfolioBucket);
+    // 2) Create an Origin Access Control (OAC) and wire it into the S3 origin
+    const oac = new S3OriginAccessControl(this, "PortfolioOAC", {
+      description: `OAC for ${this.stackName}`,
+    });
+    const s3Origin = S3BucketOrigin.withOriginAccessControl(portfolioBucket, {
+      originAccessControl: oac,
+    });
 
     // Inject security headers via CloudFront
     const securityHeaders = new ResponseHeadersPolicy(this, "SecurityHeaders", {
