@@ -226,6 +226,7 @@ export class SpaHostingStack extends Stack {
       ],
       certificate,
       domainNames: [props.domainName, `www.${props.domainName}`],
+      webAclId: props.webAclArn,
     });
 
     new ARecord(this, "ApexAlias", {
