@@ -53,6 +53,8 @@ export class SpaHostingStack extends Stack {
     const logsBucket = new Bucket(this, "AccessLogs", {
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
+      blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+      encryption: BucketEncryption.S3_MANAGED,
       lifecycleRules: [
         {
           expiration: Duration.days(14),
