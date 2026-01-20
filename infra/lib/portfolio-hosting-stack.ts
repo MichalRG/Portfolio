@@ -11,13 +11,11 @@ import {
   FunctionEventType,
   HeadersFrameOption,
   HeadersReferrerPolicy,
-  OriginAccessIdentity,
   PriceClass,
   ResponseHeadersPolicy,
   ViewerProtocolPolicy,
 } from "aws-cdk-lib/aws-cloudfront";
 import { S3BucketOrigin } from "aws-cdk-lib/aws-cloudfront-origins";
-import { CanonicalUserPrincipal, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import {
   AaaaRecord,
   ARecord,
@@ -73,38 +71,8 @@ export class SpaHostingStack extends Stack {
       serverAccessLogsPrefix: "s3/",
     });
 
-    // 2) Create an Origin Access Identity (OAI)
-    const oai = new OriginAccessIdentity(this, "PortfolioOAI", {
-      comment: `OAI for ${this.stackName}`,
-    });
-
-    portfolioBucket.addToResourcePolicy(
-      new PolicyStatement({
-        actions: ["s3:GetObject"],
-        resources: [portfolioBucket.arnForObjects("*")],
-        principals: [
-          new CanonicalUserPrincipal(
-            oai.cloudFrontOriginAccessIdentityS3CanonicalUserId
-          ),
-        ],
-      })
-    );
-    portfolioBucket.addToResourcePolicy(
-      new PolicyStatement({
-        actions: ["s3:ListBucket"],
-        resources: [portfolioBucket.bucketArn],
-        principals: [
-          new CanonicalUserPrincipal(
-            oai.cloudFrontOriginAccessIdentityS3CanonicalUserId
-          ),
-        ],
-      })
-    );
-
-    // 3) Wire that OAI into a concrete S3BucketOrigin
-    const s3Origin = S3BucketOrigin.withOriginAccessIdentity(portfolioBucket, {
-      originAccessIdentity: oai,
-    });
+    // 2) Wire up Origin Access Control (OAC) for the S3 origin
+    const s3Origin = S3BucketOrigin.withOriginAccessControl(portfolioBucket);
 
     // Inject security headers via CloudFront
     const securityHeaders = new ResponseHeadersPolicy(this, "SecurityHeaders", {
