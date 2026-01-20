@@ -5,19 +5,18 @@ import {
   CacheHeaderBehavior,
   CachePolicy,
   CacheQueryStringBehavior,
+  S3OriginAccessControl,
   Function as CfFunction,
   Distribution,
   FunctionCode,
   FunctionEventType,
   HeadersFrameOption,
   HeadersReferrerPolicy,
-  OriginAccessIdentity,
   PriceClass,
   ResponseHeadersPolicy,
   ViewerProtocolPolicy,
 } from "aws-cdk-lib/aws-cloudfront";
 import { S3BucketOrigin } from "aws-cdk-lib/aws-cloudfront-origins";
-import { CanonicalUserPrincipal, PolicyStatement } from "aws-cdk-lib/aws-iam";
 import {
   AaaaRecord,
   ARecord,
@@ -75,37 +74,12 @@ export class SpaHostingStack extends Stack {
       serverAccessLogsPrefix: "s3/",
     });
 
-    // 2) Create an Origin Access Identity (OAI)
-    const oai = new OriginAccessIdentity(this, "PortfolioOAI", {
-      comment: `OAI for ${this.stackName}`,
+    // 2) Create an Origin Access Control (OAC) and wire it into the S3 origin
+    const oac = new S3OriginAccessControl(this, "PortfolioOAC", {
+      description: `OAC for ${this.stackName}`,
     });
-
-    portfolioBucket.addToResourcePolicy(
-      new PolicyStatement({
-        actions: ["s3:GetObject"],
-        resources: [portfolioBucket.arnForObjects("*")],
-        principals: [
-          new CanonicalUserPrincipal(
-            oai.cloudFrontOriginAccessIdentityS3CanonicalUserId
-          ),
-        ],
-      })
-    );
-    portfolioBucket.addToResourcePolicy(
-      new PolicyStatement({
-        actions: ["s3:ListBucket"],
-        resources: [portfolioBucket.bucketArn],
-        principals: [
-          new CanonicalUserPrincipal(
-            oai.cloudFrontOriginAccessIdentityS3CanonicalUserId
-          ),
-        ],
-      })
-    );
-
-    // 3) Wire that OAI into a concrete S3BucketOrigin
-    const s3Origin = S3BucketOrigin.withOriginAccessIdentity(portfolioBucket, {
-      originAccessIdentity: oai,
+    const s3Origin = S3BucketOrigin.withOriginAccessControl(portfolioBucket, {
+      originAccessControl: oac,
     });
 
     // Inject security headers via CloudFront
