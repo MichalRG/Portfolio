@@ -64,7 +64,7 @@ export class SpaHostingStack extends Stack {
     const portfolioBucket = new Bucket(this, "PortfolioBucket", {
       bucketName: `portfolio-website-${this.stackName.toLowerCase()}-${
         props.stage || "dev"
-      }`,
+      }-${Stack.of(this).region}`,
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       removalPolicy: RemovalPolicy.DESTROY, // Intentionally set to avoid costs and clean entirely
       autoDeleteObjects: true,
