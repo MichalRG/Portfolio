@@ -134,5 +134,5 @@ aws cloudfront create-invalidation --distribution-id {{id}} --paths "/*"
 - [x] implement faker for tests
 - [ ] add docker for aws env
 - [x] make more fancy card under hyperlink to your portfolio
-- [ ] add index.html for pl and en
+- [x] add index.html for pl and en
 - [x] replace current front carousel with short video - partially done as I added animation with zooming in
