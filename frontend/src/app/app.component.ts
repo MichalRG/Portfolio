@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -17,6 +18,8 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { delay, filter, merge, tap } from 'rxjs';
 import { HeaderComponent } from './componenets/header/header.component';
+import { DEFAULT_LANGUAGE, LANGUAGES } from './constants/language.constants';
+import { LANGUAGE_STORAGE_KEY } from './constants/local-storage.constants';
 
 @Component({
   selector: 'app-root',
@@ -35,6 +38,36 @@ export class AppComponent implements OnInit {
   private title = inject(Title);
   private meta = inject(Meta);
   private translate = inject(TranslateService);
+  private document = inject(DOCUMENT);
+
+  constructor() {
+    const supportedLanguages = LANGUAGES.map((lang) => lang.code);
+    const storedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    const browserLanguage = navigator.language.split('-')[0];
+    const pathLanguage = window.location.pathname.startsWith('/pl')
+      ? 'pl'
+      : null;
+
+    const resolvedLanguage =
+      (pathLanguage && supportedLanguages.includes(pathLanguage)
+        ? pathLanguage
+        : null) ||
+      (storedLanguage && supportedLanguages.includes(storedLanguage)
+        ? storedLanguage
+        : null) ||
+      (supportedLanguages.includes(browserLanguage)
+        ? browserLanguage
+        : DEFAULT_LANGUAGE);
+
+    this.translate.setDefaultLang(DEFAULT_LANGUAGE);
+    this.translate.use(resolvedLanguage);
+    this.setDocumentLanguage(resolvedLanguage);
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, resolvedLanguage);
+
+    this.translate.onLangChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((event) => this.setDocumentLanguage(event.lang));
+  }
 
   ngOnInit() {
     setTimeout(() => {
@@ -66,5 +99,9 @@ export class AppComponent implements OnInit {
       .subscribe((desc) =>
         this.meta.updateTag({ name: 'description', content: desc }),
       );
+  }
+
+  private setDocumentLanguage(language: string) {
+    this.document.documentElement.setAttribute('lang', language);
   }
 }

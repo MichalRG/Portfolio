@@ -151,20 +151,53 @@ export class SpaHostingStack extends Stack {
     );
 
     const redirectWww = new CfFunction(this, "RedirectWwwToApex", {
-      comment: "301 www. → apex",
+      comment: "301 www. to apex",
       code: FunctionCode.fromInline(`
      function handler(event) {
        var req = event.request;
        var host = req.headers.host.value;
+       var uri = req.uri;
+
        if (host.startsWith('www.')) {
          return {
            statusCode: 301,
            statusDescription: 'Moved Permanently',
            headers: {
-             location: { value: 'https://' + host.slice(4) + req.uri }
+             location: { value: 'https://' + host.slice(4) + uri }
            }
          };
        }
+
+       if (uri === '/') {
+         var acceptLanguage = req.headers['accept-language']
+           ? req.headers['accept-language'].value.toLowerCase()
+           : '';
+         if (acceptLanguage.startsWith('pl')) {
+           return {
+             statusCode: 302,
+             statusDescription: 'Found',
+             headers: {
+               location: { value: '/pl/' }
+             }
+           };
+         }
+         return req;
+       }
+
+       if (uri === '/pl' || uri === '/pl/') {
+         req.uri = '/pl/index.html';
+         return req;
+       }
+
+       if (uri.startsWith('/pl/')) {
+         if (uri.indexOf('.') > -1) {
+           req.uri = uri.replace('/pl/', '/');
+           return req;
+         }
+         req.uri = '/pl/index.html';
+         return req;
+       }
+
        return req;
      }
        `),
