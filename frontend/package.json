@@ -7,6 +7,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:multi": "node scripts/build-multi-lang.js",
     "build:watch": "ng build --watch --configuration development",
     "smoke": "node tests/smoke/smoke-check.js",
     "postbuild": "node scripts/add-csp-nonce.js",

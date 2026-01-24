@@ -42,22 +42,18 @@ export class HeaderComponent implements OnInit {
   private renderer = inject(Renderer2);
 
   constructor() {
-    const currentLocalStorageLanguage =
-      localStorage.getItem(LANGUAGE_STORAGE_KEY);
-    const browserLanguage = navigator.language.split('-')[0];
-    const supportedLanguages = LANGUAGES.map((lang) => lang.code);
-
-    this.translateService.setDefaultLang(currentLocalStorageLanguage || 'en');
-    this.translateService.use(
-      currentLocalStorageLanguage ||
-        (supportedLanguages.includes(browserLanguage) ? browserLanguage : 'en'),
-    );
     this.currentLanguage = this.translateService.currentLang || 'en';
   }
 
   ngOnInit(): void {
     const initialPath = this.router.url.split('?')[0].split('#')[0];
     this.currentPath.set(initialPath);
+
+    this.translateService.onLangChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((event) => {
+        this.currentLanguage = event.lang;
+      });
 
     this.router.events
       .pipe(
