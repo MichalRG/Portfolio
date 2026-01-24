@@ -7,6 +7,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:multi": "node scripts/build-multi-lang.js",
     "build:watch": "ng build --watch --configuration development",
     "postbuild": "node scripts/add-csp-nonce.js",
     "test": "ng test --browsers=ChromeHeadlessNoSandbox --watch=false",
