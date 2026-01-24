@@ -20,14 +20,25 @@
             "outputPath": "dist/portfolio-website",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/assets", "src/favicon.ico", "src/robots.txt"],
-            "styles": ["src/styles.scss", "node_modules/ngx-toastr/toastr.css"],
+            "assets": [
+              "src/assets",
+              "src/favicon.ico",
+              "src/robots.txt"
+            ],
+            "styles": [
+              "src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css"
+            ],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": ["src"]
+              "includePaths": [
+                "src"
+              ]
             }
           },
           "configurations": {
@@ -50,6 +61,12 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "en": {
+              "index": "src/index.html"
+            },
+            "pl": {
+              "index": "src/pl/index.html"
             }
           },
           "defaultConfiguration": "production"
@@ -62,6 +79,12 @@
             },
             "development": {
               "buildTarget": "portfolio-website:build:development"
+            },
+            "en": {
+              "buildTarget": "portfolio-website:build:development,en"
+            },
+            "pl": {
+              "buildTarget": "portfolio-website:build:development,pl"
             }
           },
           "defaultConfiguration": "development"
@@ -72,14 +95,21 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": ["src"]
+              "includePaths": [
+                "src"
+              ]
             }
           }
         }

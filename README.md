@@ -30,13 +30,13 @@ npm i
 npx cdk bootstrap aws://{{accountId}}//{{region}}
 ```
 
-2. Build app
+2. Build app (EN + PL index)
 
 ```ts
 cd ../frontend
 npm i
 NONCE=$(openssl rand -base64 16) //generate NONCE for style file
-CSP_NONCE="$NONCE" npm run build  //pass CSP_NONCE to build it runs later postbuild script that adds this nonce value
+CSP_NONCE="$NONCE" npm run build:multi  //builds EN + PL index and injects nonce
 HANDLER_HASH=$(cat dist/handlerHash.txt) //for CSP to get rid console error
 ```
 
@@ -45,6 +45,7 @@ HANDLER_HASH=$(cat dist/handlerHash.txt) //for CSP to get rid console error
 ```ts
 cd ../infra
 npx cdk synth
+npx cdk synth SpaSecurityStack SpaHostingStack -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" -c certArn="$PORTFOLIO_CERT_ARN"
 ```
 
 4. Deploy changes - it requires two deploys first one to create certificate stack
