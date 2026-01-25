@@ -17,6 +17,19 @@ npm i
 npm run start
 ```
 
+
+# Docker (AWS-like)
+
+From repo root:
+
+```bash
+cd frontend
+docker build -t portfolio-aws --build-arg CSP_NONCE=local-dev-nonce .
+docker run --rm -p 8080:80 portfolio-aws
+```
+
+Then open http://localhost:8080
+
 # Setup in the AWS Cloud
 
 To setup this app from scratch for first time with brand new aws account run:
@@ -132,7 +145,7 @@ aws cloudfront create-invalidation --distribution-id {{id}} --paths "/*"
 - [x] mobile styles - for current state seems to looks well
 - [x] increase UX for landing page scrolling
 - [x] implement faker for tests
-- [ ] add docker for aws env
+- [x] add docker for aws env
 - [x] make more fancy card under hyperlink to your portfolio
 - [x] add index.html for pl and en
 - [x] replace current front carousel with short video - partially done as I added animation with zooming in
