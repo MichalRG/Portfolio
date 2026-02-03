@@ -2,16 +2,18 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ScrollRevealDirective } from '../../../directives/scroll-reveal.directive';
+import { ProjectCard } from '../../../interfaces/project-card.interface';
 
 @Component({
   selector: 'app-projects',
+  standalone: true,
   imports: [CommonModule, TranslateModule, ScrollRevealDirective],
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsComponent {
-  projects = [
+  readonly projects: ProjectCard[] = [
     {
       title: 'PROJECTS.UNIVERSITY.NAME',
       icon: 'university.svg',

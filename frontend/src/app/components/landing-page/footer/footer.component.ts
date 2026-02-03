@@ -2,10 +2,13 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-layout-playground-page',
+  selector: 'app-footer',
+  standalone: true,
   imports: [TranslateModule],
-  templateUrl: './layout-playground-page.component.html',
-  styleUrls: ['./layout-playground-page.component.scss'],
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutPlaygroundPageComponent {}
+export class FooterComponent {
+  currentYear = new Date().getFullYear();
+}

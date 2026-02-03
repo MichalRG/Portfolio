@@ -53,9 +53,6 @@ export class LoginPageComponent {
       return;
     }
 
-    const { email, password } = this.form.value;
-    console.log('Login with', email, password);
-
     this.authService.login();
     this.router.navigateByUrl('/admin');
   }

@@ -62,11 +62,11 @@ describe('ContactComponent', () => {
 
     expect(component.contactForm.invalid).toBeTrue();
     expect(
-      component.getFormControls['name'].errors?.['minlength'],
+      component.contactForm.controls.name.errors?.['minlength'],
     ).toBeTruthy();
-    expect(component.getFormControls['email'].errors?.['email']).toBeTruthy();
+    expect(component.contactForm.controls.email.errors?.['email']).toBeTruthy();
     expect(
-      component.getFormControls['message'].errors?.['minlength'],
+      component.contactForm.controls.message.errors?.['minlength'],
     ).toBeTruthy();
   });
 

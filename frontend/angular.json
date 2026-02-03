@@ -101,7 +101,11 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": [],
+            "assets": [
+              "src/assets",
+              "src/favicon.ico",
+              "src/robots.txt"
+            ],
             "styles": [
               "src/styles.scss"
             ],

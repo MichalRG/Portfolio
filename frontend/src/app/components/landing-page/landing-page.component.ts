@@ -7,6 +7,7 @@ import { ProjectsComponent } from './projects/projects.component';
 
 @Component({
   selector: 'app-landing-page',
+  standalone: true,
   imports: [
     HeroComponent,
     ContactComponent,

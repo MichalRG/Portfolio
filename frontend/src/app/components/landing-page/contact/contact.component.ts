@@ -19,14 +19,15 @@ interface ContactForm {
 
 @Component({
   selector: 'app-contact',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactComponent {
-  contactForm: FormGroup;
-  currentYear = new Date().getFullYear();
+  contactForm: FormGroup<ContactForm>;
+  readonly currentYear = new Date().getFullYear();
   isSubmitting = false;
 
   private translate = inject(TranslateService);
@@ -49,10 +50,6 @@ export class ContactComponent {
         validators: [Validators.required, Validators.minLength(10)],
       }),
     });
-  }
-
-  get getFormControls() {
-    return this.contactForm.controls;
   }
 
   onSubmit() {
