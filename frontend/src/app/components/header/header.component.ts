@@ -13,19 +13,20 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs';
 import { LANGUAGES } from '../../constants/language.constants';
-import { LANGUAGE_STORAGE_KEY } from '../../constants/local-storage.constants';
 import { DROPDOWN_HIDE_DELAY_MS } from '../../constants/ui.constants';
 import { AuthService } from '../../services/auth.service';
+import { LanguageService } from '../../services/language.service';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
   imports: [TranslateModule, CommonModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
-  languages = LANGUAGES;
+  readonly languages = LANGUAGES;
   showDropdown = false;
   dropdownOpen = false;
   currentLanguage = 'en';
@@ -40,6 +41,7 @@ export class HeaderComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   private translateService = inject(TranslateService);
   private renderer = inject(Renderer2);
+  private languageService = inject(LanguageService);
 
   constructor() {
     this.currentLanguage = this.translateService.currentLang || 'en';
@@ -72,9 +74,8 @@ export class HeaderComponent implements OnInit {
   }
 
   changeLanguage(lang: string) {
-    this.translateService.use(lang);
+    this.languageService.useLanguage(lang);
     this.currentLanguage = lang;
-    localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
     this.dropdownOpen = false;
   }
 

@@ -1,4 +1,3 @@
-import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -8,7 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Meta, Title } from '@angular/platform-browser';
+import { Meta } from '@angular/platform-browser';
 import {
   NavigationEnd,
   NavigationStart,
@@ -17,12 +16,12 @@ import {
 } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { delay, filter, merge, tap } from 'rxjs';
-import { HeaderComponent } from './componenets/header/header.component';
-import { DEFAULT_LANGUAGE, LANGUAGES } from './constants/language.constants';
-import { LANGUAGE_STORAGE_KEY } from './constants/local-storage.constants';
+import { HeaderComponent } from './components/header/header.component';
+import { LanguageService } from './services/language.service';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   imports: [RouterOutlet, HeaderComponent],
@@ -35,38 +34,12 @@ export class AppComponent implements OnInit {
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
   private cdRef = inject(ChangeDetectorRef);
-  private title = inject(Title);
   private meta = inject(Meta);
   private translate = inject(TranslateService);
-  private document = inject(DOCUMENT);
+  private languageService = inject(LanguageService);
 
   constructor() {
-    const supportedLanguages = LANGUAGES.map((lang) => lang.code);
-    const storedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY);
-    const browserLanguage = navigator.language.split('-')[0];
-    const pathLanguage = window.location.pathname.startsWith('/pl')
-      ? 'pl'
-      : null;
-
-    const resolvedLanguage =
-      (pathLanguage && supportedLanguages.includes(pathLanguage)
-        ? pathLanguage
-        : null) ||
-      (storedLanguage && supportedLanguages.includes(storedLanguage)
-        ? storedLanguage
-        : null) ||
-      (supportedLanguages.includes(browserLanguage)
-        ? browserLanguage
-        : DEFAULT_LANGUAGE);
-
-    this.translate.setDefaultLang(DEFAULT_LANGUAGE);
-    this.translate.use(resolvedLanguage);
-    this.setDocumentLanguage(resolvedLanguage);
-    localStorage.setItem(LANGUAGE_STORAGE_KEY, resolvedLanguage);
-
-    this.translate.onLangChange
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((event) => this.setDocumentLanguage(event.lang));
+    this.languageService.initLanguage();
   }
 
   ngOnInit() {
@@ -96,12 +69,9 @@ export class AppComponent implements OnInit {
 
     this.translate
       .get('HOME.META_DESCRIPTION')
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((desc) =>
         this.meta.updateTag({ name: 'description', content: desc }),
       );
-  }
-
-  private setDocumentLanguage(language: string) {
-    this.document.documentElement.setAttribute('lang', language);
   }
 }

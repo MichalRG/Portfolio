@@ -1,6 +1,6 @@
 <section class="projects" id="projects">
   <div class="projects__grid">
-    @for (card of projects; track card) {
+    @for (card of projects; track card.title) {
       <div
         class="projects__card scroll-animate"
         appScrollReveal
@@ -18,8 +18,13 @@
           {{ card.description | translate }}
         </p>
         @if (card.link) {
-          <a class="projects__link" [href]="card.link" target="_blank">
-            {{ card.linkDescription | translate }}
+          <a
+            class="projects__link"
+            [href]="card.link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {{ (card.linkDescription ?? '') | translate }}
           </a>
         }
       </div>

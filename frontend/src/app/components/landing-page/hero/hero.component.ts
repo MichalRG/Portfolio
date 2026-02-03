@@ -14,6 +14,7 @@ import { interval, Subscription, switchMap, tap, timer } from 'rxjs';
 
 @Component({
   selector: 'app-hero',
+  standalone: true,
   imports: [CommonModule, TranslateModule],
   templateUrl: './hero.component.html',
   styleUrls: ['./hero.component.scss'],

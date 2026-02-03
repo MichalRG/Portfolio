@@ -17,7 +17,6 @@ npm i
 npm run start
 ```
 
-
 # Docker (AWS-like)
 
 From repo root:
@@ -149,3 +148,5 @@ aws cloudfront create-invalidation --distribution-id {{id}} --paths "/*"
 - [x] make more fancy card under hyperlink to your portfolio
 - [x] add index.html for pl and en
 - [x] replace current front carousel with short video - partially done as I added animation with zooming in
+- [ ] refactor animations for scrolling in portfolio
+- [ ] rafactor navigation

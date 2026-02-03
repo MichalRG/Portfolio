@@ -5,13 +5,14 @@ import { ScrollRevealDirective } from '../../../directives/scroll-reveal.directi
 
 @Component({
   selector: 'app-about',
+  standalone: true,
   imports: [CommonModule, TranslateModule, ScrollRevealDirective],
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AboutComponent implements OnInit {
-  techTags = [
+  readonly techTags = [
     'Angular',
     'Node.js',
     'TypeScript',
@@ -25,7 +26,7 @@ export class AboutComponent implements OnInit {
     'CI/CD',
     'REST API',
   ];
-  interestTags = [
+  readonly interestTags = [
     'AI',
     'ML',
     'UNITY',
@@ -43,15 +44,19 @@ export class AboutComponent implements OnInit {
   ];
   techChunks: string[][] = [];
   interestChunks: string[][] = [];
-  descriptionLines = [
+  readonly descriptionLines = [
     { key: 'ABOUT.DESCRIPTION_LINE_1', delay: 0 },
     { key: 'ABOUT.DESCRIPTION_LINE_2', delay: 0.5 },
     { key: 'ABOUT.DESCRIPTION_LINE_3', delay: 1 },
   ];
 
-  tagsDelay = this.descriptionLines
-    .map((descriptionData) => descriptionData.delay + 0.5)
-    .pop();
+  readonly tagsDelay =
+    Math.max(
+      0,
+      ...this.descriptionLines.map(
+        (descriptionData) => descriptionData.delay + 0.5,
+      ),
+    ) || 0;
 
   ngOnInit(): void {
     this.techChunks = this.chunkTags(this.techTags);

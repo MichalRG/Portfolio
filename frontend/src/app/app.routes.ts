@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { LandingPageComponent } from './componenets/landing-page/landing-page.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -10,7 +10,7 @@ export const routes: Routes = [
   {
     path: 'animations',
     loadComponent: () =>
-      import('./componenets/animations-page/animations-page.component').then(
+      import('./components/animations-page/animations-page.component').then(
         (m) => m.AnimationsPageComponent,
       ),
   },
@@ -18,20 +18,20 @@ export const routes: Routes = [
     path: 'layouts',
     loadComponent: () =>
       import(
-        './componenets/layout-playground-page/layout-playground-page.component'
+        './components/layout-playground-page/layout-playground-page.component'
       ).then((m) => m.LayoutPlaygroundPageComponent),
   },
   {
     path: 'login',
     loadComponent: () =>
-      import('./componenets/login-page/login-page.component').then(
+      import('./components/login-page/login-page.component').then(
         (m) => m.LoginPageComponent,
       ),
   },
   {
     path: 'admin',
     loadComponent: () =>
-      import('./componenets/admin-page/admin-page.component').then(
+      import('./components/admin-page/admin-page.component').then(
         (m) => m.AdminPageComponent,
       ),
     canActivate: [authGuard],

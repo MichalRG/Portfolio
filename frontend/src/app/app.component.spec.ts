@@ -14,7 +14,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './componenets/header/header.component';
+import { HeaderComponent } from './components/header/header.component';
 
 describe('AppComponent', () => {
   let component: AppComponent;
