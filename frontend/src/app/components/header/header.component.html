@@ -22,42 +22,78 @@
         class="nav__links"
         [ngClass]="{ 'nav__links--open': mobileMenuOpen() }"
       >
-        @if (currentPath() === '/') {
-          <li class="nav__item">
-            <a class="nav__link" href="#home">{{
-              'HEADER.HOME' | translate
-            }}</a>
-          </li>
-          <li class="nav__item">
-            <a class="nav__link" href="#about">{{
-              'HEADER.ABOUT' | translate
-            }}</a>
-          </li>
-          <li class="nav__item">
-            <a class="nav__link" href="#projects">{{
-              'HEADER.PROJECTS' | translate
-            }}</a>
-          </li>
-          <li class="nav__item">
-            <a class="nav__link" href="#contact">{{
-              'HEADER.CONTACT' | translate
-            }}</a>
-          </li>
-        } @else {
-          <li class="nav__item">
-            <a class="nav__link" routerLink="/">{{
-              'HEADER.HOME' | translate
-            }}</a>
-          </li>
-        }
+        <li class="nav__item">
+          <a
+            class="nav__link"
+            routerLink="/"
+            fragment="home"
+            [class.nav__link--active]="activeSection() === 'home'"
+            (click)="closeMenu()"
+          >{{
+            'HEADER.HOME' | translate
+          }}</a>
+        </li>
+        <li class="nav__item">
+          <a
+            class="nav__link"
+            routerLink="/"
+            fragment="about"
+            [class.nav__link--active]="activeSection() === 'about'"
+            (click)="closeMenu()"
+          >{{
+            'HEADER.ABOUT' | translate
+          }}</a>
+        </li>
+        <li class="nav__item">
+          <a
+            class="nav__link"
+            routerLink="/"
+            fragment="projects"
+            [class.nav__link--active]="activeSection() === 'projects'"
+            (click)="closeMenu()"
+          >{{
+            'HEADER.PROJECTS' | translate
+          }}</a>
+        </li>
+        <li class="nav__item">
+          <a
+            class="nav__link"
+            routerLink="/"
+            fragment="contact"
+            [class.nav__link--active]="activeSection() === 'contact'"
+            (click)="closeMenu()"
+          >{{
+            'HEADER.CONTACT' | translate
+          }}</a>
+        </li>
+        <li class="nav__item">
+          <a
+            class="nav__link"
+            routerLink="/blog"
+            [class.nav__link--active]="activeSection() === 'blog'"
+            (click)="closeMenu()"
+          >{{
+            'HEADER.BLOG' | translate
+          }}</a>
+        </li>
         @if (isLoggedIn()) {
           <li class="nav__item">
-            <a class="nav__link" routerLink="/animations">{{
+            <a
+              class="nav__link"
+              routerLink="/animations"
+              [class.nav__link--active]="activeSection() === 'animations'"
+              (click)="closeMenu()"
+            >{{
               'HEADER.ANIMATIONS' | translate
             }}</a>
           </li>
           <li class="nav__item">
-            <a class="nav__link" routerLink="/layouts">{{
+            <a
+              class="nav__link"
+              routerLink="/layouts"
+              [class.nav__link--active]="activeSection() === 'layouts'"
+              (click)="closeMenu()"
+            >{{
               'HEADER.LAYOUTS' | translate
             }}</a>
           </li>
@@ -72,13 +108,16 @@
       (mouseleave)="onMouseLeaveLanguage()"
     >
       <button class="nav__language-btn">
-        {{ currentLanguage.toUpperCase() }}
+        {{ currentLanguageSig().toUpperCase() }}
       </button>
-      @if (showDropdown) {
+      @if (showDropdownSig()) {
         <ul
           class="nav__language-dropdown"
           (animationend)="onAnimationEnd()"
-          [ngClass]="{ 'fade-in': dropdownOpen, 'fade-out': !dropdownOpen }"
+          [ngClass]="{
+            'fade-in': dropdownOpenSig(),
+            'fade-out': !dropdownOpenSig()
+          }"
         >
           @for (lang of languages; track lang.code) {
             <li class="nav__language-item" (click)="changeLanguage(lang.code)">

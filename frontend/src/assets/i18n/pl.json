@@ -6,11 +6,16 @@
   "HEADER": {
     "LOGO": "MK",
     "HOME": "Start",
+    "BLOG": "Blog",
     "ABOUT": "O mnie",
     "CONTACT": "Kontakt",
     "PROJECTS": "Projekty i osiągnięcia",
     "ANIMATIONS": "Animacje",
     "LAYOUTS": "Layouty"
+  },
+  "BLOG": {
+    "TITLE": "Blog",
+    "SUBTITLE": "Przemyślenia, notatki i luźne myśli..."
   },
   "HERO": {
     "TITLE-1": "Witaj po drugiej stronie ekranu!",

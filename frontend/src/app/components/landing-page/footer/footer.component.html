@@ -6,12 +6,16 @@
   <hr class="footer__divider" />
 
   <nav class="footer__nav">
-    <a class="footer__link" href="#home">{{ 'FOOTER.HOME' | translate }}</a>
-    <a class="footer__link" href="#about">{{ 'FOOTER.ABOUT' | translate }}</a>
-    <a class="footer__link" href="#projects">{{
+    <a class="footer__link" routerLink="/" fragment="home">{{
+      'FOOTER.HOME' | translate
+    }}</a>
+    <a class="footer__link" routerLink="/" fragment="about">{{
+      'FOOTER.ABOUT' | translate
+    }}</a>
+    <a class="footer__link" routerLink="/" fragment="projects">{{
       'FOOTER.PROJECTS' | translate
     }}</a>
-    <a class="footer__link" href="#contact">{{
+    <a class="footer__link" routerLink="/" fragment="contact">{{
       'FOOTER.CONTACT' | translate
     }}</a>
   </nav>

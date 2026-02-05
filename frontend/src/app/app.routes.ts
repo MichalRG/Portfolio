@@ -22,6 +22,13 @@ export const routes: Routes = [
       ).then((m) => m.LayoutPlaygroundPageComponent),
   },
   {
+    path: 'blog',
+    loadComponent: () =>
+      import('./components/blog-page/blog-page.component').then(
+        (m) => m.BlogPageComponent,
+      ),
+  },
+  {
     path: 'login',
     loadComponent: () =>
       import('./components/login-page/login-page.component').then(

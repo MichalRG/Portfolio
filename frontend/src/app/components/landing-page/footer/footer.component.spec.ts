@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { FooterComponent } from './footer.component';
 
@@ -9,6 +10,7 @@ describe('FooterComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FooterComponent, TranslateModule.forRoot()],
+      providers: [{ provide: ActivatedRoute, useValue: {} }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FooterComponent);

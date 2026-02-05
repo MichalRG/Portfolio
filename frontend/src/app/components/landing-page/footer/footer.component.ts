@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [TranslateModule],
+  imports: [TranslateModule, RouterModule],
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -6,7 +6,7 @@ import {
   provideZoneChangeDetection,
 } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToastrModule } from 'ngx-toastr';
@@ -20,7 +20,13 @@ export function HttpLoaderFactory(http: HttpClient) {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        anchorScrolling: 'enabled',
+        scrollPositionRestoration: 'enabled',
+      }),
+    ),
     provideHttpClient(),
     importProvidersFrom(
       TranslateModule.forRoot({
