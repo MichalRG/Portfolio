@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { LanguageService } from '../../services/language.service';
 import { HeaderComponent } from './header.component';
 
 class MockAuthService {
@@ -13,14 +14,9 @@ class MockAuthService {
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
-  let authServiceSpy: jasmine.SpyObj<AuthService>;
   let routerSpy: jasmine.SpyObj<Router>;
+  let languageServiceSpy: jasmine.SpyObj<LanguageService>;
   let events$: Subject<NavigationEnd>;
-  authServiceSpy = jasmine.createSpyObj('AuthService', [
-    'logout',
-    'isLoggedIn',
-  ]);
-  authServiceSpy.isLoggedIn.and.returnValue(true);
 
   beforeEach(async () => {
     events$ = new Subject<NavigationEnd>();
@@ -38,12 +34,17 @@ describe('HeaderComponent', () => {
     routerSpy.parseUrl.and.returnValue({} as any);
     routerSpy.serializeUrl.and.returnValue('/mocked-serialized-url');
 
+    languageServiceSpy = jasmine.createSpyObj('LanguageService', [
+      'useLanguage',
+    ]);
+
     await TestBed.configureTestingModule({
       imports: [HeaderComponent, TranslateModule.forRoot()],
       providers: [
         { provide: AuthService, useClass: MockAuthService },
         { provide: Router, useValue: routerSpy },
         { provide: ActivatedRoute, useValue: {} },
+        { provide: LanguageService, useValue: languageServiceSpy },
       ],
     }).compileComponents();
 
@@ -57,12 +58,11 @@ describe('HeaderComponent', () => {
   });
 
   it('should change language and update localStorage', () => {
-    const setItemSpy = spyOn(localStorage, 'setItem');
     component.changeLanguage('pl');
 
-    expect(component.currentLanguage).toBe('pl');
-    expect(setItemSpy).toHaveBeenCalledWith('language', 'pl');
-    expect(component.dropdownOpen).toBeFalse();
+    expect(languageServiceSpy.useLanguage).toHaveBeenCalledWith('pl');
+    expect(component.currentLanguageSig()).toBe('pl');
+    expect(component.dropdownOpenSig()).toBeFalse();
   });
 
   it('should call logout and redirect to /login', () => {
@@ -76,27 +76,27 @@ describe('HeaderComponent', () => {
 
   it('should handle language dropdown mouse enter/leave', () => {
     component.onMouseEnterLanguage();
-    expect(component.showDropdown).toBeTrue();
-    expect(component.dropdownOpen).toBeTrue();
+    expect(component.showDropdownSig()).toBeTrue();
+    expect(component.dropdownOpenSig()).toBeTrue();
 
     jasmine.clock().install();
     component.onMouseLeaveLanguage();
     jasmine.clock().tick(500); // DROPDOWN_HIDE_DELAY_MS
-    expect(component.dropdownOpen).toBeFalse();
+    expect(component.dropdownOpenSig()).toBeFalse();
     jasmine.clock().uninstall();
   });
 
   it('should hide dropdown on animation end if dropdownOpen is false', () => {
-    component.dropdownOpen = false;
-    component.showDropdown = true;
+    component.dropdownOpenSig.set(false);
+    component.showDropdownSig.set(true);
 
     component.onAnimationEnd();
 
-    expect(component.showDropdown).toBeFalse();
+    expect(component.showDropdownSig()).toBeFalse();
   });
 
-  it('should update currentPath on NavigationEnd', () => {
+  it('should update activeSection on NavigationEnd', () => {
     events$.next(new NavigationEnd(1, '/projects', '/projects'));
-    expect(component.currentPath()).toBe('/projects');
+    expect(component.activeSection()).toBe('projects');
   });
 });

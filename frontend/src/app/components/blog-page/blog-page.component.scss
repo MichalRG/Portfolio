@@ -1,0 +1,23 @@
+.blog {
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+}
+
+.blog__content {
+  max-width: 720px;
+  text-align: center;
+}
+
+.blog__title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0 0 16px;
+}
+
+.blog__subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  opacity: 0.8;
+  margin: 0;
+}

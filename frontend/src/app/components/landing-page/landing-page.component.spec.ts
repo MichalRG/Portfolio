@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { LandingPageComponent } from './landing-page.component';
 
@@ -28,7 +29,10 @@ describe('LandingPageComponent', () => {
         ProjectsComponent,
         TranslateModule.forRoot(),
       ],
-      providers: [{ provide: ToastrService, useValue: mockToastrService }],
+      providers: [
+        { provide: ToastrService, useValue: mockToastrService },
+        { provide: ActivatedRoute, useValue: {} },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LandingPageComponent);
