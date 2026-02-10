@@ -1,0 +1,87 @@
+@if (articleView(); as article) {
+  <section class="blog-article-page">
+    <div class="blog-article-page__shell">
+      <a class="blog-article-page__back-link" routerLink="/blog">
+        {{ 'BLOG.BACK_TO_LIST' | translate }}
+      </a>
+
+      <header class="blog-article-page__header">
+        <h1 class="blog-article-page__title">{{ article.title }}</h1>
+        <p class="blog-article-page__description">{{ article.description }}</p>
+
+        <ul class="blog-article-page__tags">
+          @for (tag of article.tags; track tag) {
+            <li class="blog-article-page__tag">{{ tag }}</li>
+          }
+        </ul>
+
+        <div class="blog-article-page__meta">
+          <span>{{ article.publishedAtFormatted }}</span>
+          <span aria-hidden="true">•</span>
+          <span>
+            {{
+              'BLOG.READ_TIME' | translate: { minutes: article.estimatedReadMinutes }
+            }}
+          </span>
+        </div>
+      </header>
+
+      <div class="blog-article-page__layout">
+        @if (article.toc.length > 0) {
+          <nav class="blog-article-page__toc" [attr.aria-label]="'BLOG.TOC_TITLE' | translate">
+            <p class="blog-article-page__toc-title">
+              {{ 'BLOG.TOC_TITLE' | translate }}
+            </p>
+            <ul class="blog-article-page__toc-list">
+              @for (item of article.toc; track trackByTocId($index, item)) {
+                <li
+                  class="blog-article-page__toc-item"
+                  [class.blog-article-page__toc-item--nested]="item.level === 3"
+                >
+                  <a [routerLink]="[]" [fragment]="item.id">{{ item.text }}</a>
+                </li>
+              }
+            </ul>
+          </nav>
+        }
+
+        <article class="blog-article-page__article" [innerHTML]="article.contentHtml"></article>
+      </div>
+
+      @if (relatedArticles().length > 0) {
+        <section class="blog-article-page__related">
+          <h2 class="blog-article-page__related-title">
+            {{ 'BLOG.RELATED_TITLE' | translate }}
+          </h2>
+          <div class="blog-article-page__related-list">
+            @for (
+              relatedArticle of relatedArticles();
+              track trackByRelatedSlug($index, relatedArticle)
+            ) {
+              <a
+                class="blog-article-page__related-card"
+                [routerLink]="['/blog', relatedArticle.slug]"
+              >
+                <h3>{{ relatedArticle.title }}</h3>
+                <p>{{ relatedArticle.description }}</p>
+              </a>
+            }
+          </div>
+        </section>
+      }
+
+      <section class="blog-article-page__share">
+        <button
+          class="blog-article-page__share-button"
+          type="button"
+          (click)="shareArticle()"
+        >
+          <img src="assets/icons/share.svg" alt="" aria-hidden="true" />
+          <span>{{ 'BLOG.SHARE' | translate }}</span>
+        </button>
+      </section>
+    </div>
+  </section>
+}
+
+<app-footer></app-footer>

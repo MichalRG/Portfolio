@@ -13,9 +13,22 @@
     "ANIMATIONS": "Animacje",
     "LAYOUTS": "Layouty"
   },
-  "BLOG": {
+   "BLOG": {
     "TITLE": "Blog",
-    "SUBTITLE": "Przemyślenia, notatki i luźne myśli..."
+    "SUBTITLE": "Programowanie i luźne przemyślenia",
+    "INTRO_TEXT": "Artykuły dotyczą glównie programowania, decyzji architektonicznych i mojego doświadczenia.",
+    "SEARCH_LABEL": "Szukaj po tytule",
+    "SEARCH_PLACEHOLDER": "Wpisz fragment tytulu",
+    "EMPTY": "Brak artykulow pasujacych do tytulu.",
+    "READ_TIME": "{{minutes}} min czytania",
+    "BACK_TO_LIST": "Powrot do listy artykulow",
+    "TOC_TITLE": "Spis tresci",
+    "RELATED_TITLE": "Powiazane artykuly",
+    "SHARE": "Udostepnij link do artykulu",
+    "SHARE_SUCCESS_TITLE": "Skopiowano link",
+    "SHARE_SUCCESS_MESSAGE": "Link do artykulu skopiowany do schowka.",
+    "SHARE_ERROR_TITLE": "Blad kopiowania",
+    "SHARE_ERROR_MESSAGE": "Nie udalo sie automatycznie skopiowac linku."
   },
   "HERO": {
     "TITLE-1": "Witaj po drugiej stronie ekranu!",

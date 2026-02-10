@@ -1,6 +1,58 @@
 <section class="blog">
-  <div class="blog__content">
-    <h1 class="blog__title">{{ 'BLOG.TITLE' | translate }}</h1>
-    <p class="blog__subtitle">{{ 'BLOG.SUBTITLE' | translate }}</p>
+  <div class="blog__shell">
+    <header class="blog__intro">
+      <p class="blog__eyebrow">{{ 'BLOG.SUBTITLE' | translate }}</p>
+      <h1 class="blog__title">{{ 'BLOG.TITLE' | translate }}</h1>
+      <p class="blog__description">{{ 'BLOG.INTRO_TEXT' | translate }}</p>
+    </header>
+
+    <div class="blog__search">
+      <label class="blog__search-label" for="blog-search">
+        {{ 'BLOG.SEARCH_LABEL' | translate }}
+      </label>
+      <input
+        id="blog-search"
+        class="blog__search-input"
+        type="search"
+        [value]="searchQuery()"
+        [placeholder]="'BLOG.SEARCH_PLACEHOLDER' | translate"
+        (input)="onSearchInput($event)"
+      />
+    </div>
+
+    @if (filteredArticles().length > 0) {
+      <div class="blog__list">
+        @for (article of filteredArticles(); track trackBySlug($index, article)) {
+          <a
+            class="blog__card"
+            [routerLink]="['/blog', article.slug]"
+            [attr.aria-label]="article.title"
+          >
+            <h2 class="blog__card-title">{{ article.title }}</h2>
+            <p class="blog__card-description">{{ article.description }}</p>
+
+            <ul class="blog__tags">
+              @for (tag of article.tags; track tag) {
+                <li class="blog__tag">{{ tag }}</li>
+              }
+            </ul>
+
+            <div class="blog__meta">
+              <span>{{ article.publishedAtFormatted }}</span>
+              <span aria-hidden="true">•</span>
+              <span>
+                {{
+                  'BLOG.READ_TIME' | translate: { minutes: article.estimatedReadMinutes }
+                }}
+              </span>
+            </div>
+          </a>
+        }
+      </div>
+    } @else {
+      <p class="blog__empty">{{ 'BLOG.EMPTY' | translate }}</p>
+    }
   </div>
 </section>
+
+<app-footer></app-footer>

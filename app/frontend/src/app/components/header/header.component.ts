@@ -142,6 +142,13 @@ export class HeaderComponent implements OnInit {
     const path = pathPart.split('?')[0];
     const section = fragment ?? '';
 
+    if (this.isBlogPath(path)) {
+      this.activeSection.set('blog');
+      this.observeRetryCount = 0;
+      this.disconnectSectionObserver();
+      return;
+    }
+
     if (path !== '/') {
       this.activeSection.set(path.replace('/', ''));
       this.observeRetryCount = 0;
@@ -217,5 +224,15 @@ export class HeaderComponent implements OnInit {
   private disconnectSectionObserver() {
     this.sectionObserver?.disconnect();
     this.sectionObserver = undefined;
+  }
+
+  private isBlogPath(path: string): boolean {
+    const normalizedPath = path.replace(/\/+$/, '');
+    return (
+      normalizedPath === '/blog' ||
+      normalizedPath.startsWith('/blog/') ||
+      normalizedPath === '/pl/blog' ||
+      normalizedPath.startsWith('/pl/blog/')
+    );
   }
 }

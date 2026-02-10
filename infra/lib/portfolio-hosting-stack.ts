@@ -32,6 +32,7 @@ import {
 import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 import { Construct } from "constructs";
 import { randomBytes } from "crypto";
+import * as path from "path";
 import { SpaHostingStackProps } from "./types";
 
 export class SpaHostingStack extends Stack {
@@ -261,8 +262,13 @@ export class SpaHostingStack extends Stack {
     });
 
     // 5) Deploy your built Angular files and invalidate cache
+    const frontendDistPath = path.resolve(
+      __dirname,
+      "../../app/frontend/dist/portfolio-website/browser"
+    );
+
     new BucketDeployment(this, "DeployWebsite", {
-      sources: [Source.asset("../frontend/dist/portfolio-website/browser")],
+      sources: [Source.asset(frontendDistPath)],
       destinationBucket: portfolioBucket,
       distribution: this.distribution,
       distributionPaths: ["/*"],

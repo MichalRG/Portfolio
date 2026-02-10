@@ -15,7 +15,20 @@
   },
   "BLOG": {
     "TITLE": "Blog",
-    "SUBTITLE": "Thoughts and notes. Coming soon."
+    "SUBTITLE": "Programming notes and personal thoughts",
+    "INTRO_TEXT": "Articles are about programming, software engineering decisions, and what I learn while during my work.",
+    "SEARCH_LABEL": "Search article titles",
+    "SEARCH_PLACEHOLDER": "Type a title to filter articles",
+    "EMPTY": "No articles match this title query.",
+    "READ_TIME": "{{minutes}} min read",
+    "BACK_TO_LIST": "Back to blog list",
+    "TOC_TITLE": "On this page",
+    "RELATED_TITLE": "Related posts",
+    "SHARE": "Share article link",
+    "SHARE_SUCCESS_TITLE": "Link copied",
+    "SHARE_SUCCESS_MESSAGE": "Article link copied to clipboard.",
+    "SHARE_ERROR_TITLE": "Copy failed",
+    "SHARE_ERROR_MESSAGE": "Could not copy the link automatically."
   },
   "HERO": {
     "TITLE-1": "Welcome from the other side of the screen!",

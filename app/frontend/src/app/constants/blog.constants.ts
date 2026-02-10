@@ -1,0 +1,2 @@
+export const BLOG_DEFAULT_RELATED_POST_LIMIT = 3;
+export const BLOG_WORDS_PER_MINUTE = 220;

@@ -1,0 +1,262 @@
+@use 'assets/styles/variables' as *;
+
+.blog-article-page {
+  background: $color-background;
+  color: $color-text;
+  padding: 7rem 1.5rem 3rem;
+
+  &__shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    gap: 1.8rem;
+  }
+
+  &__back-link {
+    width: fit-content;
+    text-decoration: none;
+    color: $color-primary;
+    border-bottom: 1px solid transparent;
+
+    &:hover {
+      border-color: currentColor;
+    }
+  }
+
+  &__header {
+    display: grid;
+    gap: 0.95rem;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px solid rgba($color-primary, 0.25);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    color: $color-primary;
+  }
+
+  &__description {
+    margin: 0;
+    max-width: 900px;
+    line-height: 1.7;
+    color: rgba($color-text, 0.88);
+  }
+
+  &__tags {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  &__tag {
+    font-size: 0.76rem;
+    padding: 0.26rem 0.58rem;
+    border-radius: 999px;
+    border: 1px solid rgba($color-primary, 0.28);
+    color: rgba($color-text, 0.86);
+    background: rgba($color-primary, 0.08);
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    color: rgba($color-text, 0.65);
+    font-size: 0.86rem;
+  }
+
+  &__layout {
+    display: grid;
+    grid-template-columns: minmax(210px, 260px) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+  }
+
+  &__toc {
+    position: sticky;
+    top: 94px;
+    border: 1px solid rgba($color-primary, 0.22);
+    border-radius: 12px;
+    background: rgba(17, 17, 17, 0.92);
+    padding: 1rem;
+  }
+
+  &__toc-title {
+    margin: 0 0 0.75rem;
+    font-size: 0.86rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: rgba($color-primary, 0.9);
+  }
+
+  &__toc-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  &__toc-item {
+    a {
+      color: rgba($color-text, 0.86);
+      text-decoration: none;
+      font-size: 0.9rem;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+  }
+
+  &__toc-item--nested {
+    padding-left: 0.75rem;
+  }
+
+  &__article {
+    min-width: 0;
+    line-height: 1.8;
+    color: rgba($color-text, 0.95);
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: $color-primary;
+      margin-top: 1.8rem;
+      margin-bottom: 0.75rem;
+      scroll-margin-top: 90px;
+    }
+
+    p {
+      margin: 0 0 1rem;
+    }
+
+    ul {
+      margin: 0.6rem 0 1rem;
+      padding-left: 1.2rem;
+    }
+
+    li {
+      margin-bottom: 0.45rem;
+    }
+
+    pre {
+      margin: 1.2rem 0;
+      padding: 1rem;
+      overflow-x: auto;
+      border-radius: 10px;
+      background: $color-code;
+      border: 1px solid rgba($color-primary, 0.2);
+    }
+
+    code {
+      font-family:
+        Consolas,
+        'Courier New',
+        monospace;
+    }
+  }
+
+  &__related {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  &__related-title {
+    margin: 0;
+    color: $color-primary;
+    font-size: 1.3rem;
+  }
+
+  &__related-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+
+  &__related-card {
+    border: 1px solid rgba($color-primary, 0.2);
+    border-radius: 12px;
+    padding: 0.95rem 1rem;
+    text-decoration: none;
+    color: inherit;
+    background: rgba(17, 17, 17, 0.88);
+
+    &:hover {
+      border-color: rgba($color-primary, 0.45);
+    }
+
+    h3 {
+      margin: 0 0 0.45rem;
+      color: $color-primary;
+      font-size: 1rem;
+    }
+
+    p {
+      margin: 0;
+      color: rgba($color-text, 0.78);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+  }
+
+  &__share {
+    margin-top: 1.5rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba($color-primary, 0.22);
+    display: flex;
+    justify-content: center;
+  }
+
+  &__share-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.62rem 0.95rem;
+    border-radius: 10px;
+    border: 1px solid rgba($color-primary, 0.45);
+    background: #111;
+    color: $color-text;
+    cursor: pointer;
+    font-weight: 600;
+
+    &:hover {
+      border-color: rgba($color-primary, 0.8);
+    }
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+@media (max-width: 1000px) {
+  .blog-article-page {
+    &__layout {
+      grid-template-columns: 1fr;
+    }
+
+    &__toc {
+      position: static;
+    }
+
+    &__related-list {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .blog-article-page {
+    padding-top: 6.2rem;
+  }
+}
