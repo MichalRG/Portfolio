@@ -8,6 +8,7 @@
     "start": "ng serve",
     "build": "ng build",
     "build:multi": "node scripts/build-multi-lang.js",
+    "preview:prod": "docker build -t portfolio-aws --build-arg CSP_NONCE=local-dev-nonce . && docker run --rm -p 8080:80 portfolio-aws",
     "build:watch": "ng build --watch --configuration development",
     "smoke": "node tests/smoke/smoke-check.js",
     "postbuild": "node scripts/add-csp-nonce.js",

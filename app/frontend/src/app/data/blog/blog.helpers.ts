@@ -88,7 +88,9 @@ const flushList = (listItems: string[], htmlParts: string[]): void => {
     return;
   }
 
-  const items = listItems.map((item) => `<li>${escapeHtml(item)}</li>`).join('');
+  const items = listItems
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join('');
   htmlParts.push(`<ul>${items}</ul>`);
   listItems.length = 0;
 };
@@ -103,9 +105,7 @@ const flushCodeBlock = (
   }
 
   const escapedCode = escapeHtml(codeLines.join('\n'));
-  const className = language
-    ? ` class="language-${escapeHtml(language)}"`
-    : '';
+  const className = language ? ` class="language-${escapeHtml(language)}"` : '';
   htmlParts.push(`<pre><code${className}>${escapedCode}</code></pre>`);
   codeLines.length = 0;
 };
@@ -113,14 +113,18 @@ const flushCodeBlock = (
 const compareDatesDesc = (left: string, right: string): number =>
   new Date(right).getTime() - new Date(left).getTime();
 
-export const resolveBlogLanguage = (language: string | undefined): BlogLanguageCode => {
+export const resolveBlogLanguage = (
+  language: string | undefined,
+): BlogLanguageCode => {
   if (!language) {
     return 'en';
   }
 
   const normalized = language.toLowerCase().split('-')[0];
   const supported = BLOG_LANGUAGE_CODES as readonly string[];
-  return supported.includes(normalized) ? (normalized as BlogLanguageCode) : 'en';
+  return supported.includes(normalized)
+    ? (normalized as BlogLanguageCode)
+    : 'en';
 };
 
 export const getLocalizedArticle = (
@@ -149,9 +153,10 @@ export const formatBlogDate = (
   language: string | undefined,
 ): string => {
   const resolvedLanguage = resolveBlogLanguage(language);
-  return new Intl.DateTimeFormat(resolvedLanguage, BLOG_DATE_FORMAT_OPTIONS).format(
-    new Date(dateIso),
-  );
+  return new Intl.DateTimeFormat(
+    resolvedLanguage,
+    BLOG_DATE_FORMAT_OPTIONS,
+  ).format(new Date(dateIso));
 };
 
 export const renderMarkdownArticle = (markdown: string): RenderedArticle => {
@@ -263,7 +268,10 @@ export const getRelatedArticles = (
       if (right.overlapCount !== left.overlapCount) {
         return right.overlapCount - left.overlapCount;
       }
-      return compareDatesDesc(left.article.publishedAt, right.article.publishedAt);
+      return compareDatesDesc(
+        left.article.publishedAt,
+        right.article.publishedAt,
+      );
     });
 
   const related = scoredArticles
