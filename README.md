@@ -12,7 +12,7 @@ I encourage you to visit mkrzyzowski.com to see it in action :) it's still not f
 1. Install deps and run local serve of frontend
 
 ```ts
-cd frontend
+cd app/frontend
 npm i
 npm run start
 ```
@@ -22,9 +22,8 @@ npm run start
 From repo root:
 
 ```bash
-cd frontend
-docker build -t portfolio-aws --build-arg CSP_NONCE=local-dev-nonce .
-docker run --rm -p 8080:80 portfolio-aws
+cd app/frontend
+npm run preview:prod
 ```
 
 Then open http://localhost:8080
@@ -45,12 +44,14 @@ npx cdk bootstrap aws://{{accountId}}//{{region}}
 2. Build app (EN + PL index)
 
 ```ts
-cd ../frontend
+cd ../app/frontend
 npm i
 NONCE=$(openssl rand -base64 16) //generate NONCE for style file
 CSP_NONCE="$NONCE" npm run build:multi  //builds EN + PL index and injects nonce
 HANDLER_HASH=$(cat dist/handlerHash.txt) //for CSP to get rid console error
 ```
+
+For production deployments, prefer the CI artifact from `app/frontend/dist` (built in GitHub Actions) instead of rebuilding locally during deploy.
 
 3. Check Infra file setup
 
@@ -112,7 +113,7 @@ if [ -f "$SIMPLE_GIT_HOOKS_RC" ]; then
     . "$SIMPLE_GIT_HOOKS_RC"
 fi
 
-cd frontend
+cd app/frontend
 npm run lint
 ```
 
