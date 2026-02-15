@@ -54,7 +54,8 @@ export class BlogPageComponent {
 
   private readonly sortedArticles = [...BLOG_ARTICLES].sort(
     (left, right) =>
-      new Date(right.publishedAt).getTime() - new Date(left.publishedAt).getTime(),
+      new Date(right.publishedAt).getTime() -
+      new Date(left.publishedAt).getTime(),
   );
   private readonly articleCards = computed<BlogArticleCardViewModel[]>(() => {
     const language = this.currentLanguage();

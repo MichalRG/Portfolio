@@ -60,7 +60,9 @@ export class BlogArticlePageComponent implements OnInit {
 
     const language = this.currentLanguage();
     const localizedContent = getLocalizedArticle(article, language);
-    const renderedArticle = renderMarkdownArticle(localizedContent.contentMarkdown);
+    const renderedArticle = renderMarkdownArticle(
+      localizedContent.contentMarkdown,
+    );
     const trustedHtml = this.domSanitizer.bypassSecurityTrustHtml(
       renderedArticle.html,
     );
@@ -146,13 +148,19 @@ export class BlogArticlePageComponent implements OnInit {
 
     if (copied) {
       const title = this.translateService.instant('BLOG.SHARE_SUCCESS_TITLE');
-      const message = this.translateService.instant('BLOG.SHARE_SUCCESS_MESSAGE');
+      const message = this.translateService.instant(
+        'BLOG.SHARE_SUCCESS_MESSAGE',
+      );
       this.toastr.success(message, title);
       return;
     }
 
-    const fallbackTitle = this.translateService.instant('BLOG.SHARE_ERROR_TITLE');
-    const fallbackMessage = this.translateService.instant('BLOG.SHARE_ERROR_MESSAGE');
+    const fallbackTitle = this.translateService.instant(
+      'BLOG.SHARE_ERROR_TITLE',
+    );
+    const fallbackMessage = this.translateService.instant(
+      'BLOG.SHARE_ERROR_MESSAGE',
+    );
     this.toastr.error(fallbackMessage, fallbackTitle);
   }
 
