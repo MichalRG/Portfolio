@@ -46,15 +46,15 @@ export class AboutComponent implements OnInit {
   interestChunks: string[][] = [];
   readonly descriptionLines = [
     { key: 'ABOUT.DESCRIPTION_LINE_1', delay: 0 },
-    { key: 'ABOUT.DESCRIPTION_LINE_2', delay: 0.5 },
-    { key: 'ABOUT.DESCRIPTION_LINE_3', delay: 1 },
+    { key: 'ABOUT.DESCRIPTION_LINE_2', delay: 0.25 },
+    { key: 'ABOUT.DESCRIPTION_LINE_3', delay: 0.5 },
   ];
 
   readonly tagsDelay =
     Math.max(
       0,
       ...this.descriptionLines.map(
-        (descriptionData) => descriptionData.delay + 0.5,
+        (descriptionData) => descriptionData.delay + 0.25,
       ),
     ) || 0;
 

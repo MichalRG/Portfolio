@@ -29,8 +29,8 @@
 
     &.scroll-animate {
       transition:
-        opacity 1.5s ease 1s,
-        transform 1.5s ease 1s;
+        opacity 0.75s ease 0.5s,
+        transform 0.75s ease 0.5s;
     }
 
     &.active {
