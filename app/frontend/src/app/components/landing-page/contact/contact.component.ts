@@ -28,6 +28,7 @@ interface ContactForm {
 export class ContactComponent {
   contactForm: FormGroup<ContactForm>;
   readonly currentYear = new Date().getFullYear();
+  readonly contactEmail = 'michal.krzyzowski98@gmail.com';
   isSubmitting = false;
 
   private translate = inject(TranslateService);
@@ -57,22 +58,58 @@ export class ContactComponent {
       this.contactForm.markAllAsTouched();
       return;
     }
+
     this.isSubmitting = true;
 
-    const name = this.contactForm.value.name;
-    const email = this.contactForm.value.email;
-    const message = this.contactForm.value.message;
+    const { name, email, message } = this.contactForm.getRawValue();
 
     const subject = encodeURIComponent(`Contact from ${name}`);
     const body = encodeURIComponent(`Email: ${email}\n\n${message}\n\n${name}`);
-    const mailtoUrl = `mailto:michal.krzyzowski98@gmail.com?subject=${subject}&body=${body}`;
+    const mailtoUrl = `mailto:${this.contactEmail}?subject=${subject}&body=${body}`;
 
-    const titleToastr = this.translate.instant('CONTACT.TOAST.TITLE');
-    const messageToastr = this.translate.instant('CONTACT.TOAST.MESSAGE');
+    const titleToastr = this.translate.instant('CONTACT.TOAST.OPENING_TITLE');
+    const messageToastr = this.translate.instant(
+      'CONTACT.TOAST.OPENING_MESSAGE',
+    );
 
-    this.toastr.success(messageToastr, titleToastr);
+    this.toastr.info(messageToastr, titleToastr);
 
     this.isSubmitting = false;
     this.browser.navigate(mailtoUrl);
+  }
+
+  async copyEmail() {
+    const isCopied = await this.copyToClipboard(this.contactEmail);
+
+    if (isCopied) {
+      this.toastr.success(
+        this.translate.instant('CONTACT.TOAST.COPY_SUCCESS_MESSAGE'),
+        this.translate.instant('CONTACT.TOAST.COPY_SUCCESS_TITLE'),
+      );
+      return;
+    }
+
+    this.toastr.error(
+      this.translate.instant('CONTACT.TOAST.COPY_ERROR_MESSAGE'),
+      this.translate.instant('CONTACT.TOAST.COPY_ERROR_TITLE'),
+    );
+  }
+
+  private async copyToClipboard(text: string): Promise<boolean> {
+    if (
+      typeof window === 'undefined' ||
+      typeof navigator === 'undefined' ||
+      !window.isSecureContext ||
+      !navigator.clipboard?.writeText
+    ) {
+      return false;
+    }
+
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      return false;
+    }
   }
 }

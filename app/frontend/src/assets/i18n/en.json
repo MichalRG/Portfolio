@@ -1,4 +1,4 @@
-{
+﻿{
   "HOME": {
     "TITLE": "Michal Krzyżowski - Portfolio 🫎",
     "META_DESCRIPTION": "Welcome to my portfolio! Explore my thoughts, projects, achievements, and interests 💥. I encourage to contact, I'll be more than glad to connect!"
@@ -81,14 +81,20 @@
   "CONTACT": {
     "TITLE": "Get in Touch",
     "TEXT": "Feel free to reach out via email or connect on social media.",
+    "DIRECT_EMAIL": "Or email me directly:",
     "NAME": "Your Name",
     "EMAIL": "Your Email",
     "MESSAGE": "Your Message",
+    "COPY_EMAIL": "Copy email",
     "SEND": "Send Message",
     "SENDING": "Sending...",
     "TOAST": {
-      "TITLE": "Email Window Open",
-      "MESSAGE": "Opening your mail app, thanks for your time 😎!"
+      "OPENING_TITLE": "Trying to open email app",
+      "OPENING_MESSAGE": "If nothing opens, use the direct email link or copy button.",
+      "COPY_SUCCESS_TITLE": "Email copied",
+      "COPY_SUCCESS_MESSAGE": "Email address copied to clipboard.",
+      "COPY_ERROR_TITLE": "Copy failed",
+      "COPY_ERROR_MESSAGE": "Could not copy automatically. Please copy the address manually."
     },
     "ERROR": {
       "NAME_REQUIRED": "Name is required",

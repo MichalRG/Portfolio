@@ -13,7 +13,11 @@ describe('ContactComponent', () => {
   const browserSpy = jasmine.createSpyObj('BrowserLocation', ['navigate']);
 
   beforeEach(async () => {
-    toastrServiceSpy = jasmine.createSpyObj('ToastrService', ['success']);
+    toastrServiceSpy = jasmine.createSpyObj('ToastrService', [
+      'success',
+      'info',
+      'error',
+    ]);
     await TestBed.configureTestingModule({
       imports: [
         ContactComponent,
@@ -83,9 +87,9 @@ describe('ContactComponent', () => {
 
     component.onSubmit();
 
-    expect(toastrServiceSpy.success).toHaveBeenCalledWith(
-      'CONTACT.TOAST.MESSAGE',
-      'CONTACT.TOAST.TITLE',
+    expect(toastrServiceSpy.info).toHaveBeenCalledWith(
+      'CONTACT.TOAST.OPENING_MESSAGE',
+      'CONTACT.TOAST.OPENING_TITLE',
     );
     expect(component.contactForm.value).toEqual({
       name,
@@ -106,6 +110,40 @@ describe('ContactComponent', () => {
 
     component.onSubmit();
 
-    expect(toastrServiceSpy.success).not.toHaveBeenCalled();
+    expect(toastrServiceSpy.info).not.toHaveBeenCalled();
+    expect(browserSpy.navigate).not.toHaveBeenCalled();
+  });
+
+  it('should show success toast when copying email succeeds', async () => {
+    spyOn(
+      component as unknown as {
+        copyToClipboard: (text: string) => Promise<boolean>;
+      },
+      'copyToClipboard',
+    ).and.returnValue(Promise.resolve(true));
+
+    await component.copyEmail();
+
+    expect(toastrServiceSpy.success).toHaveBeenCalledWith(
+      'CONTACT.TOAST.COPY_SUCCESS_MESSAGE',
+      'CONTACT.TOAST.COPY_SUCCESS_TITLE',
+    );
+    expect(toastrServiceSpy.error).not.toHaveBeenCalled();
+  });
+
+  it('should show error toast when copying email fails', async () => {
+    spyOn(
+      component as unknown as {
+        copyToClipboard: (text: string) => Promise<boolean>;
+      },
+      'copyToClipboard',
+    ).and.returnValue(Promise.resolve(false));
+
+    await component.copyEmail();
+
+    expect(toastrServiceSpy.error).toHaveBeenCalledWith(
+      'CONTACT.TOAST.COPY_ERROR_MESSAGE',
+      'CONTACT.TOAST.COPY_ERROR_TITLE',
+    );
   });
 });

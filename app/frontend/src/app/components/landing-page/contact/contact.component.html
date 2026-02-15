@@ -2,6 +2,17 @@
   <div class="contact__inner">
     <h2 class="contact__title">{{ 'CONTACT.TITLE' | translate }}</h2>
     <p class="contact__text">{{ 'CONTACT.TEXT' | translate }}</p>
+    <div class="contact__quick-actions">
+      <span class="contact__quick-label">
+        {{ 'CONTACT.DIRECT_EMAIL' | translate }}
+      </span>
+      <a class="contact__mail-link" [href]="'mailto:' + contactEmail">
+        {{ contactEmail }}
+      </a>
+      <button class="contact__copy-button" type="button" (click)="copyEmail()">
+        {{ 'CONTACT.COPY_EMAIL' | translate }}
+      </button>
+    </div>
 
     <form
       class="contact__form"

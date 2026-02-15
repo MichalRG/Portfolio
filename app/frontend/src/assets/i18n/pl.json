@@ -1,4 +1,4 @@
-{
+﻿{
   "HOME": {
     "TITLE": "Michal Krzyżowski - Portfolio 🫎",
     "META_DESCRIPTION": "Witaj na moim portfolio! Skubnij moich przemyśleń, sprawdź projekty, osiągnięcia i zainteresowania 💥. Zachęcam do kontaktu, będzie mi niezwykle miło!"
@@ -13,10 +13,10 @@
     "ANIMATIONS": "Animacje",
     "LAYOUTS": "Layouty"
   },
-   "BLOG": {
+  "BLOG": {
     "TITLE": "Blog",
     "SUBTITLE": "Programowanie i luźne przemyślenia",
-    "INTRO_TEXT": "Artykuły dotyczą glównie programowania, decyzji architektonicznych i mojego doświadczenia.",
+    "INTRO_TEXT": "Artykuły dotyczą głównie programowania, decyzji architektonicznych i mojego doświadczenia.",
     "SEARCH_LABEL": "Szukaj po tytule",
     "SEARCH_PLACEHOLDER": "Wpisz fragment tytulu",
     "EMPTY": "Brak artykulow pasujacych do tytulu.",
@@ -80,15 +80,21 @@
   },
   "CONTACT": {
     "TITLE": "Kontakt",
+    "DIRECT_EMAIL": "Lub napisz bezpośrednio:",
     "TEXT": "Zapraszam do kontaktu mailowego lub przez media społecznościowe.",
     "NAME": "Twoje imię",
     "EMAIL": "Twój email",
     "MESSAGE": "Twoja wiadomość",
     "SENDING": "Wysyłanie...",
     "SEND": "Wyślij 📧",
+    "COPY_EMAIL": "Kopiuj e-mail 📋",
     "TOAST": {
-      "TITLE": "Otwieranie okna e-mail",
-      "MESSAGE": "Otwieranie Twojej aplikacji mailowej, dzięki za Twój czas 😎!"
+      "OPENING_TITLE": "Próba otwarcia aplikacji e-mail",
+      "OPENING_MESSAGE": "Jeśli nic się nie otworzy, użyj linku e-mail albo kopiowania adresu. Dzięki za Twój czas 😎!",
+      "COPY_SUCCESS_TITLE": "E-mail skopiowany",
+      "COPY_SUCCESS_MESSAGE": "Adres e-mail skopiowano do schowka.",
+      "COPY_ERROR_TITLE": "Kopiowanie nieudane",
+      "COPY_ERROR_MESSAGE": "Nie udało się skopiować automatycznie. Skopiuj adres ręcznie."
     },
     "ERROR": {
       "NAME_REQUIRED": "Imię jest wymagane",
