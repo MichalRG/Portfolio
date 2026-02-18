@@ -1,0 +1,33 @@
+services:
+  dynamodb-local:
+    image: amazon/dynamodb-local:latest
+    container_name: portfolio-dynamodb-local
+    command: "-jar DynamoDBLocal.jar -sharedDb -inMemory"
+    ports:
+      - "8000:8000"
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portfolio-api-backend
+    depends_on:
+      - dynamodb-local
+    ports:
+      - "8080:8080"
+    environment:
+      PORTFOLIO_API_APP_NAME: Portfolio API
+      PORTFOLIO_API_APP_VERSION: 0.1.0
+      PORTFOLIO_API_AWS_REGION: us-east-1
+      PORTFOLIO_API_DYNAMODB_ENDPOINT_URL: http://dynamodb-local:8000
+      PORTFOLIO_API_AWS_ACCESS_KEY_ID: local
+      PORTFOLIO_API_AWS_SECRET_ACCESS_KEY: local
+      PORTFOLIO_API_COMMENTS_TABLE_NAME: portfolio-comments
+      PORTFOLIO_API_TTL_RETENTION_DAYS: 30
+      PORTFOLIO_API_DEFAULT_LIST_LIMIT: 20
+      PORTFOLIO_API_MAX_LIST_LIMIT: 100
+      PORTFOLIO_API_LOG_LEVEL: INFO
+    command: >
+      sh -c "uv run --no-sync python scripts/wait_for_dynamodb.py
+      && uv run --no-sync python scripts/create_local_table.py
+      && uv run --no-sync uvicorn portfolio_api.main:app --host 0.0.0.0 --port 8080"

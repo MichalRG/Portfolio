@@ -44,3 +44,11 @@ Thumbs.db
 # Cdk
 **/cdk.out/
 **/cdk.context.json
+
+# Python (backend)
+app/backend/.venv/
+app/backend/.pytest_cache/
+app/backend/**/*.egg-info/
+app/backend/**/__pycache__/
+app/backend/**/*.py[cod]
+
