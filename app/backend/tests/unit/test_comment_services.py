@@ -10,7 +10,7 @@ from portfolio_api.application.services.comments.get_comment import GetCommentSe
 from portfolio_api.application.services.comments.list_comments import ListCommentsService
 from portfolio_api.application.services.comments.update_comment import UpdateCommentService
 from portfolio_api.domain.comment import Comment
-from portfolio_api.domain.errors import NotFound
+from portfolio_api.domain.errors import DomainValidationError, NotFound
 from tests.fakes.comment_repo import InMemoryCommentRepository
 
 FIXED_NOW = datetime(2026, 1, 1, tzinfo=timezone.utc)
@@ -96,6 +96,16 @@ def test_update_comment_updates_selected_fields() -> None:
     assert updated.content == "Updated"
     assert updated.email is None
     assert updated.updated_at == FIXED_NOW + timedelta(days=1)
+
+
+@pytest.mark.parametrize("patch", [{"user_name": None}, {"content": None}])
+def test_update_comment_rejects_null_required_fields(patch: dict[str, object]) -> None:
+    repo = InMemoryCommentRepository()
+    repo.create(_make_comment(ULID_1, "my-post", 1))
+    service = UpdateCommentService(repo=repo, clock=lambda: FIXED_NOW + timedelta(days=1))
+
+    with pytest.raises(DomainValidationError):
+        service.execute(post_slug="my-post", comment_id=ULID_1, patch=patch)
 
 
 def test_delete_comment_soft_deletes_with_ttl() -> None:

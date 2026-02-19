@@ -46,4 +46,11 @@ def decode_cursor(cursor: str | None) -> dict[str, Any] | None:
         raise DomainValidationError("cursor is invalid") from exc
     if not isinstance(value, dict):
         raise DomainValidationError("cursor is invalid")
+    if (
+        not isinstance(value.get("PK"), str)
+        or not value["PK"]
+        or not isinstance(value.get("SK"), str)
+        or not value["SK"]
+    ):
+        raise DomainValidationError("cursor is invalid")
     return value

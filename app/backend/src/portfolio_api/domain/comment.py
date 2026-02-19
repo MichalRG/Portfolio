@@ -83,11 +83,19 @@ class Comment:
 
         next_user_name = self.user_name
         if user_name is not MISSING:
-            next_user_name = self.normalize_user_name(str(user_name))
+            if user_name is None:
+                raise DomainValidationError("user_name cannot be null")
+            if not isinstance(user_name, str):
+                raise DomainValidationError("user_name must be a string")
+            next_user_name = self.normalize_user_name(user_name)
 
         next_content = self.content
         if content is not MISSING:
-            next_content = self.normalize_content(str(content))
+            if content is None:
+                raise DomainValidationError("content cannot be null")
+            if not isinstance(content, str):
+                raise DomainValidationError("content must be a string")
+            next_content = self.normalize_content(content)
 
         next_email = self.email
         if email is not MISSING:

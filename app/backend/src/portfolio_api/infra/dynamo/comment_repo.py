@@ -103,7 +103,11 @@ class DynamoCommentRepository(CommentRepository):
             "UpdateExpression": update_expression,
             "ExpressionAttributeNames": names,
             "ReturnValues": "ALL_NEW",
-            "ConditionExpression": Attr("deleted_at").not_exists(),
+            "ConditionExpression": (
+                Attr("PK").exists()
+                & Attr("SK").exists()
+                & Attr("deleted_at").not_exists()
+            ),
         }
         if values:
             update_kwargs["ExpressionAttributeValues"] = values
@@ -141,7 +145,11 @@ class DynamoCommentRepository(CommentRepository):
                     ":updated_at": self._serialize_datetime(updated_at),
                     ":expires_at": expires_at,
                 },
-                ConditionExpression=Attr("deleted_at").not_exists(),
+                ConditionExpression=(
+                    Attr("PK").exists()
+                    & Attr("SK").exists()
+                    & Attr("deleted_at").not_exists()
+                ),
             )
         except ClientError as exc:
             error_code = exc.response.get("Error", {}).get("Code")
