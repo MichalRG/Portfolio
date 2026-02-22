@@ -80,6 +80,12 @@ npx cdk deploy SpaSecurityStack SpaHostingStack -c stage=dev -c cspNonce="$NONCE
 npx cdk deploy SpaHostingStack -c stage=dev -c cspNonce="$NONCE" -c handlerHash="$HANDLER_HASH" -c certArn="$PORTFOLIO_CERT_ARN"
 ```
 
+5.1 Hosting should deploy API stack too but if not, or you wan to update it
+
+```ts
+ npx cdk deploy PortfolioApiStack -c stage=dev -c certArn="$CERT_ARN" -c commentsTableName="$TABLE_NAME"
+```
+
 6. Pray
 
 🙏🙏🙏
@@ -149,5 +155,5 @@ aws cloudfront create-invalidation --distribution-id {{id}} --paths "/*"
 - [x] make more fancy card under hyperlink to your portfolio
 - [x] add index.html for pl and en
 - [x] replace current front carousel with short video - partially done as I added animation with zooming in
-- [ ] refactor animations for scrolling in portfolio
-- [ ] rafactor navigation
+- [x] refactor animations for scrolling in portfolio
+- [x] rafactor navigation

@@ -28,7 +28,7 @@ class DynamoCommentRepository(CommentRepository):
         try:
             self._table.put_item(
                 Item=item,
-                ConditionExpression="attribute_not_exists(PK) AND attribute_not_exists(SK)",
+                ConditionExpression="attribute_not_exists(post_slug) AND attribute_not_exists(comment_id)",
             )
         except ClientError as exc:
             error_code = exc.response.get("Error", {}).get("Code")
@@ -43,10 +43,12 @@ class DynamoCommentRepository(CommentRepository):
         self, slug: str, limit: int, cursor: str | None
     ) -> ListCommentsResult:
         query_params: dict[str, Any] = {
-            "KeyConditionExpression": Key("PK").eq(slug),
+            "KeyConditionExpression": Key("post_slug").eq(slug),
             "FilterExpression": Attr("deleted_at").not_exists(),
             "Limit": limit,
             "ScanIndexForward": False,
+            # Prevent stale reads right after soft delete/update operations.
+            "ConsistentRead": True,
         }
         decoded_cursor = decode_cursor(cursor)
         if decoded_cursor is not None:
@@ -58,7 +60,11 @@ class DynamoCommentRepository(CommentRepository):
         return ListCommentsResult(items=items, next_cursor=next_cursor)
 
     def get_by_id(self, post_slug: str, comment_id: str) -> Comment | None:
-        response = self._table.get_item(Key={"PK": post_slug, "SK": comment_id})
+        response = self._table.get_item(
+            Key={"post_slug": post_slug, "comment_id": comment_id},
+            # Prevent stale reads immediately after write operations.
+            ConsistentRead=True,
+        )
         item = response.get("Item")
         if item is None or item.get("deleted_at"):
             return None
@@ -99,13 +105,13 @@ class DynamoCommentRepository(CommentRepository):
         update_expression = " ".join(clauses)
 
         update_kwargs: dict[str, Any] = {
-            "Key": {"PK": post_slug, "SK": comment_id},
+            "Key": {"post_slug": post_slug, "comment_id": comment_id},
             "UpdateExpression": update_expression,
             "ExpressionAttributeNames": names,
             "ReturnValues": "ALL_NEW",
             "ConditionExpression": (
-                Attr("PK").exists()
-                & Attr("SK").exists()
+                Attr("post_slug").exists()
+                & Attr("comment_id").exists()
                 & Attr("deleted_at").not_exists()
             ),
         }
@@ -134,8 +140,8 @@ class DynamoCommentRepository(CommentRepository):
         expires_at: int,
     ) -> bool:
         try:
-            self._table.update_item(
-                Key={"PK": post_slug, "SK": comment_id},
+            response = self._table.update_item(
+                Key={"post_slug": post_slug, "comment_id": comment_id},
                 UpdateExpression=(
                     "SET deleted_at = :deleted_at, updated_at = :updated_at, "
                     "expires_at = :expires_at"
@@ -146,17 +152,19 @@ class DynamoCommentRepository(CommentRepository):
                     ":expires_at": expires_at,
                 },
                 ConditionExpression=(
-                    Attr("PK").exists()
-                    & Attr("SK").exists()
+                    Attr("post_slug").exists()
+                    & Attr("comment_id").exists()
                     & Attr("deleted_at").not_exists()
                 ),
+                ReturnValues="ALL_NEW",
             )
         except ClientError as exc:
             error_code = exc.response.get("Error", {}).get("Code")
             if error_code == "ConditionalCheckFailedException":
                 return False
             raise
-        return True
+        attrs = response.get("Attributes")
+        return bool(attrs is not None and attrs.get("deleted_at"))
 
     def ping(self) -> None:
         self._table.load()
@@ -171,10 +179,8 @@ class DynamoCommentRepository(CommentRepository):
 
     def _to_dynamo_item(self, comment: Comment) -> dict[str, Any]:
         item: dict[str, Any] = {
-            "PK": comment.post_slug,
-            "SK": comment.comment_id,
-            "comment_id": comment.comment_id,
             "post_slug": comment.post_slug,
+            "comment_id": comment.comment_id,
             "user_name": comment.user_name,
             "content": comment.content,
             "created_at": self._serialize_datetime(comment.created_at),

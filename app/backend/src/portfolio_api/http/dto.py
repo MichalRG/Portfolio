@@ -33,6 +33,18 @@ class CreateCommentRequest(BaseModel):
         description="Optional email used for moderation workflows.",
         examples=["john@example.com"],
     )
+    honeypot: str | None = Field(
+        default=None,
+        max_length=200,
+        description="Hidden anti-bot field. Must remain empty.",
+        examples=[""],
+    )
+    captcha_token: str | None = Field(
+        default=None,
+        max_length=2048,
+        description="Captcha token (required when captcha enforcement is enabled).",
+        examples=["0.4fM9m8h_a_sample_token"],
+    )
 
 
 class UpdateCommentRequest(BaseModel):

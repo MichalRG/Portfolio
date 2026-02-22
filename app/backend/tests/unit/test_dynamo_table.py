@@ -15,23 +15,25 @@ def _encode_cursor_payload(payload: object) -> str:
 
 
 def test_decode_cursor_accepts_expected_key_shape() -> None:
-    cursor = _encode_cursor_payload({"PK": "my-post", "SK": "01JZ4Y2V9D3MQ8G7RKTY6XP0A1"})
+    cursor = _encode_cursor_payload(
+        {"post_slug": "my-post", "comment_id": "01JZ4Y2V9D3MQ8G7RKTY6XP0A1"}
+    )
 
     decoded = decode_cursor(cursor)
 
-    assert decoded == {"PK": "my-post", "SK": "01JZ4Y2V9D3MQ8G7RKTY6XP0A1"}
+    assert decoded == {"post_slug": "my-post", "comment_id": "01JZ4Y2V9D3MQ8G7RKTY6XP0A1"}
 
 
 @pytest.mark.parametrize(
     "payload",
     [
         {},
-        {"PK": "my-post"},
-        {"SK": "01JZ4Y2V9D3MQ8G7RKTY6XP0A1"},
-        {"PK": "", "SK": "01JZ4Y2V9D3MQ8G7RKTY6XP0A1"},
-        {"PK": "my-post", "SK": ""},
-        {"PK": 123, "SK": "01JZ4Y2V9D3MQ8G7RKTY6XP0A1"},
-        {"PK": "my-post", "SK": 123},
+        {"post_slug": "my-post"},
+        {"comment_id": "01JZ4Y2V9D3MQ8G7RKTY6XP0A1"},
+        {"post_slug": "", "comment_id": "01JZ4Y2V9D3MQ8G7RKTY6XP0A1"},
+        {"post_slug": "my-post", "comment_id": ""},
+        {"post_slug": 123, "comment_id": "01JZ4Y2V9D3MQ8G7RKTY6XP0A1"},
+        {"post_slug": "my-post", "comment_id": 123},
     ],
 )
 def test_decode_cursor_rejects_invalid_key_shape(payload: object) -> None:

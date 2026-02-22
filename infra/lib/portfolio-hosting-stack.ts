@@ -1,6 +1,7 @@
 import { CfnOutput, Duration, RemovalPolicy, Stack } from "aws-cdk-lib";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import {
+  AllowedMethods,
   CacheCookieBehavior,
   CacheHeaderBehavior,
   CachePolicy,
@@ -12,11 +13,13 @@ import {
   FunctionEventType,
   HeadersFrameOption,
   HeadersReferrerPolicy,
+  OriginRequestPolicy,
+  OriginProtocolPolicy,
   PriceClass,
   ResponseHeadersPolicy,
   ViewerProtocolPolicy,
 } from "aws-cdk-lib/aws-cloudfront";
-import { S3BucketOrigin } from "aws-cdk-lib/aws-cloudfront-origins";
+import { HttpOrigin, S3BucketOrigin } from "aws-cdk-lib/aws-cloudfront-origins";
 import {
   AaaaRecord,
   ARecord,
@@ -185,6 +188,10 @@ export class SpaHostingStack extends Stack {
          return req;
        }
 
+       if (uri === '/api' || uri.startsWith('/api/')) {
+         return req;
+       }
+
        if (uri === '/pl' || uri === '/pl/') {
          req.uri = '/pl/index.html';
          return req;
@@ -199,9 +206,19 @@ export class SpaHostingStack extends Stack {
          return req;
        }
 
+       if (uri.indexOf('.') === -1) {
+         req.uri = '/index.html';
+         return req;
+       }
+
        return req;
      }
        `),
+    });
+
+    const apiOrigin = new HttpOrigin(props.apiOriginDomainName, {
+      protocolPolicy: OriginProtocolPolicy.HTTPS_ONLY,
+      readTimeout: Duration.seconds(15),
     });
 
     // 4) CloudFront distribution
@@ -220,23 +237,16 @@ export class SpaHostingStack extends Stack {
         ],
       },
       priceClass: PriceClass.PRICE_CLASS_100,
-      errorResponses: [
-        {
-          httpStatus: 403,
-          responseHttpStatus: 200,
-          responsePagePath: "/index.html",
-          ttl: Duration.minutes(0),
-        },
-        {
-          httpStatus: 404,
-          responseHttpStatus: 200,
-          responsePagePath: "/index.html",
-          ttl: Duration.minutes(0),
-        },
-      ],
       certificate,
       domainNames: [props.domainName, `www.${props.domainName}`],
       webAclId: props.webAclArn,
+    });
+
+    this.distribution.addBehavior("api/*", apiOrigin, {
+      viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+      cachePolicy: CachePolicy.CACHING_DISABLED,
+      originRequestPolicy: OriginRequestPolicy.ALL_VIEWER_EXCEPT_HOST_HEADER,
+      allowedMethods: AllowedMethods.ALLOW_ALL,
     });
 
     new ARecord(this, "ApexAlias", {

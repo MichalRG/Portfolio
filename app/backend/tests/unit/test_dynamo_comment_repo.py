@@ -51,17 +51,17 @@ class FakeDynamoTable:
         self.remove_before_update = False
 
     def seed(self, item: dict[str, Any]) -> None:
-        key = (item["PK"], item["SK"])
+        key = (item["post_slug"], item["comment_id"])
         self._items[key] = dict(item)
 
-    def get_item(self, *, Key: dict[str, str]) -> dict[str, Any]:
-        item = self._items.get((Key["PK"], Key["SK"]))
+    def get_item(self, *, Key: dict[str, str], **_: Any) -> dict[str, Any]:
+        item = self._items.get((Key["post_slug"], Key["comment_id"]))
         if item is None:
             return {}
         return {"Item": dict(item)}
 
     def update_item(self, **kwargs: Any) -> dict[str, Any]:
-        key = (kwargs["Key"]["PK"], kwargs["Key"]["SK"])
+        key = (kwargs["Key"]["post_slug"], kwargs["Key"]["comment_id"])
         if self.remove_before_update:
             self._items.pop(key, None)
             self.remove_before_update = False
@@ -71,7 +71,11 @@ class FakeDynamoTable:
         if condition is not None and not _evaluate_condition(condition, current or {}):
             raise _conditional_check_failed()
 
-        attrs = dict(current) if current is not None else {"PK": key[0], "SK": key[1]}
+        attrs = (
+            dict(current)
+            if current is not None
+            else {"post_slug": key[0], "comment_id": key[1]}
+        )
         self._apply_update_expression(
             attrs=attrs,
             update_expression=kwargs["UpdateExpression"],

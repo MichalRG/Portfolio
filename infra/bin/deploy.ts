@@ -1,5 +1,6 @@
 import { App } from "aws-cdk-lib";
 import { CertificateStack } from "../lib/certificate-stack";
+import { PortfolioApiStack } from "../lib/portfolio-api-stack";
 import { SpaHostingStack } from "../lib/portfolio-hosting-stack";
 import { SpaSecurityStack } from "../lib/web-acl-stack";
 
@@ -29,15 +30,23 @@ if (!certArnCtx) {
     crossRegionReferences: true,
   });
 
+  const api = new PortfolioApiStack(app, "PortfolioApiStack", {
+    stage,
+    domainName,
+    env: { account: awsAccountId, region: "eu-central-1" },
+  });
+
   // Creating hosting stack with existing certificate
   const hosting = new SpaHostingStack(app, "SpaHostingStack", {
     stage,
     domainName,
     certificateArn: certArnCtx,
     webAclArn: security.webAclArn,
+    apiOriginDomainName: api.apiOriginDomainName,
     env: { account: awsAccountId, region: "eu-central-1" },
     crossRegionReferences: true,
   });
 
   hosting.addDependency(security); // guarantees ordering
+  hosting.addDependency(api);
 }

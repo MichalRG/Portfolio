@@ -20,6 +20,9 @@ class Settings(BaseSettings):
     default_list_limit: int = 20
     max_list_limit: int = 100
     log_level: str = "INFO"
+    comments_require_captcha: bool = False
+    turnstile_secret_key: str | None = None
+    turnstile_verify_url: str = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
 
     @field_validator("ttl_retention_days")
     @classmethod

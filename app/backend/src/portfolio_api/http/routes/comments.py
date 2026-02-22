@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, Path, Query, Response, status
+from fastapi import APIRouter, Depends, Path, Query, Request, Response, status
 
 from portfolio_api.application.services.comments.create_comment import CreateCommentService
 from portfolio_api.application.services.comments.delete_comment import DeleteCommentService
@@ -22,12 +22,13 @@ from portfolio_api.http.dto import (
     ListCommentsResponse,
     UpdateCommentRequest,
 )
+from portfolio_api.http.spam_protection import validate_comment_submission
 
 router = APIRouter(tags=["comments"])
 
 
 @router.post(
-    "/posts/{post_slug}/comments",
+    "/api/v1/comments/{post_slug}",
     response_model=CommentResponse,
     status_code=status.HTTP_201_CREATED,
     summary="Create Comment",
@@ -40,11 +41,20 @@ router = APIRouter(tags=["comments"])
 )
 def create_comment(
     payload: CreateCommentRequest,
+    request: Request,
     post_slug: str = Path(
         min_length=1, max_length=120, description="Post slug, e.g. `my-first-post`."
     ),
     service: CreateCommentService = Depends(get_create_comment_service),
+    settings: Settings = Depends(get_settings),
 ) -> CommentResponse:
+    validate_comment_submission(
+        settings=settings,
+        honeypot=payload.honeypot,
+        captcha_token=payload.captcha_token,
+        client_ip=request.client.host if request.client is not None else None,
+    )
+
     comment = service.execute(
         post_slug=post_slug,
         user_name=payload.user_name,
@@ -55,7 +65,7 @@ def create_comment(
 
 
 @router.get(
-    "/posts/{post_slug}/comments",
+    "/api/v1/comments/{post_slug}",
     response_model=ListCommentsResponse,
     summary="List Comments",
     description="List comments for a post, newest first, with cursor pagination.",
@@ -91,7 +101,7 @@ def list_comments(
 
 
 @router.get(
-    "/posts/{post_slug}/comments/{comment_id}",
+    "/api/v1/comments/{post_slug}/{comment_id}",
     response_model=CommentResponse,
     summary="Get Comment",
     description="Get a single comment by post slug and comment id.",
@@ -109,7 +119,7 @@ def get_comment(
 
 
 @router.patch(
-    "/posts/{post_slug}/comments/{comment_id}",
+    "/api/v1/comments/{post_slug}/{comment_id}",
     response_model=CommentResponse,
     summary="Update Comment",
     description="Update selected comment fields.",
@@ -133,7 +143,7 @@ def update_comment(
 
 
 @router.delete(
-    "/posts/{post_slug}/comments/{comment_id}",
+    "/api/v1/comments/{post_slug}/{comment_id}",
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Delete Comment",
     description="Soft delete comment and set DynamoDB TTL expiration timestamp.",
