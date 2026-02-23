@@ -186,6 +186,8 @@ class DynamoCommentRepository(CommentRepository):
             "created_at": self._serialize_datetime(comment.created_at),
             "updated_at": self._serialize_datetime(comment.updated_at),
         }
+        if comment.parent_comment_id is not None:
+            item["parent_comment_id"] = comment.parent_comment_id
         if comment.email is not None:
             item["email"] = comment.email
         if comment.deleted_at is not None:
@@ -197,6 +199,7 @@ class DynamoCommentRepository(CommentRepository):
     def _from_dynamo_item(self, item: dict[str, Any]) -> Comment:
         return Comment(
             comment_id=item["comment_id"],
+            parent_comment_id=item.get("parent_comment_id"),
             post_slug=item["post_slug"],
             user_name=item["user_name"],
             content=item["content"],

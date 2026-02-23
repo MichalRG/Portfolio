@@ -1,5 +1,6 @@
 export interface BlogComment {
   id: string;
+  parentCommentId: string | null;
   postSlug: string;
   userName: string;
   content: string;

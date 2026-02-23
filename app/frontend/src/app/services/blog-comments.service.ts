@@ -6,6 +6,7 @@ import { BlogComment } from '../interfaces/blog-comment.interface';
 
 interface BlogCommentResponseDto {
   id: string;
+  parent_comment_id: string | null;
   post_slug: string;
   user_name: string;
   content: string;
@@ -23,6 +24,7 @@ export interface CreateBlogCommentInput {
   userName: string;
   content: string;
   email?: string | null;
+  parentCommentId?: string | null;
   honeypot?: string;
   captchaToken?: string | null;
 }
@@ -59,6 +61,7 @@ export class BlogCommentsService {
         user_name: input.userName,
         content: input.content,
         email: input.email ?? null,
+        parent_comment_id: input.parentCommentId ?? null,
         honeypot: input.honeypot ?? '',
         captcha_token: input.captchaToken ?? null,
       })
@@ -90,6 +93,7 @@ export class BlogCommentsService {
   private mapComment(comment: BlogCommentResponseDto): BlogComment {
     return {
       id: comment.id,
+      parentCommentId: comment.parent_comment_id,
       postSlug: comment.post_slug,
       userName: comment.user_name,
       content: comment.content,

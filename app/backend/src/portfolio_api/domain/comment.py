@@ -20,6 +20,7 @@ MISSING = object()
 @dataclass(frozen=True, slots=True)
 class Comment:
     comment_id: str
+    parent_comment_id: str | None
     post_slug: str
     user_name: str
     content: str
@@ -42,6 +43,7 @@ class Comment:
         cls,
         *,
         comment_id: str,
+        parent_comment_id: str | None = None,
         post_slug: str,
         user_name: str,
         content: str,
@@ -50,11 +52,17 @@ class Comment:
     ) -> "Comment":
         normalized_slug = cls.normalize_post_slug(post_slug)
         normalized_comment_id = cls.normalize_comment_id(comment_id)
+        normalized_parent_comment_id = cls.normalize_parent_comment_id(parent_comment_id)
         normalized_name = cls.normalize_user_name(user_name)
         normalized_content = cls.normalize_content(content)
         normalized_email = cls.normalize_email(email)
 
         cls.validate_comment_id(normalized_comment_id)
+        cls.validate_parent_comment_id(normalized_parent_comment_id)
+        if normalized_parent_comment_id == normalized_comment_id:
+            raise DomainValidationError(
+                "parent_comment_id cannot match comment_id"
+            )
         cls.validate_post_slug(normalized_slug)
         cls.validate_user_name(normalized_name)
         cls.validate_content(normalized_content)
@@ -62,6 +70,7 @@ class Comment:
         ts = cls._as_utc(now)
         return cls(
             comment_id=normalized_comment_id,
+            parent_comment_id=normalized_parent_comment_id,
             post_slug=normalized_slug,
             user_name=normalized_name,
             content=normalized_content,
@@ -106,6 +115,7 @@ class Comment:
 
         return Comment(
             comment_id=self.comment_id,
+            parent_comment_id=self.parent_comment_id,
             post_slug=self.post_slug,
             user_name=next_user_name,
             content=next_content,
@@ -127,6 +137,7 @@ class Comment:
             raise DomainValidationError("expires_at must be greater than 0")
         return Comment(
             comment_id=self.comment_id,
+            parent_comment_id=self.parent_comment_id,
             post_slug=self.post_slug,
             user_name=self.user_name,
             content=self.content,
@@ -144,6 +155,13 @@ class Comment:
     @staticmethod
     def normalize_comment_id(value: str) -> str:
         return value.strip().upper()
+
+    @staticmethod
+    def normalize_parent_comment_id(value: str | None) -> str | None:
+        if value is None:
+            return None
+        normalized = Comment.normalize_comment_id(value)
+        return normalized or None
 
     @staticmethod
     def normalize_user_name(value: str) -> str:
@@ -178,6 +196,12 @@ class Comment:
             )
         if POST_SLUG_PATTERN.match(value) is None:
             raise DomainValidationError("post_slug format is invalid")
+
+    @staticmethod
+    def validate_parent_comment_id(value: str | None) -> None:
+        if value is None:
+            return
+        Comment.validate_comment_id(value)
 
     @staticmethod
     def validate_user_name(value: str) -> None:

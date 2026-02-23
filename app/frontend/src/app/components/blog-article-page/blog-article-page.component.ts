@@ -3,15 +3,17 @@ import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
+  ElementRef,
   OnInit,
+  ViewChild,
   ViewEncapsulation,
   computed,
   inject,
   signal,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
@@ -49,6 +51,11 @@ interface BlogRelatedArticleViewModel {
   description: string;
 }
 
+interface BlogCommentThreadNode {
+  comment: BlogComment;
+  replies: readonly BlogCommentThreadNode[];
+}
+
 const EMAIL_WITH_TLD_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 @Component({
@@ -67,6 +74,11 @@ const EMAIL_WITH_TLD_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   encapsulation: ViewEncapsulation.None,
 })
 export class BlogArticlePageComponent implements OnInit {
+  @ViewChild('commentFormElement')
+  private commentFormElement?: ElementRef<HTMLElement>;
+  @ViewChild('commentContentInput')
+  private commentContentInput?: ElementRef<HTMLTextAreaElement>;
+
   readonly articleView = computed<BlogArticleViewModel | null>(() => {
     const article = this.selectedArticle();
     if (!article) {
@@ -115,9 +127,22 @@ export class BlogArticlePageComponent implements OnInit {
 
   readonly currentLanguage = signal('en');
   readonly comments = signal<readonly BlogComment[]>([]);
+  readonly commentThreads = computed<readonly BlogCommentThreadNode[]>(() =>
+    this.buildCommentThreads(this.comments()),
+  );
   readonly commentsLoading = signal(false);
   readonly commentsError = signal(false);
   readonly submittingComment = signal(false);
+  readonly replyingToCommentId = signal<string | null>(null);
+  readonly replyingToComment = computed<BlogComment | null>(() => {
+    const replyToCommentId = this.replyingToCommentId();
+    if (!replyToCommentId) {
+      return null;
+    }
+    return (
+      this.comments().find((comment) => comment.id === replyToCommentId) ?? null
+    );
+  });
   private readonly formBuilder = inject(FormBuilder);
   readonly commentForm = this.formBuilder.nonNullable.group({
     userName: [
@@ -189,8 +214,17 @@ export class BlogArticlePageComponent implements OnInit {
     return article.slug;
   }
 
-  trackByCommentId(_: number, comment: BlogComment): string {
-    return comment.id;
+  trackByCommentThread(_: number, thread: BlogCommentThreadNode): string {
+    return thread.comment.id;
+  }
+
+  startReply(commentId: string): void {
+    this.replyingToCommentId.set(commentId);
+    this.scrollToCommentForm();
+  }
+
+  cancelReply(): void {
+    this.replyingToCommentId.set(null);
   }
 
   submitComment(): void {
@@ -224,6 +258,7 @@ export class BlogArticlePageComponent implements OnInit {
       userName,
       content,
       email: email || null,
+      parentCommentId: this.replyingToCommentId(),
       honeypot: formValue.honeypot,
     };
 
@@ -239,6 +274,7 @@ export class BlogArticlePageComponent implements OnInit {
       .subscribe({
         next: (createdComment) => {
           this.comments.update((items) => [createdComment, ...items]);
+          this.replyingToCommentId.set(null);
           this.commentForm.reset({
             userName: '',
             email: '',
@@ -324,6 +360,7 @@ export class BlogArticlePageComponent implements OnInit {
 
   private resetCommentsState(): void {
     this.comments.set([]);
+    this.replyingToCommentId.set(null);
     this.commentsLoading.set(false);
     this.commentsError.set(false);
     this.submittingComment.set(false);
@@ -333,5 +370,52 @@ export class BlogArticlePageComponent implements OnInit {
       content: '',
       honeypot: '',
     });
+  }
+
+  private scrollToCommentForm(): void {
+    queueMicrotask(() => {
+      this.commentFormElement?.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+      this.commentContentInput?.nativeElement.focus();
+    });
+  }
+
+  private buildCommentThreads(
+    comments: readonly BlogComment[],
+  ): readonly BlogCommentThreadNode[] {
+    const sortedComments = [...comments].sort(
+      (left, right) => Date.parse(left.createdAt) - Date.parse(right.createdAt),
+    );
+    const nodesByCommentId = new Map<string, BlogCommentThreadNode>();
+
+    for (const comment of sortedComments) {
+      nodesByCommentId.set(comment.id, { comment, replies: [] });
+    }
+
+    const roots: BlogCommentThreadNode[] = [];
+    for (const comment of sortedComments) {
+      const node = nodesByCommentId.get(comment.id);
+      if (!node) {
+        continue;
+      }
+
+      const parentCommentId = comment.parentCommentId;
+      if (!parentCommentId) {
+        roots.push(node);
+        continue;
+      }
+
+      const parentNode = nodesByCommentId.get(parentCommentId);
+      if (!parentNode || parentCommentId === comment.id) {
+        roots.push(node);
+        continue;
+      }
+
+      (parentNode.replies as BlogCommentThreadNode[]).push(node);
+    }
+
+    return roots.reverse();
   }
 }

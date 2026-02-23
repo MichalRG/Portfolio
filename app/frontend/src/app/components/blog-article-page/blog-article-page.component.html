@@ -54,10 +54,29 @@
         </h2>
 
         <form
+          #commentFormElement
           class="blog-article-page__comment-form"
           [formGroup]="commentForm"
           (ngSubmit)="submitComment()"
         >
+          @if (replyingToComment(); as replyingToComment) {
+            <div class="blog-article-page__replying-banner">
+              <span class="blog-article-page__replying-text">
+                {{
+                  'BLOG.COMMENTS.REPLYING_TO'
+                    | translate: { name: replyingToComment.userName }
+                }}
+              </span>
+              <button
+                type="button"
+                class="blog-article-page__replying-cancel"
+                (click)="cancelReply()"
+              >
+                {{ 'BLOG.COMMENTS.CANCEL_REPLY' | translate }}
+              </button>
+            </div>
+          }
+
           <div class="blog-article-page__comment-form-row">
             <div class="blog-article-page__comment-col blog-article-page__comment-col--6">
               <label class="blog-article-page__comment-field">
@@ -117,6 +136,7 @@
               <label class="blog-article-page__comment-field">
                 <span>{{ 'BLOG.COMMENTS.MESSAGE_LABEL' | translate }}</span>
                 <textarea
+                  #commentContentInput
                   rows="4"
                   formControlName="content"
                   [placeholder]="'BLOG.COMMENTS.MESSAGE_PLACEHOLDER' | translate"
@@ -156,6 +176,8 @@
           >
             @if (submittingComment()) {
               <span>{{ 'BLOG.COMMENTS.SUBMITTING' | translate }}</span>
+            } @else if (replyingToComment()) {
+              <span>{{ 'BLOG.COMMENTS.SUBMIT_REPLY' | translate }}</span>
             } @else {
               <span>{{ 'BLOG.COMMENTS.SUBMIT' | translate }}</span>
             }
@@ -178,20 +200,65 @@
           </p>
         } @else {
           <ul class="blog-article-page__comments-list">
-            @for (comment of comments(); track trackByCommentId($index, comment)) {
+            @for (thread of commentThreads(); track trackByCommentThread($index, thread)) {
               <li class="blog-article-page__comment">
-                <div class="blog-article-page__comment-meta">
-                  <span class="blog-article-page__comment-author">{{
-                    comment.userName
-                  }}</span>
-                  <span class="blog-article-page__comment-date">{{
-                    comment.createdAt | date: 'medium'
-                  }}</span>
-                </div>
-                <p class="blog-article-page__comment-content">{{ comment.content }}</p>
+                <ng-container
+                  [ngTemplateOutlet]="commentThread"
+                  [ngTemplateOutletContext]="{ $implicit: thread, depth: 0 }"
+                ></ng-container>
               </li>
             }
           </ul>
+
+          <ng-template #commentThread let-thread let-depth="depth">
+            <article
+              class="blog-article-page__comment-card"
+              [style.--comment-depth]="depth"
+            >
+              <div class="blog-article-page__comment-meta">
+                <span class="blog-article-page__comment-author">{{
+                  thread.comment.userName
+                }}</span>
+                <span class="blog-article-page__comment-date">{{
+                  thread.comment.createdAt | date: 'medium'
+                }}</span>
+              </div>
+              <p class="blog-article-page__comment-content">
+                {{ thread.comment.content }}
+              </p>
+              <div class="blog-article-page__comment-footer">
+                <button
+                  type="button"
+                  class="blog-article-page__comment-reply"
+                  [class.blog-article-page__comment-reply--active]="
+                    replyingToCommentId() === thread.comment.id
+                  "
+                  (click)="startReply(thread.comment.id)"
+                >
+                  {{ 'BLOG.COMMENTS.REPLY' | translate }}
+                </button>
+              </div>
+            </article>
+
+            @if (thread.replies.length > 0) {
+              <ul class="blog-article-page__comments-list blog-article-page__comments-list--nested">
+                @for (
+                  reply of thread.replies;
+                  track trackByCommentThread($index, reply)
+                ) {
+                  <li class="blog-article-page__comment">
+                    <ng-container
+                      [ngTemplateOutlet]="commentThread"
+                      [ngTemplateOutletContext]="{
+                        $implicit: reply,
+                        depth: depth + 1,
+                      }"
+                    ></ng-container>
+                  </li>
+                }
+              </ul>
+            }
+          </ng-template>
         }
       </section>
 

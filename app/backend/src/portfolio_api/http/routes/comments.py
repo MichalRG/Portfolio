@@ -60,6 +60,7 @@ def create_comment(
         user_name=payload.user_name,
         content=payload.content,
         email=str(payload.email) if payload.email is not None else None,
+        parent_comment_id=payload.parent_comment_id,
     )
     return CommentResponse.from_domain(comment)
 

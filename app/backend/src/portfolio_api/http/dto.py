@@ -45,6 +45,12 @@ class CreateCommentRequest(BaseModel):
         description="Captcha token (required when captcha enforcement is enabled).",
         examples=["0.4fM9m8h_a_sample_token"],
     )
+    parent_comment_id: str | None = Field(
+        default=None,
+        min_length=1,
+        description="Optional ULID of a parent comment to create a reply.",
+        examples=["01JZ4Y2V9D3MQ8G7RKTY6XP0A1"],
+    )
 
 
 class UpdateCommentRequest(BaseModel):
@@ -81,6 +87,9 @@ class CommentResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: str = Field(description="Comment ULID identifier.")
+    parent_comment_id: str | None = Field(
+        default=None, description="Parent comment ULID when this item is a reply."
+    )
     post_slug: str = Field(description="Post identifier.")
     user_name: str = Field(description="Comment author display name.")
     content: str = Field(description="Comment body.")
@@ -95,6 +104,7 @@ class CommentResponse(BaseModel):
     def from_domain(cls, comment: DomainComment) -> "CommentResponse":
         return cls(
             id=comment.comment_id,
+            parent_comment_id=comment.parent_comment_id,
             post_slug=comment.post_slug,
             user_name=comment.user_name,
             content=comment.content,

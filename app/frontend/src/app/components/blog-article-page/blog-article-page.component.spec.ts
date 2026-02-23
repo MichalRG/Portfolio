@@ -16,13 +16,11 @@ describe('BlogArticlePageComponent', () => {
   let commentsServiceSpy: jasmine.SpyObj<BlogCommentsService>;
 
   const paramMapSubject = new BehaviorSubject(
-    convertToParamMap({ slug: 'building-static-blog-with-angular' }),
+    convertToParamMap({ slug: 'test' }),
   );
 
   beforeEach(async () => {
-    paramMapSubject.next(
-      convertToParamMap({ slug: 'building-static-blog-with-angular' }),
-    );
+    paramMapSubject.next(convertToParamMap({ slug: 'test' }));
 
     toastrSpy = jasmine.createSpyObj<ToastrService>('ToastrService', [
       'success',
@@ -57,9 +55,7 @@ describe('BlogArticlePageComponent', () => {
   it('should create the component', () => {
     expect(component).toBeTruthy();
     expect(component.articleView()).not.toBeNull();
-    expect(commentsServiceSpy.listComments).toHaveBeenCalledWith(
-      'building-static-blog-with-angular',
-    );
+    expect(commentsServiceSpy.listComments).toHaveBeenCalledWith('test');
   });
 
   it('should expose toc entries for headings', () => {
@@ -93,7 +89,8 @@ describe('BlogArticlePageComponent', () => {
     const comments: readonly BlogComment[] = [
       {
         id: '01ARZ3NDEKTSV4RRFFQ69G5FAV',
-        postSlug: 'comments-api-with-fastapi-and-dynamodb',
+        parentCommentId: null,
+        postSlug: 'test',
         userName: 'Jane Doe',
         content: 'This architecture looks clean and practical.',
         email: null,
@@ -104,9 +101,7 @@ describe('BlogArticlePageComponent', () => {
     ];
     commentsServiceSpy.listComments.and.returnValue(of(comments));
 
-    paramMapSubject.next(
-      convertToParamMap({ slug: 'comments-api-with-fastapi-and-dynamodb' }),
-    );
+    paramMapSubject.next(convertToParamMap({ slug: 'test' }));
     fixture.detectChanges();
 
     const authorElement = fixture.nativeElement.querySelector(

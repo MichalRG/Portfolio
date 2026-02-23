@@ -18,12 +18,19 @@ ULID_1 = "01JZ4Y2V9D3MQ8G7RKTY6XP0A1"
 ULID_2 = "01JZ4Y2V9D3MQ8G7RKTY6XP0A2"
 ULID_3 = "01JZ4Y2V9D3MQ8G7RKTY6XP0A3"
 ULID_4 = "01JZ4Y2V9D3MQ8G7RKTY6XP0A4"
+ULID_5 = "01JZ4Y2V9D3MQ8G7RKTY6XP0A5"
 
 
-def _make_comment(comment_id: str, post_slug: str, offset_seconds: int = 0) -> Comment:
+def _make_comment(
+    comment_id: str,
+    post_slug: str,
+    offset_seconds: int = 0,
+    parent_comment_id: str | None = None,
+) -> Comment:
     timestamp = FIXED_NOW + timedelta(seconds=offset_seconds)
     return Comment.create(
         comment_id=comment_id,
+        parent_comment_id=parent_comment_id,
         post_slug=post_slug,
         user_name="Jane Doe",
         content="Hello",
@@ -34,6 +41,7 @@ def _make_comment(comment_id: str, post_slug: str, offset_seconds: int = 0) -> C
 
 def test_create_comment_normalizes_input() -> None:
     repo = InMemoryCommentRepository()
+    repo.create(_make_comment(ULID_2, "my-post", 1))
     service = CreateCommentService(
         repo=repo,
         id_factory=lambda: ULID_1,
@@ -45,13 +53,32 @@ def test_create_comment_normalizes_input() -> None:
         user_name="  Jane    Doe ",
         content="  test content ",
         email="  USER@Example.COM ",
+        parent_comment_id=f"  {ULID_2.lower()}  ",
     )
 
     assert created.comment_id == ULID_1
+    assert created.parent_comment_id == ULID_2
     assert created.post_slug == "my-post"
     assert created.user_name == "Jane Doe"
     assert created.content == "test content"
     assert created.email == "user@example.com"
+
+
+def test_create_reply_raises_not_found_for_missing_parent_comment() -> None:
+    repo = InMemoryCommentRepository()
+    service = CreateCommentService(
+        repo=repo,
+        id_factory=lambda: ULID_5,
+        clock=lambda: FIXED_NOW,
+    )
+
+    with pytest.raises(NotFound):
+        service.execute(
+            post_slug="my-post",
+            user_name="Jane Doe",
+            content="Reply",
+            parent_comment_id=ULID_1,
+        )
 
 
 def test_get_comment_raises_not_found() -> None:

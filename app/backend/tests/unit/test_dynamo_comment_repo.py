@@ -164,3 +164,24 @@ def test_soft_delete_returns_false_without_creating_tombstone_for_missing_item()
 
     assert deleted is False
     assert table._items == {}  # noqa: SLF001
+
+
+def test_parent_comment_id_round_trip() -> None:
+    table = FakeDynamoTable()
+    repo = DynamoCommentRepository(table)
+    parent_comment_id = "01JZ4Y2V9D3MQ8G7RKTY6XP0A2"
+    comment = Comment.create(
+        comment_id=COMMENT_ID,
+        parent_comment_id=parent_comment_id,
+        post_slug=POST_SLUG,
+        user_name="Jane Doe",
+        content="Reply",
+        email="jane@example.com",
+        now=FIXED_NOW,
+    )
+    table.seed(repo._to_dynamo_item(comment))  # noqa: SLF001
+
+    loaded = repo.get_by_id(POST_SLUG, COMMENT_ID)
+
+    assert loaded is not None
+    assert loaded.parent_comment_id == parent_comment_id
