@@ -7,7 +7,7 @@
 
   &__inner {
     max-width: 500px;
-    margin: 0 auto 3rem;
+    margin: 0 auto 1.25rem;
     text-align: center;
   }
 
@@ -28,7 +28,9 @@
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba($color-primary, 0.2);
   }
 
   &__quick-label {
