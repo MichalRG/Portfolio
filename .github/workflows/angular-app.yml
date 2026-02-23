@@ -36,23 +36,26 @@ jobs:
         with:
           node-version: 24
           cache: "npm"
-          cache-dependency-path: frontend/package-lock.json
+          cache-dependency-path: app/frontend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
-        working-directory: frontend
+        working-directory: app/frontend
 
       - name: Build
         env:
           CSP_NONCE: ${{ steps.nonce.outputs.NONCE }}
         run: npm run build:multi
-        working-directory: frontend
+        working-directory: app/frontend
+
+      - name: Verify frontend dist layout
+        run: test -f app/frontend/dist/portfolio-website/browser/index.html
 
       - name: Upload dist (+ handlerHash)
         uses: actions/upload-artifact@v4
         with:
           name: frontend-dist
-          path: frontend/dist/
+          path: app/frontend/dist/
 
   test:
     runs-on: ubuntu-latest
@@ -66,15 +69,15 @@ jobs:
         with:
           node-version: 24
           cache: "npm"
-          cache-dependency-path: frontend/package-lock.json
+          cache-dependency-path: app/frontend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
-        working-directory: frontend
+        working-directory: app/frontend
 
       - name: Run tests (Frontend)
         run: npm test
-        working-directory: frontend
+        working-directory: app/frontend
 
   lint:
     runs-on: ubuntu-latest
@@ -88,15 +91,15 @@ jobs:
         with:
           node-version: 24
           cache: "npm"
-          cache-dependency-path: frontend/package-lock.json
+          cache-dependency-path: app/frontend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
-        working-directory: frontend
+        working-directory: app/frontend
 
       - name: Run ESLint (Frontend)
         run: npm run lint
-        working-directory: frontend
+        working-directory: app/frontend
 
   infra-deploy:
     runs-on: ubuntu-latest
@@ -109,12 +112,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: frontend-dist
-          path: frontend/dist
+          path: app/frontend/dist
 
       - name: Read handler hash
         id: handler
         run: |
-          HASH=$(cat frontend/dist/handlerHash.txt)
+          HASH=$(cat app/frontend/dist/handlerHash.txt)
           echo "HASH=$HASH" >> "$GITHUB_OUTPUT"
 
       - name: Setup Node.js (Infra)
@@ -160,12 +163,12 @@ jobs:
         with:
           node-version: 24
           cache: "npm"
-          cache-dependency-path: frontend/package-lock.json
+          cache-dependency-path: app/frontend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
-        working-directory: frontend
+        working-directory: app/frontend
 
       - name: Run smoke tests
         run: npm run smoke -- ${{ inputs.base_url }}
-        working-directory: frontend
+        working-directory: app/frontend

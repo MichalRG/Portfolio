@@ -1,0 +1,200 @@
+﻿{
+  "HOME": {
+    "TITLE": "Michal Krzyżowski - Portfolio 🫎",
+    "META_DESCRIPTION": "Witaj na moim portfolio! Skubnij moich przemyśleń, sprawdź projekty, osiągnięcia i zainteresowania 💥. Zachęcam do kontaktu, będzie mi niezwykle miło!"
+  },
+  "HEADER": {
+    "LOGO": "MK",
+    "HOME": "Start",
+    "BLOG": "Blog",
+    "ABOUT": "O mnie",
+    "CONTACT": "Kontakt",
+    "PROJECTS": "Projekty i osiągnięcia",
+    "ANIMATIONS": "Animacje",
+    "LAYOUTS": "Layouty"
+  },
+  "BLOG": {
+    "TITLE": "Blog",
+    "SUBTITLE": "Programowanie i luźne przemyślenia",
+    "INTRO_TEXT": "Artykuły dotyczą głównie programowania, decyzji architektonicznych i mojego doświadczenia.",
+    "SEARCH_LABEL": "Szukaj po tytule",
+    "SEARCH_PLACEHOLDER": "Wpisz fragment tytulu",
+    "EMPTY": "Brak artykulow pasujacych do tytulu.",
+    "READ_TIME": "{{minutes}} min czytania",
+    "BACK_TO_LIST": "Powrot do listy artykulow",
+    "TOC_TITLE": "Spis tresci",
+    "RELATED_TITLE": "Powiazane artykuly",
+    "SHARE": "Udostepnij link do artykulu",
+    "SHARE_SUCCESS_TITLE": "Skopiowano link",
+    "SHARE_SUCCESS_MESSAGE": "Link do artykulu skopiowany do schowka.",
+    "SHARE_ERROR_TITLE": "Blad kopiowania",
+    "SHARE_ERROR_MESSAGE": "Nie udalo sie automatycznie skopiowac linku.",
+    "COMMENTS": {
+      "TITLE": "Komentarze",
+      "LOADING": "Ladowanie komentarzy...",
+      "EMPTY": "Brak komentarzy.",
+      "ERROR": "Nie udalo się pobrać komentarzy.",
+      "NAME_LABEL": "Imie",
+      "NAME_PLACEHOLDER": "Twoja nazwa wyświetlana",
+      "EMAIL_LABEL": "Email (opcjonalnie)",
+      "EMAIL_PLACEHOLDER": "twoj@email.com",
+      "MESSAGE_LABEL": "Komentarz",
+      "MESSAGE_PLACEHOLDER": "Napisz komentarz",
+      "REPLYING_TO": "Odpowiedz na komentarz {{name}}",
+      "CANCEL_REPLY": "Anuluj odpowiedź",
+      "REPLY": "Odpowiedz",
+      "SUBMIT": "Dodaj komentarz",
+      "SUBMIT_REPLY": "Dodaj odpowiedź",
+      "SUBMITTING": "Wysylanie...",
+      "CREATE_SUCCESS_TITLE": "Dodano komentarz",
+      "CREATE_SUCCESS_MESSAGE": "Twoj komentarz zostal opublikowany.",
+      "CREATE_ERROR_TITLE": "Nie udalo sie dodac komentarza",
+      "CREATE_ERROR_MESSAGE": "Sprawdz formularz i sprobuj ponownie.",
+      "ERRORS": {
+        "NAME_REQUIRED": "Imie jest wymagane.",
+        "NAME_MIN": "Imie musi miec co najmniej {{min}} znaki.",
+        "NAME_MAX": "Imie nie moze miec wiecej niz {{max}} znakow.",
+        "EMAIL_VALID": "Wpisz poprawny adres email.",
+        "MESSAGE_REQUIRED": "Komentarz jest wymagany.",
+        "MESSAGE_MAX": "Komentarz nie moze miec wiecej niz {{max}} znakow."
+      }
+    }
+  },
+  "HERO": {
+    "TITLE-1": "Witaj po drugiej stronie ekranu!",
+    "TITLE-2": "Miło mi że tu jesteś, uśmiechnij się i miłego przeglądania :)"
+  },
+  "ABOUT": {
+    "TITLE": "Uszanowanko!",
+    "DESCRIPTION_LINE_1": "Obecnie pracuję i rozwijam się jako software engineer. W życiu kieruję się pasją do nauki, odkrywania nowych możliwości i tworzenia innowacyjnych rozwiązań.",
+    "DESCRIPTION_LINE_2": "Uwielbiam próbować nowych rzeczy i się nimi bawić — szukam wyzwań, które pozwalają mi się rozwijać i zdobywać nowe umiejętności.",
+    "DESCRIPTION_LINE_3": "Poniżej znajdziesz tagi odzwierciedlające moje zainteresowania, doświadczenie — zarówno te związane z IT, jak i nie tylko...",
+    "INTERESTS": {
+      "AI": "Sztuczna inteligencja",
+      "ML": "Uczenie maszynowe",
+      "UNITY": "Unity",
+      "UE": "Unreal Engine",
+      "QC": "Obliczenia kwantowe",
+      "DL": "Uczenie głębokie",
+      "PYTHON": "Python",
+      "RPG": "Gry fabularne (RPG)",
+      "GAMES": "Gry komputerowe",
+      "SF_FANTASY": "Fantastyka naukowa i fantasy",
+      "BOARD_GAME": "Gry planszowe",
+      "SW_LOTR": "Gwiezdne Wojny i Władca Pierścieni 💗",
+      "PSYCHOLOGY": "Psychologia",
+      "PHILOSOPHY": "Filozofia"
+    }
+  },
+  "PROJECTS": {
+    "VISIT": "odwiedź",
+    "UNIVERSITY": {
+      "NAME": "Uniwersytet Bielsko-Bialski",
+      "DESCRIPTION": "Byłem studentem Uniwersytetu Bielsko-Bialskiego, gdzie studiowałem Informatykę. Uzyskałem tytuł inżyniera w 2022 roku oraz tytuł magistra w 2024 roku.",
+      "LINK": "Strona UBB"
+    },
+    "CERT": {
+      "NAME": "Certyfikaty",
+      "DESCRIPTION": "Ukończyłem dwa certyfikaty: \"AI Devs 3 Agents\" oraz \"AI Devs 2 - Połączenie GPT-4 z aplikacją i logiką automatyzacji\".",
+      "LINK": "Certyfikat AI Devs"
+    },
+    "GITHUB": {
+      "NAME": "GitHub",
+      "DESCRIPTION": "W ostatnich latach większość czasu poświęcałem na commitowanie do repozytoriów w pracy, ale mam też kilka przykładów mojej pracy dostępnych na GitHubie. Znajdują się tam małe projekty ze studiów, częściowo kod tego portfolio, projekty z kursów z Udemy, bot Discorda stworzony dla kanału Awanturnicy na YouTube oraz przykłady mojej pracy z AI Devs.",
+      "LINK": "Profil GitHub"
+    },
+    "EXPERIENCE": {
+      "NAME": "Doświadczenie",
+      "DESCRIPTION": "- Software Engineer @ Precisely - od 2021,\n- Stażysta @ SM32 Studio od czerwca 2019 do września 2019"
+    }
+  },
+  "CONTACT": {
+    "TITLE": "Kontakt",
+    "DIRECT_EMAIL": "Lub napisz bezpośrednio:",
+    "TEXT": "Zapraszam do kontaktu mailowego lub przez media społecznościowe.",
+    "NAME": "Twoje imię",
+    "EMAIL": "Twój email",
+    "MESSAGE": "Twoja wiadomość",
+    "SENDING": "Wysyłanie...",
+    "SEND": "Wyślij 📧",
+    "COPY_EMAIL": "Kopiuj e-mail 📋",
+    "TOAST": {
+      "OPENING_TITLE": "Próba otwarcia aplikacji e-mail",
+      "OPENING_MESSAGE": "Jeśli nic się nie otworzy, użyj linku e-mail albo kopiowania adresu. Dzięki za Twój czas 😎!",
+      "COPY_SUCCESS_TITLE": "E-mail skopiowany",
+      "COPY_SUCCESS_MESSAGE": "Adres e-mail skopiowano do schowka.",
+      "COPY_ERROR_TITLE": "Kopiowanie nieudane",
+      "COPY_ERROR_MESSAGE": "Nie udało się skopiować automatycznie. Skopiuj adres ręcznie."
+    },
+    "ERROR": {
+      "NAME_REQUIRED": "Imię jest wymagane",
+      "NAME_MIN": "Imię musi mieć co najmniej {{min}} znaków",
+      "EMAIL_REQUIRED": "Email jest wymagany",
+      "EMAIL_VALID": "Wprowadź poprawny email",
+      "MESSAGE_REQUIRED": "Wiadomość jest wymagana",
+      "MESSAGE_MIN": "Wiadomość musi mieć co najmniej {{min}} znaków"
+    }
+  },
+  "ANIMATIONS": {
+    "TITLE": "CSS Animacje Przykłady",
+    "FADEIN": "Znikanie",
+    "SLIDEUPFADE": "Wjazd + Znikanie",
+    "BOUNCE": "Bounce",
+    "ROTATE": "Rotacja",
+    "PULSE": "Pulsacja",
+    "FANCY_ENTRANCE": "Fancy Wejście"
+  },
+  "FOOTER": {
+    "COPYRIGHT_NAME": "Michał Krzyżowski",
+    "HOME": "Start",
+    "ABOUT": "O mnie",
+    "PROJECTS": "Projekty i osiągnięcia",
+    "CONTACT": "Kontakt",
+    "LOGO": "MK"
+  },
+  "LAYOUT": {
+    "TITLE": "Plac zabaw: Flex i Grid",
+    "FLEX": "Demo Flexboxa",
+    "GRID_TITLE": "Przykład CSS Grida",
+    "TABLE": {
+      "HEADER": {
+        "ELEMENT": "Element",
+        "FLEX": "Wartość Flex",
+        "BEHAVIOR": "Zachowanie"
+      },
+      "ROW": {
+        "GROW1": {
+          "LABEL": "Grow 1",
+          "FLEX": "flex: 1 1 0%",
+          "DESC": "Otrzymuje <strong>1 część</strong> dostępnego miejsca. Drugi parametr: 1 = może się kurczyć, 0 = nie może."
+        },
+        "GROW2": {
+          "LABEL": "Grow 2",
+          "FLEX": "flex: 2 1 0%",
+          "DESC": "Otrzymuje <strong>2 części</strong> przestrzeni — <em>dwa razy więcej</em> niż Grow 1."
+        },
+        "FIXED": {
+          "LABEL": "Fixed",
+          "FLEX": "flex: 0 0 150px",
+          "DESC": "Zawsze ma <strong>150px szerokości</strong>, bez rozciągania i kurczenia."
+        }
+      }
+    },
+    "GRID": {
+      "BOX1": "Box 1 — zajmuje 2 kolumny",
+      "BOX2": "Box 2",
+      "BOX3": "Box 3 — zajmuje 2 wiersze",
+      "BOX4": "Box 4",
+      "BOX5": "Box 5"
+    }
+  },
+  "LOGIN": {
+    "TITLE": "Logowanie",
+    "EMAIL": "E-mail",
+    "PASSWORD": "Hasło",
+    "SUBMIT": "Zaloguj się",
+    "REQUIRED": "To pole jest wymagane",
+    "INVALID_EMAIL": "Podaj poprawny adres e-mail",
+    "PASSWORD_TOO_SHORT": "Hasło musi mieć co najmniej 6 znaków"
+  }
+}

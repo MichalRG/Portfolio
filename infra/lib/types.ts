@@ -6,6 +6,7 @@ export interface SpaHostingStackProps extends StackProps {
   certificateArn: string;
   env: { region: string; account: string };
   webAclArn: string;
+  apiOriginDomainName: string;
 }
 
 export interface CertificateStackProps extends StackProps {
@@ -15,4 +16,9 @@ export interface CertificateStackProps extends StackProps {
 
 export interface SpaSecurityStackProps extends StackProps {
   stage: string;
+}
+
+export interface PortfolioApiStackProps extends StackProps {
+  stage: string;
+  domainName: string;
 }
