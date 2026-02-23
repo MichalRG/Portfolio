@@ -9,11 +9,13 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
+import { EMPTY, catchError, finalize, of, switchMap } from 'rxjs';
 import { BLOG_ARTICLES } from '../../data/blog/blog-articles.data';
 import {
   estimateReadTimeMinutes,
@@ -23,6 +25,11 @@ import {
   renderMarkdownArticle,
 } from '../../data/blog/blog.helpers';
 import { BlogArticle } from '../../interfaces/blog-article.interface';
+import { BlogComment } from '../../interfaces/blog-comment.interface';
+import {
+  BlogCommentsService,
+  CreateBlogCommentInput,
+} from '../../services/blog-comments.service';
 import { FooterComponent } from '../landing-page/footer/footer.component';
 
 interface BlogArticleViewModel {
@@ -42,10 +49,18 @@ interface BlogRelatedArticleViewModel {
   description: string;
 }
 
+const EMAIL_WITH_TLD_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
 @Component({
   selector: 'app-blog-article-page',
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule, FooterComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    TranslateModule,
+    FooterComponent,
+  ],
   templateUrl: './blog-article-page.component.html',
   styleUrls: ['./blog-article-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -99,6 +114,20 @@ export class BlogArticlePageComponent implements OnInit {
   });
 
   readonly currentLanguage = signal('en');
+  readonly comments = signal<readonly BlogComment[]>([]);
+  readonly commentsLoading = signal(false);
+  readonly commentsError = signal(false);
+  readonly submittingComment = signal(false);
+  private readonly formBuilder = inject(FormBuilder);
+  readonly commentForm = this.formBuilder.nonNullable.group({
+    userName: [
+      '',
+      [Validators.required, Validators.minLength(2), Validators.maxLength(80)],
+    ],
+    email: ['', [Validators.email, Validators.pattern(EMAIL_WITH_TLD_PATTERN)]],
+    content: ['', [Validators.required, Validators.maxLength(2000)]],
+    honeypot: [''],
+  });
   private readonly selectedArticle = signal<BlogArticle | null>(null);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -107,6 +136,7 @@ export class BlogArticlePageComponent implements OnInit {
   private readonly toastr = inject(ToastrService);
   private readonly document = inject(DOCUMENT);
   private readonly domSanitizer = inject(DomSanitizer);
+  private readonly blogCommentsService = inject(BlogCommentsService);
 
   constructor() {
     this.currentLanguage.set(this.translateService.currentLang || 'en');
@@ -120,17 +150,34 @@ export class BlogArticlePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((paramMap) => {
-        const slug = paramMap.get('slug');
-        const article = BLOG_ARTICLES.find((entry) => entry.slug === slug);
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        switchMap((paramMap) => {
+          this.resetCommentsState();
 
-        if (!article) {
-          void this.router.navigate(['/blog'], { replaceUrl: true });
-          return;
-        }
+          const slug = paramMap.get('slug');
+          const article = BLOG_ARTICLES.find((entry) => entry.slug === slug);
 
-        this.selectedArticle.set(article);
+          if (!article) {
+            this.selectedArticle.set(null);
+            void this.router.navigate(['/blog'], { replaceUrl: true });
+            return EMPTY;
+          }
+
+          this.selectedArticle.set(article);
+          this.commentsLoading.set(true);
+
+          return this.blogCommentsService.listComments(article.slug).pipe(
+            catchError(() => {
+              this.commentsError.set(true);
+              return of([] as readonly BlogComment[]);
+            }),
+          );
+        }),
+      )
+      .subscribe((comments) => {
+        this.comments.set(comments);
+        this.commentsLoading.set(false);
       });
   }
 
@@ -140,6 +187,78 @@ export class BlogArticlePageComponent implements OnInit {
 
   trackByRelatedSlug(_: number, article: BlogRelatedArticleViewModel): string {
     return article.slug;
+  }
+
+  trackByCommentId(_: number, comment: BlogComment): string {
+    return comment.id;
+  }
+
+  submitComment(): void {
+    if (this.submittingComment()) {
+      return;
+    }
+
+    if (this.commentForm.invalid) {
+      this.commentForm.markAllAsTouched();
+      return;
+    }
+
+    const article = this.selectedArticle();
+    if (!article) {
+      return;
+    }
+
+    const formValue = this.commentForm.getRawValue();
+    const userName = formValue.userName.trim();
+    const content = formValue.content.trim();
+    const email = formValue.email.trim();
+
+    if (!userName || !content) {
+      this.commentForm.controls.userName.setValue(userName);
+      this.commentForm.controls.content.setValue(content);
+      this.commentForm.markAllAsTouched();
+      return;
+    }
+
+    const createInput: CreateBlogCommentInput = {
+      userName,
+      content,
+      email: email || null,
+      honeypot: formValue.honeypot,
+    };
+
+    this.submittingComment.set(true);
+    this.blogCommentsService
+      .createComment(article.slug, createInput)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          this.submittingComment.set(false);
+        }),
+      )
+      .subscribe({
+        next: (createdComment) => {
+          this.comments.update((items) => [createdComment, ...items]);
+          this.commentForm.reset({
+            userName: '',
+            email: '',
+            content: '',
+            honeypot: '',
+          });
+          this.toastr.success(
+            this.translateService.instant(
+              'BLOG.COMMENTS.CREATE_SUCCESS_MESSAGE',
+            ),
+            this.translateService.instant('BLOG.COMMENTS.CREATE_SUCCESS_TITLE'),
+          );
+        },
+        error: () => {
+          this.toastr.error(
+            this.translateService.instant('BLOG.COMMENTS.CREATE_ERROR_MESSAGE'),
+            this.translateService.instant('BLOG.COMMENTS.CREATE_ERROR_TITLE'),
+          );
+        },
+      });
   }
 
   async shareArticle(): Promise<void> {
@@ -201,5 +320,18 @@ export class BlogArticlePageComponent implements OnInit {
     const copied = this.document.execCommand('copy');
     body.removeChild(textarea);
     return copied;
+  }
+
+  private resetCommentsState(): void {
+    this.comments.set([]);
+    this.commentsLoading.set(false);
+    this.commentsError.set(false);
+    this.submittingComment.set(false);
+    this.commentForm.reset({
+      userName: '',
+      email: '',
+      content: '',
+      honeypot: '',
+    });
   }
 }

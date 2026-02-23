@@ -28,7 +28,33 @@
     "SHARE_SUCCESS_TITLE": "Link copied",
     "SHARE_SUCCESS_MESSAGE": "Article link copied to clipboard.",
     "SHARE_ERROR_TITLE": "Copy failed",
-    "SHARE_ERROR_MESSAGE": "Could not copy the link automatically."
+    "SHARE_ERROR_MESSAGE": "Could not copy the link automatically.",
+    "COMMENTS": {
+      "TITLE": "Comments",
+      "LOADING": "Loading comments...",
+      "EMPTY": "No comments yet.",
+      "ERROR": "Could not load comments right now.",
+      "NAME_LABEL": "Name",
+      "NAME_PLACEHOLDER": "Your display name",
+      "EMAIL_LABEL": "Email (optional)",
+      "EMAIL_PLACEHOLDER": "your@email.com",
+      "MESSAGE_LABEL": "Comment",
+      "MESSAGE_PLACEHOLDER": "Write your comment",
+      "SUBMIT": "Add comment",
+      "SUBMITTING": "Sending...",
+      "CREATE_SUCCESS_TITLE": "Comment added",
+      "CREATE_SUCCESS_MESSAGE": "Your comment has been posted.",
+      "CREATE_ERROR_TITLE": "Could not add comment",
+      "CREATE_ERROR_MESSAGE": "Please check the form and try again.",
+      "ERRORS": {
+        "NAME_REQUIRED": "Name is required.",
+        "NAME_MIN": "Name must be at least {{min}} characters.",
+        "NAME_MAX": "Name cannot be longer than {{max}} characters.",
+        "EMAIL_VALID": "Enter a valid email address.",
+        "MESSAGE_REQUIRED": "Comment is required.",
+        "MESSAGE_MAX": "Comment cannot be longer than {{max}} characters."
+      }
+    }
   },
   "HERO": {
     "TITLE-1": "Welcome from the other side of the screen!",

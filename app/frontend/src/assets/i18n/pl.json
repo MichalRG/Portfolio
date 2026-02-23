@@ -28,7 +28,33 @@
     "SHARE_SUCCESS_TITLE": "Skopiowano link",
     "SHARE_SUCCESS_MESSAGE": "Link do artykulu skopiowany do schowka.",
     "SHARE_ERROR_TITLE": "Blad kopiowania",
-    "SHARE_ERROR_MESSAGE": "Nie udalo sie automatycznie skopiowac linku."
+    "SHARE_ERROR_MESSAGE": "Nie udalo sie automatycznie skopiowac linku.",
+    "COMMENTS": {
+      "TITLE": "Komentarze",
+      "LOADING": "Ladowanie komentarzy...",
+      "EMPTY": "Brak komentarzy.",
+      "ERROR": "Nie udalo sie pobrac komentarzy.",
+      "NAME_LABEL": "Imie",
+      "NAME_PLACEHOLDER": "Twoja nazwa wyswietlana",
+      "EMAIL_LABEL": "Email (opcjonalnie)",
+      "EMAIL_PLACEHOLDER": "twoj@email.com",
+      "MESSAGE_LABEL": "Komentarz",
+      "MESSAGE_PLACEHOLDER": "Napisz komentarz",
+      "SUBMIT": "Dodaj komentarz",
+      "SUBMITTING": "Wysylanie...",
+      "CREATE_SUCCESS_TITLE": "Dodano komentarz",
+      "CREATE_SUCCESS_MESSAGE": "Twoj komentarz zostal opublikowany.",
+      "CREATE_ERROR_TITLE": "Nie udalo sie dodac komentarza",
+      "CREATE_ERROR_MESSAGE": "Sprawdz formularz i sprobuj ponownie.",
+      "ERRORS": {
+        "NAME_REQUIRED": "Imie jest wymagane.",
+        "NAME_MIN": "Imie musi miec co najmniej {{min}} znaki.",
+        "NAME_MAX": "Imie nie moze miec wiecej niz {{max}} znakow.",
+        "EMAIL_VALID": "Wpisz poprawny adres email.",
+        "MESSAGE_REQUIRED": "Komentarz jest wymagany.",
+        "MESSAGE_MAX": "Komentarz nie moze miec wiecej niz {{max}} znakow."
+      }
+    }
   },
   "HERO": {
     "TITLE-1": "Witaj po drugiej stronie ekranu!",

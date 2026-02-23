@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import punq
 
 from portfolio_api.application.ports.comment_repo import CommentRepository
@@ -52,6 +53,13 @@ def create_app(
     app.state.settings = app.state.container.resolve(Settings)
     app.state.comment_repo = app.state.container.resolve(CommentRepository)
 
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=runtime_settings.cors_allowed_origins,
+        allow_credentials=False,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
     app.add_middleware(CorrelationIdMiddleware)
     register_exception_handlers(app)
     app.include_router(health_router)

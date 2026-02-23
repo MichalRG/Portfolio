@@ -23,6 +23,10 @@ class Settings(BaseSettings):
     comments_require_captcha: bool = False
     turnstile_secret_key: str | None = None
     turnstile_verify_url: str = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
+    cors_allowed_origins: list[str] = [
+        "http://localhost:4200",
+        "http://127.0.0.1:4200",
+    ]
 
     @field_validator("ttl_retention_days")
     @classmethod

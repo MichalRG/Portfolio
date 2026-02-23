@@ -4,28 +4,42 @@ import { BehaviorSubject } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 import { BlogArticlePageComponent } from './blog-article-page.component';
+import { BlogComment } from '../../interfaces/blog-comment.interface';
+import { BlogCommentsService } from '../../services/blog-comments.service';
 
 describe('BlogArticlePageComponent', () => {
   let component: BlogArticlePageComponent;
   let fixture: ComponentFixture<BlogArticlePageComponent>;
   let toastrSpy: jasmine.SpyObj<ToastrService>;
+  let commentsServiceSpy: jasmine.SpyObj<BlogCommentsService>;
 
   const paramMapSubject = new BehaviorSubject(
     convertToParamMap({ slug: 'building-static-blog-with-angular' }),
   );
 
   beforeEach(async () => {
+    paramMapSubject.next(
+      convertToParamMap({ slug: 'building-static-blog-with-angular' }),
+    );
+
     toastrSpy = jasmine.createSpyObj<ToastrService>('ToastrService', [
       'success',
       'error',
     ]);
+    commentsServiceSpy = jasmine.createSpyObj<BlogCommentsService>(
+      'BlogCommentsService',
+      ['listComments'],
+    );
+    commentsServiceSpy.listComments.and.returnValue(of([]));
 
     await TestBed.configureTestingModule({
       imports: [BlogArticlePageComponent, TranslateModule.forRoot()],
       providers: [
         provideRouter([]),
         { provide: ToastrService, useValue: toastrSpy },
+        { provide: BlogCommentsService, useValue: commentsServiceSpy },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -43,6 +57,9 @@ describe('BlogArticlePageComponent', () => {
   it('should create the component', () => {
     expect(component).toBeTruthy();
     expect(component.articleView()).not.toBeNull();
+    expect(commentsServiceSpy.listComments).toHaveBeenCalledWith(
+      'building-static-blog-with-angular',
+    );
   });
 
   it('should expose toc entries for headings', () => {
@@ -70,5 +87,38 @@ describe('BlogArticlePageComponent', () => {
 
     expect(toastrSpy.success).toHaveBeenCalled();
     expect(toastrSpy.error).not.toHaveBeenCalled();
+  });
+
+  it('should render loaded comments', () => {
+    const comments: readonly BlogComment[] = [
+      {
+        id: '01ARZ3NDEKTSV4RRFFQ69G5FAV',
+        postSlug: 'comments-api-with-fastapi-and-dynamodb',
+        userName: 'Jane Doe',
+        content: 'This architecture looks clean and practical.',
+        email: null,
+        createdAt: '2026-02-22T21:00:00Z',
+        updatedAt: '2026-02-22T21:00:00Z',
+        deletedAt: null,
+      },
+    ];
+    commentsServiceSpy.listComments.and.returnValue(of(comments));
+
+    paramMapSubject.next(
+      convertToParamMap({ slug: 'comments-api-with-fastapi-and-dynamodb' }),
+    );
+    fixture.detectChanges();
+
+    const authorElement = fixture.nativeElement.querySelector(
+      '.blog-article-page__comment-author',
+    ) as HTMLElement | null;
+    const contentElement = fixture.nativeElement.querySelector(
+      '.blog-article-page__comment-content',
+    ) as HTMLElement | null;
+
+    expect(authorElement?.textContent).toContain('Jane Doe');
+    expect(contentElement?.textContent).toContain(
+      'This architecture looks clean and practical.',
+    );
   });
 });

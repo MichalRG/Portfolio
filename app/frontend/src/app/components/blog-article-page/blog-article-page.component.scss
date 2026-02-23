@@ -165,6 +165,15 @@
     }
   }
 
+  &__comments {
+    border-top: 1px solid rgba($color-primary, 0.22);
+  }
+
+  &__comment {
+    padding: 0.85rem 0.95rem;
+    border-left: 2px solid rgba($color-primary, 0.3);
+  }
+
   &__related {
     display: grid;
     gap: 0.85rem;

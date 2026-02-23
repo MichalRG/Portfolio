@@ -17,7 +17,7 @@
 
         <div class="blog-article-page__meta">
           <span>{{ article.publishedAtFormatted }}</span>
-          <span aria-hidden="true">•</span>
+          <span aria-hidden="true">&bull;</span>
           <span>
             {{
               'BLOG.READ_TIME' | translate: { minutes: article.estimatedReadMinutes }
@@ -47,6 +47,153 @@
 
         <article class="blog-article-page__article" [innerHTML]="article.contentHtml"></article>
       </div>
+
+      <section class="blog-article-page__comments">
+        <h2 class="blog-article-page__comments-title">
+          {{ 'BLOG.COMMENTS.TITLE' | translate }}
+        </h2>
+
+        <form
+          class="blog-article-page__comment-form"
+          [formGroup]="commentForm"
+          (ngSubmit)="submitComment()"
+        >
+          <div class="blog-article-page__comment-form-row">
+            <div class="blog-article-page__comment-col blog-article-page__comment-col--6">
+              <label class="blog-article-page__comment-field">
+                <span>{{ 'BLOG.COMMENTS.NAME_LABEL' | translate }}</span>
+                <input
+                  type="text"
+                  formControlName="userName"
+                  autocomplete="name"
+                  [placeholder]="'BLOG.COMMENTS.NAME_PLACEHOLDER' | translate"
+                />
+                @if (
+                  commentForm.get('userName')?.touched &&
+                  commentForm.get('userName')?.invalid
+                ) {
+                  <small class="blog-article-page__comment-error">
+                    @if (commentForm.get('userName')?.hasError('required')) {
+                      {{ 'BLOG.COMMENTS.ERRORS.NAME_REQUIRED' | translate }}
+                    } @else if (commentForm.get('userName')?.hasError('minlength')) {
+                      {{
+                        'BLOG.COMMENTS.ERRORS.NAME_MIN'
+                          | translate: { min: 2 }
+                      }}
+                    } @else if (commentForm.get('userName')?.hasError('maxlength')) {
+                      {{
+                        'BLOG.COMMENTS.ERRORS.NAME_MAX'
+                          | translate: { max: 80 }
+                      }}
+                    }
+                  </small>
+                }
+              </label>
+            </div>
+            <div class="blog-article-page__comment-col blog-article-page__comment-col--6">
+              <label class="blog-article-page__comment-field">
+                <span>{{ 'BLOG.COMMENTS.EMAIL_LABEL' | translate }}</span>
+                <input
+                  type="email"
+                  formControlName="email"
+                  autocomplete="email"
+                  [placeholder]="'BLOG.COMMENTS.EMAIL_PLACEHOLDER' | translate"
+                />
+                @if (
+                  commentForm.get('email')?.touched &&
+                  (commentForm.get('email')?.hasError('email') ||
+                    commentForm.get('email')?.hasError('pattern'))
+                ) {
+                  <small class="blog-article-page__comment-error">
+                    {{ 'BLOG.COMMENTS.ERRORS.EMAIL_VALID' | translate }}
+                  </small>
+                }
+              </label>
+            </div>
+          </div>
+
+          <div class="blog-article-page__comment-form-row">
+            <div class="blog-article-page__comment-col blog-article-page__comment-col--12">
+              <label class="blog-article-page__comment-field">
+                <span>{{ 'BLOG.COMMENTS.MESSAGE_LABEL' | translate }}</span>
+                <textarea
+                  rows="4"
+                  formControlName="content"
+                  [placeholder]="'BLOG.COMMENTS.MESSAGE_PLACEHOLDER' | translate"
+                ></textarea>
+                @if (
+                  commentForm.get('content')?.touched &&
+                  commentForm.get('content')?.invalid
+                ) {
+                  <small class="blog-article-page__comment-error">
+                    @if (commentForm.get('content')?.hasError('required')) {
+                      {{ 'BLOG.COMMENTS.ERRORS.MESSAGE_REQUIRED' | translate }}
+                    } @else if (commentForm.get('content')?.hasError('maxlength')) {
+                      {{
+                        'BLOG.COMMENTS.ERRORS.MESSAGE_MAX'
+                          | translate: { max: 2000 }
+                      }}
+                    }
+                  </small>
+                }
+              </label>
+            </div>
+          </div>
+
+          <input
+            type="text"
+            formControlName="honeypot"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+            class="blog-article-page__comment-honeypot"
+          />
+
+          <button
+            class="blog-article-page__comment-submit"
+            type="submit"
+            [disabled]="commentForm.invalid || submittingComment()"
+          >
+            @if (submittingComment()) {
+              <span>{{ 'BLOG.COMMENTS.SUBMITTING' | translate }}</span>
+            } @else {
+              <span>{{ 'BLOG.COMMENTS.SUBMIT' | translate }}</span>
+            }
+          </button>
+        </form>
+
+        @if (commentsLoading()) {
+          <p class="blog-article-page__comments-state">
+            {{ 'BLOG.COMMENTS.LOADING' | translate }}
+          </p>
+        } @else if (commentsError()) {
+          <p
+            class="blog-article-page__comments-state blog-article-page__comments-state--error"
+          >
+            {{ 'BLOG.COMMENTS.ERROR' | translate }}
+          </p>
+        } @else if (comments().length === 0) {
+          <p class="blog-article-page__comments-state">
+            {{ 'BLOG.COMMENTS.EMPTY' | translate }}
+          </p>
+        } @else {
+          <ul class="blog-article-page__comments-list">
+            @for (comment of comments(); track trackByCommentId($index, comment)) {
+              <li class="blog-article-page__comment">
+                <div class="blog-article-page__comment-meta">
+                  <span class="blog-article-page__comment-author">{{
+                    comment.userName
+                  }}</span>
+                  <span class="blog-article-page__comment-date">{{
+                    comment.createdAt | date: 'medium'
+                  }}</span>
+                </div>
+                <p class="blog-article-page__comment-content">{{ comment.content }}</p>
+              </li>
+            }
+          </ul>
+        }
+      </section>
 
       @if (relatedArticles().length > 0) {
         <section class="blog-article-page__related">
